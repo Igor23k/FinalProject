@@ -4,11 +4,11 @@ import by.hotel.bean.Reservation;
 import by.hotel.builder.DiscountBuilder;
 import by.hotel.builder.ReservationBuilder;
 import by.hotel.builder.UserBuilder;
-import by.hotel.dao.ReservationDao;
+import by.hotel.dao.IReservationDao;
 import by.hotel.dao.exception.DAOException;
 import by.hotel.dao.impl.ReservationDaoImpl;
 import by.hotel.service.AbstractService;
-import by.hotel.service.CrudServiceExtended;
+import by.hotel.service.ICrudServiceExtended;
 import by.hotel.service.exception.IncorrectCostException;
 import by.hotel.service.exception.IncorrectDateException;
 import by.hotel.service.exception.ServiceException;
@@ -21,8 +21,8 @@ import java.text.SimpleDateFormat;
 import java.util.List;
 import java.util.Map;
 
-public class ReservationServiceImpl extends AbstractService implements CrudServiceExtended<Reservation> {
-    ReservationDao reservationDao = new ReservationDaoImpl();
+public class ReservationServiceImpl extends AbstractService implements ICrudServiceExtended<Reservation> {
+    IReservationDao reservationDao = new ReservationDaoImpl();
 
     public List<String> getAllHeaders() throws ServiceException {
         Connection connection = null;

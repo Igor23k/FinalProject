@@ -3,11 +3,11 @@ package by.hotel.service.impl;
 
 import by.hotel.bean.ParkingSpace;
 import by.hotel.builder.ParkingSpaceBuilder;
-import by.hotel.dao.ParkingSpaceDao;
+import by.hotel.dao.IParkingSpaceDao;
 import by.hotel.dao.impl.ParkingSpaceDaoImpl;
 import by.hotel.dao.exception.DAOException;
 import by.hotel.service.AbstractService;
-import by.hotel.service.CrudServiceExtended;
+import by.hotel.service.ICrudServiceExtended;
 import by.hotel.service.exception.IncorrectParkingSpaceLevelException;
 import by.hotel.service.exception.IncorrectParkingSpaceReservationException;
 import by.hotel.service.exception.ServiceException;
@@ -17,8 +17,8 @@ import java.sql.Connection;
 import java.util.List;
 import java.util.Map;
 
-public class ParkingSpaceServiceImpl extends AbstractService implements CrudServiceExtended<ParkingSpace> {
-    private ParkingSpaceDao parkingSpaceDao = new ParkingSpaceDaoImpl();
+public class ParkingSpaceServiceImpl extends AbstractService implements ICrudServiceExtended<ParkingSpace> {
+    private IParkingSpaceDao parkingSpaceDao = new ParkingSpaceDaoImpl();
 
     public List<String> getAllHeaders() throws ServiceException {
         Connection connection = null;

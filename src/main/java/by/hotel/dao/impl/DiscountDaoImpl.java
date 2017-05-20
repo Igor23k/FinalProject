@@ -3,7 +3,7 @@ package by.hotel.dao.impl;
 import by.hotel.bean.Discount;
 import by.hotel.builder.DiscountBuilder;
 import by.hotel.dao.AbstractDao;
-import by.hotel.dao.DiscountDao;
+import by.hotel.dao.IDiscountDao;
 import by.hotel.dao.exception.DAOException;
 import by.hotel.util.ErrorStringBuilder;
 
@@ -15,7 +15,7 @@ import java.util.Map;
 
 import static by.hotel.dao.constants.Constants.*;
 
-public class DiscountDaoImpl extends AbstractDao implements DiscountDao {
+public class DiscountDaoImpl extends AbstractDao implements IDiscountDao {
     public List<String> getDiscountHeaders(Connection connection) throws DAOException {
         PreparedStatement statement = null;
         ResultSet resultSet = null;

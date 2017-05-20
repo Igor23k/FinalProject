@@ -2,11 +2,11 @@ package by.hotel.service.impl;
 
 import by.hotel.bean.Discount;
 import by.hotel.builder.DiscountBuilder;
-import by.hotel.dao.DiscountDao;
+import by.hotel.dao.IDiscountDao;
 import by.hotel.dao.impl.DiscountDaoImpl;
 import by.hotel.dao.exception.DAOException;
 import by.hotel.service.AbstractService;
-import by.hotel.service.CrudServiceExtended;
+import by.hotel.service.ICrudServiceExtended;
 import by.hotel.service.exception.IncorrectDiscountNameException;
 import by.hotel.service.exception.ServiceException;
 import by.hotel.service.validator.ValidatorDiscount;
@@ -15,8 +15,8 @@ import java.sql.Connection;
 import java.util.List;
 import java.util.Map;
 
-public class DiscountServiceImpl extends AbstractService implements CrudServiceExtended<Discount> {
-    private DiscountDao discountDao = new DiscountDaoImpl();
+public class DiscountServiceImpl extends AbstractService implements ICrudServiceExtended<Discount> {
+    private IDiscountDao discountDao = new DiscountDaoImpl();
 
     public List<String> getAllHeaders() throws ServiceException {
         Connection connection = null;

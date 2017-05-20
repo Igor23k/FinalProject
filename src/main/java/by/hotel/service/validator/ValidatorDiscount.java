@@ -6,9 +6,6 @@ import by.hotel.service.exception.IncorrectDiscountNameException;
 
 import java.util.Map;
 
-/**
- * Created by 1 on 18.04.2017.
- */
 public class ValidatorDiscount extends AbstractValidator {
     public boolean validate(Map<String, String[]> data) throws IncorrectDiscountNameException {
         if (validateNameDiscount(data.get("name")[0])) {

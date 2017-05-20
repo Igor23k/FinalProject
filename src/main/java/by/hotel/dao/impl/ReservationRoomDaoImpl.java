@@ -3,7 +3,7 @@ package by.hotel.dao.impl;
 import by.hotel.bean.*;
 import by.hotel.builder.*;
 import by.hotel.dao.AbstractDao;
-import by.hotel.dao.ReservationRoomDao;
+import by.hotel.dao.IReservationRoomDao;
 import by.hotel.dao.exception.DAOException;
 import by.hotel.util.ErrorStringBuilder;
 
@@ -15,7 +15,7 @@ import java.util.Map;
 
 import static by.hotel.dao.constants.Constants.*;
 
-public class ReservationRoomDaoImpl extends AbstractDao implements ReservationRoomDao {
+public class ReservationRoomDaoImpl extends AbstractDao implements IReservationRoomDao {
     public List<ReservationRoom> getReservationRooms(Connection connection) throws DAOException {
         PreparedStatement statement = null;
         ResultSet resultSet = null;

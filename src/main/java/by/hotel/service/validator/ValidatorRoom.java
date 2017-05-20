@@ -6,9 +6,6 @@ import by.hotel.service.exception.IncorrectRoomPhoneNumberException;
 
 import java.util.Map;
 
-/**
- * Created by 1 on 18.04.2017.
- */
 public class ValidatorRoom extends AbstractValidator {
     public boolean validate(Map<String, String[]> data) throws IncorrectRoomNameException, IncorrectRoomPhoneNumberException, IncorrectRoomPathException {
         if (validateNameRoom(data.get("name")[0]) & validatePhone(data.get("phone")[0])  & validatePath(data.get("path")[0])) {

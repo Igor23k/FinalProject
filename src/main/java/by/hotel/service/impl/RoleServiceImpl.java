@@ -1,23 +1,21 @@
 package by.hotel.service.impl;
 
-import by.hotel.bean.ReservationRoom;
 import by.hotel.bean.Role;
 import by.hotel.builder.RoleBuilder;
-import by.hotel.dao.RoleDao;
+import by.hotel.dao.IRoleDao;
 import by.hotel.dao.impl.RoleDaoImpl;
 import by.hotel.dao.exception.DAOException;
 import by.hotel.service.AbstractService;
-import by.hotel.service.CrudServiceExtended;
+import by.hotel.service.ICrudServiceExtended;
 import by.hotel.service.exception.*;
-import by.hotel.service.validator.ValidatorParkingSpace;
 import by.hotel.service.validator.ValidatorRole;
 
 import java.sql.Connection;
 import java.util.List;
 import java.util.Map;
 
-public class RoleServiceImpl extends AbstractService implements CrudServiceExtended<Role> {
-    private RoleDao roleDao = new RoleDaoImpl();
+public class RoleServiceImpl extends AbstractService implements ICrudServiceExtended<Role> {
+    private IRoleDao roleDao = new RoleDaoImpl();
 
     public List<String> getAllHeaders() throws ServiceException {
         Connection connection = null;

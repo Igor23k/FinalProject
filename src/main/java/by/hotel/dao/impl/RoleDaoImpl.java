@@ -1,12 +1,9 @@
 package by.hotel.dao.impl;
 
 import by.hotel.bean.Role;
-import by.hotel.bean.User;
 import by.hotel.builder.RoleBuilder;
-import by.hotel.builder.UserBuilder;
 import by.hotel.dao.AbstractDao;
-import by.hotel.dao.RoleDao;
-import by.hotel.dao.constants.Constants;
+import by.hotel.dao.IRoleDao;
 import by.hotel.dao.exception.DAOException;
 import by.hotel.util.ErrorStringBuilder;
 
@@ -18,7 +15,7 @@ import java.util.Map;
 
 import static by.hotel.dao.constants.Constants.*;
 
-public class RoleDaoImpl extends AbstractDao implements RoleDao {
+public class RoleDaoImpl extends AbstractDao implements IRoleDao {
     public List<String> getRoleHeaders(Connection connection) throws DAOException {
         PreparedStatement statement = null;
         ResultSet resultSet = null;

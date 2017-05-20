@@ -2,21 +2,20 @@ package by.hotel.service.impl;
 
 import by.hotel.bean.RoomType;
 import by.hotel.builder.RoomTypeBuilder;
-import by.hotel.dao.RoomTypeDao;
+import by.hotel.dao.IRoomTypeDao;
 import by.hotel.dao.impl.RoomTypeDaoImpl;
 import by.hotel.dao.exception.DAOException;
 import by.hotel.service.AbstractService;
-import by.hotel.service.CrudServiceExtended;
+import by.hotel.service.ICrudServiceExtended;
 import by.hotel.service.exception.*;
-import by.hotel.service.validator.ValidatorRoom;
 import by.hotel.service.validator.ValidatorRoomType;
 
 import java.sql.Connection;
 import java.util.List;
 import java.util.Map;
 
-public class RoomTypeServiceImpl extends AbstractService implements CrudServiceExtended<RoomType> {
-    private RoomTypeDao roomTypeDao = new RoomTypeDaoImpl();
+public class RoomTypeServiceImpl extends AbstractService implements ICrudServiceExtended<RoomType> {
+    private IRoomTypeDao roomTypeDao = new RoomTypeDaoImpl();
 
     public List<String> getAllHeaders() throws ServiceException {
         Connection connection = null;

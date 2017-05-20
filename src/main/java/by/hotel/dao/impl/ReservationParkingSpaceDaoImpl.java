@@ -1,10 +1,9 @@
 package by.hotel.dao.impl;
 
 import by.hotel.bean.ReservationParkingSpace;
-import by.hotel.bean.Role;
 import by.hotel.builder.*;
 import by.hotel.dao.AbstractDao;
-import by.hotel.dao.ReservationParkingSpaceDao;
+import by.hotel.dao.IReservationParkingSpaceDao;
 import by.hotel.dao.exception.DAOException;
 import by.hotel.util.ErrorStringBuilder;
 
@@ -16,7 +15,7 @@ import java.util.Map;
 
 import static by.hotel.dao.constants.Constants.*;
 
-public class ReservationParkingSpaceDaoImpl extends AbstractDao implements ReservationParkingSpaceDao {
+public class ReservationParkingSpaceDaoImpl extends AbstractDao implements IReservationParkingSpaceDao {
     public List<ReservationParkingSpace> getReservationParkingSpaces(Connection connection) throws DAOException {
         PreparedStatement statement = null;
         ResultSet resultSet = null;

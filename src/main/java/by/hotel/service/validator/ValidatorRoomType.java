@@ -4,9 +4,6 @@ import by.hotel.service.exception.*;
 
 import java.util.Map;
 
-/**
- * Created by 1 on 18.04.2017.
- */
 public class ValidatorRoomType extends AbstractValidator{
     public boolean validate(Map<String, String[]> data) throws IncorrectRoomBathroomsException, IncorrectRoomsCountException, IncorrectRoomBedsException, IncorrectRoomSizeException, IncorrectCostException, IncorrectRoomAdditionalInfoException {
         if (validateRoomsCountDigit(data.get("rooms_count")[0])

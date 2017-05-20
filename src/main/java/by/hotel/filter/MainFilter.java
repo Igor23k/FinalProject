@@ -22,7 +22,6 @@ public class MainFilter implements Filter {
         rights.put("REMOVE", 32);
         rights.put("UPDATE", 64);
         rights.put("GET_ALL_HEADERS", 127);
-        rights.put("CREATE_DOCUMENT", 127);
         rights.put("AUTHORIZATION", 4);
         rights.put("REGISTRATION", 4);
     }

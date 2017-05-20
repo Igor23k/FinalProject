@@ -1,9 +1,7 @@
 package by.hotel.servlet;
 
-import by.hotel.command.Command;
+import by.hotel.command.ICommand;
 import by.hotel.command.exception.CommandException;
-import by.hotel.command.impl.Authorization;
-import by.hotel.command.impl.Registration;
 import by.hotel.factory.impl.CommandFactoryMapper;
 import com.google.gson.Gson;
 import org.apache.logging.log4j.LogManager;
@@ -15,29 +13,28 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
-import java.util.Map;
 
 @WebServlet (urlPatterns = {"/servlet"})
 public class MainServlet extends HttpServlet {
     private static final Logger logger = LogManager.getLogger(MainServlet.class.getName());
 
-    private void doRequest(HttpServletRequest req, HttpServletResponse resp){
+    private void doRequest(HttpServletRequest request, HttpServletResponse response){
         try {
             Object result;
-            String page = req.getParameter("page");
+            String page = request.getParameter("page");
             CommandFactoryMapper commandFactoryMapper = CommandFactoryMapper.getInstance();
-            Command command = commandFactoryMapper.getCommand(req.getParameter("action"));
-            result = command.execute(req.getParameterMap(),req);
+            ICommand command = commandFactoryMapper.getCommand(request.getParameter("action"));
+            result = command.execute(request);
             if(page != null) {
-                req.setAttribute("items", result);
-                req.getRequestDispatcher(page).forward(req,resp);
+                request.setAttribute("items", result);
+                request.getRequestDispatcher(page).forward(request,response);
             }else {
-                formJsonResponse(resp, result);
+                formJsonResponse(response, result);
             }
         } catch (CommandException e) {
             logger.error(e);
             String message = e.getMessage();
-            formJsonResponse(resp,message.substring(message.lastIndexOf(":")+1));
+            formJsonResponse(response,message.substring(message.lastIndexOf(":")+1));
         }catch (IOException e){
             logger.error(e);
         }catch (ServletException e){

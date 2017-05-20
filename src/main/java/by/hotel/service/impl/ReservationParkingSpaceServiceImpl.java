@@ -4,19 +4,19 @@ import by.hotel.bean.ReservationParkingSpace;
 import by.hotel.builder.ParkingSpaceBuilder;
 import by.hotel.builder.ReservationBuilder;
 import by.hotel.builder.ReservationParkingSpaceBuilder;
-import by.hotel.dao.ReservationParkingSpaceDao;
+import by.hotel.dao.IReservationParkingSpaceDao;
 import by.hotel.dao.impl.ReservationParkingSpaceDaoImpl;
 import by.hotel.dao.exception.DAOException;
 import by.hotel.service.AbstractService;
-import by.hotel.service.CrudService;
+import by.hotel.service.ICrudService;
 import by.hotel.service.exception.ServiceException;
 
 import java.sql.Connection;
 import java.util.List;
 import java.util.Map;
 
-public class ReservationParkingSpaceServiceImpl extends AbstractService implements CrudService<ReservationParkingSpace> {
-    ReservationParkingSpaceDao reservationParkingSpaceDao = new ReservationParkingSpaceDaoImpl();
+public class ReservationParkingSpaceServiceImpl extends AbstractService implements ICrudService<ReservationParkingSpace> {
+    IReservationParkingSpaceDao reservationParkingSpaceDao = new ReservationParkingSpaceDaoImpl();
 
     public List<ReservationParkingSpace> getAllEntities() throws ServiceException {
         Connection connection = null;

@@ -5,9 +5,6 @@ import by.hotel.service.exception.IncorrectRightRoleException;
 
 import java.util.Map;
 
-/**
- * Created by 1 on 18.04.2017.
- */
 public class ValidatorRole extends AbstractValidator{
     public boolean validate(Map<String, String[]> data) throws IncorrectRightRoleException, IncorrectNameRoleException {
         if (validateNameRole(data.get("nameRole")[0]) & validateRight(data.get("update")[0]) & validateRight(data.get("delete")[0])

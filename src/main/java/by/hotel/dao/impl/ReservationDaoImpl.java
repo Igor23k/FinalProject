@@ -5,7 +5,7 @@ import by.hotel.builder.DiscountBuilder;
 import by.hotel.builder.ReservationBuilder;
 import by.hotel.builder.UserBuilder;
 import by.hotel.dao.AbstractDao;
-import by.hotel.dao.ReservationDao;
+import by.hotel.dao.IReservationDao;
 import by.hotel.dao.constants.Constants;
 import by.hotel.dao.exception.DAOException;
 import by.hotel.util.ErrorStringBuilder;
@@ -18,7 +18,7 @@ import java.util.Map;
 
 import static by.hotel.dao.constants.Constants.*;
 
-public class ReservationDaoImpl extends AbstractDao implements ReservationDao {
+public class ReservationDaoImpl extends AbstractDao implements IReservationDao {
     public List<String> getReservationHeaders(Connection connection) throws DAOException {
         PreparedStatement statement = null;
         ResultSet resultSet = null;

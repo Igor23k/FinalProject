@@ -3,22 +3,21 @@ package by.hotel.service.impl;
 import by.hotel.bean.User;
 import by.hotel.builder.RoleBuilder;
 import by.hotel.builder.UserBuilder;
-import by.hotel.dao.UserDao;
+import by.hotel.dao.IUserDao;
 import by.hotel.dao.exception.DAOException;
 import by.hotel.dao.impl.UserDaoImpl;
 import by.hotel.security.MD5;
 import by.hotel.service.AbstractService;
-import by.hotel.service.CrudServiceExtended;
+import by.hotel.service.ICrudServiceExtended;
 import by.hotel.service.exception.*;
-import by.hotel.service.validator.ValidatorRoom;
 import by.hotel.service.validator.ValidatorUser;
 
 import java.sql.Connection;
 import java.util.List;
 import java.util.Map;
 
-public class UserServiceImpl extends AbstractService implements CrudServiceExtended<User> {
-    private UserDao userDao = new UserDaoImpl();
+public class UserServiceImpl extends AbstractService implements ICrudServiceExtended<User> {
+    private IUserDao userDao = new UserDaoImpl();
 
     public List<String> getAllHeaders() throws ServiceException {
         Connection connection = null;

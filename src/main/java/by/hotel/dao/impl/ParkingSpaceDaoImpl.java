@@ -3,7 +3,7 @@ package by.hotel.dao.impl;
 import by.hotel.bean.ParkingSpace;
 import by.hotel.builder.ParkingSpaceBuilder;
 import by.hotel.dao.AbstractDao;
-import by.hotel.dao.ParkingSpaceDao;
+import by.hotel.dao.IParkingSpaceDao;
 import by.hotel.dao.exception.DAOException;
 import by.hotel.util.ErrorStringBuilder;
 
@@ -15,7 +15,7 @@ import java.util.Map;
 
 import static by.hotel.dao.constants.Constants.*;
 
-public class ParkingSpaceDaoImpl extends AbstractDao implements ParkingSpaceDao {
+public class ParkingSpaceDaoImpl extends AbstractDao implements IParkingSpaceDao {
     public List<String> getParkingSpaceHeaders(Connection connection) throws DAOException {
         PreparedStatement statement = null;
         ResultSet resultSet = null;

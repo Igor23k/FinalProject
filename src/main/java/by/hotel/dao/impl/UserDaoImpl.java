@@ -1,13 +1,11 @@
 package by.hotel.dao.impl;
 
-import by.hotel.bean.Reservation;
 import by.hotel.bean.User;
-import by.hotel.builder.ReservationBuilder;
 import by.hotel.builder.RoleBuilder;
 import by.hotel.builder.UserBuilder;
 import by.hotel.dao.AbstractDao;
-import by.hotel.dao.AuthDao;
-import by.hotel.dao.UserDao;
+import by.hotel.dao.IAuthDao;
+import by.hotel.dao.IUserDao;
 import by.hotel.dao.constants.Constants;
 import by.hotel.dao.exception.DAOException;
 
@@ -20,7 +18,7 @@ import java.util.List;
 
 import static by.hotel.dao.constants.Constants.*;
 
-public class UserDaoImpl extends AbstractDao implements UserDao,AuthDao {
+public class UserDaoImpl extends AbstractDao implements IUserDao,IAuthDao {
     public List<String> getUserHeaders(Connection connection) throws DAOException {
         PreparedStatement statement = null;
         ResultSet resultSet = null;

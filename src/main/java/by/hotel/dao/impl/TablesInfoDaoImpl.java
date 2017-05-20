@@ -1,7 +1,7 @@
 package by.hotel.dao.impl;
 
 import by.hotel.dao.AbstractDao;
-import by.hotel.dao.TablesInfoDao;
+import by.hotel.dao.ITablesInfoDao;
 import by.hotel.dao.exception.DAOException;
 
 import java.sql.Connection;
@@ -13,7 +13,7 @@ import java.util.List;
 
 import static by.hotel.dao.constants.Constants.GET_ALL_NAMES_TABLES;
 
-public class TablesInfoDaoImpl extends AbstractDao implements TablesInfoDao{
+public class TablesInfoDaoImpl extends AbstractDao implements ITablesInfoDao {
     public List<String> getNamesTables(Connection connection) throws DAOException {
         PreparedStatement statement=null;
         ResultSet resultSet=null;

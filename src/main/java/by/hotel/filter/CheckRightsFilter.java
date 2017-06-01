@@ -3,16 +3,14 @@ package by.hotel.filter;
 import javax.servlet.*;
 import javax.servlet.annotation.WebFilter;
 import javax.servlet.annotation.WebInitParam;
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpSession;
 import java.io.IOException;
 import java.util.HashMap;
 import java.util.Map;
 
-@WebFilter(filterName = "mainfilter",
+@WebFilter(filterName = "checkrightsfilter",
         urlPatterns = {"/servlet"},
         initParams = @WebInitParam(name = "env", value = "dev"))
-public class MainFilter implements Filter {
+public class CheckRightsFilter implements Filter {
     final private static Map<String, Integer> rights = new HashMap();
 
     static {
@@ -34,10 +32,11 @@ public class MainFilter implements Filter {
 
     public void doFilter(ServletRequest request, ServletResponse response, FilterChain chain) throws IOException, ServletException {
 
-        Integer requiredRight;
+        Integer requiredRight = 0;
         Integer userRights;
-
-        requiredRight = rights.get(request.getParameter("action"));
+        if(request.getParameter("action")!= null) {
+            requiredRight = rights.get(request.getParameter("action"));
+        }
         //userRights = Integer.parseInt(request.getParameter("rights"));
         userRights = 127;
         if ((requiredRight & userRights) == requiredRight) {

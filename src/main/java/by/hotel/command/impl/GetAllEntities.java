@@ -8,10 +8,11 @@ import by.hotel.service.exception.ServiceException;
 
 import javax.servlet.http.HttpServletRequest;
 import java.util.List;
+import java.util.Map;
 
 public class GetAllEntities implements ICommand {
     public Object execute(HttpServletRequest request) throws CommandException {
-        List<?> resultList;
+        List resultList;
         try {
             ICrudService service =  CrudServiceMapper.getService(request.getParameterMap().get("tableName")[0]);
             resultList = service.getAllEntities();

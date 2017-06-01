@@ -1,12 +1,8 @@
-/**
- * Created by SK on 30.04.2017.
- */
-
 (function($,window){
 
     var pageHandlers = {};
 
-    var currentPageName = "contentMain";
+
     var $currentPage = null;
 
     function show(pageName,param) {
@@ -32,7 +28,7 @@
             $(".nav a[href='#"+currentPageName+"']")[0].classList.remove('current');
 
             if(currentPageName=='contentBooking') {
-                var booking = document.getElementById("idBookingA");
+                var booking = document.getElementById("idBookingAHeader");
                 booking.removeAttribute('href');
             }
 
@@ -55,7 +51,7 @@
 
         if(pageName=='undefined')
             pageName = currentPageName;
-        
+
         var $page = $(document.body).find("section#" + pageName);
 
         var src = $page.attr("src");

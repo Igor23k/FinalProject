@@ -24,6 +24,10 @@ public class AuthServiceImpl extends AbstractService implements IAuthService {
 		}
 	}
 
+	public AuthServiceImpl() {
+
+	}
+
 	public boolean logout(){
 		return false;
 	}

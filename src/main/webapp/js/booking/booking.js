@@ -41,12 +41,11 @@ function getReservationData(editBody) {
         });
     });
     if(currentUser!=null)
-        result = result.concat('&','id_user','=', currentUser['id']);
+        result = result.concat('&','idUser','=', currentUser['id']);
     else
-        result = result.concat('&','id_user','=', '0');
-
-    result = result.concat('&','cost_additional_services','=', '0');
-    result = result.concat('&','id_discount','=', '1');
+        result = result.concat('&','idUser','=', '0');
+    result = result.concat('&','costAdditionalServices','=', '0');
+    result = result.concat('&','idDiscount','=', '1');
 
     return result;
 }
@@ -57,7 +56,7 @@ function sendReservation() {
     if(flag)
     $.ajax({
         type: 'POST',
-        url: '/servlet?action=ADD' + data +'&tableName=RESERVATION&rights='+generatePermissionsUser(),
+        url: '/servlet?action=ADD' + data +'&tableName=RESERVATION&locale='+locale+"&localePage=contentServices&rights=128",
         success: function () {
         }});
 }
@@ -65,7 +64,7 @@ function sendReservation() {
 function acceptReservationRoom() {
     sendReservation();
     if(flag) {
-        var services = document.getElementById("idServicesA");
+        var services = document.getElementById("servicesHeader");
         services.click();
     }
 }

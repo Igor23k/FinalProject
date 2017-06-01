@@ -61,14 +61,14 @@ function getUpdateDataUser() {
         });
     });
     result = result.concat('&','id','=', currentUser.id);
-    result = result.concat('&','role','=', currentUser.role);
+    result = result.concat('&','role','=', currentUser.role.id);
     return result;
 }
 
 function sendUpdatePersonalInfo() {
     $.ajax({
         type: 'POST',
-        url: '/servlet?action=UPDATE' + getUpdateDataUser() + '&rights='+generatePermissionsUser()+'&tableName=USER',
+        url: '/servlet?action=UPDATE' + getUpdateDataUser() + '&rights=128&tableName=USER',
 
         success: function(data) {
 
@@ -83,10 +83,9 @@ function updatePersonalInfo() {
     var mobilePhone = document.getElementById("mobilePhone");
     var login = document.getElementById("login");
     var passportNumber = document.getElementById("passportNumber");
-    var pass = document.getElementById("pass");
 
     if(!validName(name.value) || !validName(surname.value) || !validPhone(mobilePhone.value) || !validEmail(email.value) ||
-        !validLogin(login.value) || !validPassport(passportNumber.value)|| !validPassword(pass.value))
+        !validLogin(login.value) || !validPassport(passportNumber.value))
     {
         alert ("Данные заполнены неверно!");
         return  false;
@@ -96,7 +95,7 @@ function updatePersonalInfo() {
 }
 
 function setNewValueEntryDiv(textDiv) {
-    var entry = document.getElementById("idEntryA");
+    var entry = document.getElementById("singinHeader");
     entry.innerHTML = textDiv;
 }
 
@@ -104,7 +103,7 @@ function sendUserDataRegistration(login,email,pass,phone,name,surname,passport) 
     $.ajax({
         type: 'POST',
         url: '/servlet?action=REGISTRATION',
-        data:{"rights":4,"login":login,"email":email,"password":pass,"mobilePhone":phone,"name":name,"surname":surname,"passportNumber":passport,"id":0,"id_role":1},
+        data:{"locale":locale,"rights":4,"login":login,"email":email,"password":pass,"mobilePhone":phone,"name":name,"surname":surname,"passportNumber":passport,"id":0,"role":1},
         success: function(data) {
             if(typeof data =='object') {
                 currentUser = data;
@@ -119,12 +118,10 @@ function sendUserDataLogin(email,pass){
      $.ajax({
          type: 'POST',
          url: '/servlet?action=AUTHORIZATION',
-         data:{"email":email,"password":pass,"rights":4},
+         data:{"locale":locale,"localePage":"personalArea","email":email,"password":pass,"rights":4},
          success: function(data) {
-             console.log(data);
              if(typeof data =='object' && data!=null) {
-                 currentUser = data;
-
+                 currentUser = data['data'];
                  if(sessionStorage.length==0) {
                      for (var fieldUser in currentUser) {
                          if (typeof currentUser[fieldUser] == 'object')
@@ -134,6 +131,7 @@ function sendUserDataLogin(email,pass){
                      }
 
                  }
+
                  document.getElementById('idAdminRef').style.display = 'block';
                  loadTemplate('/templates/pages/signin/personalInfo.html');
                  setNewValueEntryDiv(currentUser.name);

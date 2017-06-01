@@ -1,4 +1,9 @@
-
+include("js/booking/booking.js");
+function include(url) {
+    var script = document.createElement('script');
+    script.src = url;
+    document.getElementsByTagName('head')[0].appendChild(script);
+}
 $templateRoom = null;
 var roomObject = {};
 
@@ -28,14 +33,14 @@ function generateRooms(arrayRooms) {
                     roomObject[fieldRoomObj] = arrayRooms[i][fieldRoomObj];
                 }
         }
-        generateHtml(roomObject);
+        generateRoomHtml(roomObject);
     }
 }
 
 function reservateRoom(e) {
     if (currentUser != null) {
         var idRoom = e.id.substr(6);
-        var booking = document.getElementById("idBookingA");
+        var booking = document.getElementById("idBookingAHeader");
         setTimeout(setReservationForm, 200,idRoom);
         booking.setAttribute('href', '#contentBooking');
         booking.click();
@@ -43,7 +48,7 @@ function reservateRoom(e) {
         alert("Вы не авторизованы!")
 }
 
-function generateHtml(roomObj) {
+function generateRoomHtml(roomObj) {
     $('#containerServices').append($templateRoom);
 
     var arrayComponentsListRoom = $(($('#containerServices').children().last().children())[1]).children();
@@ -61,13 +66,13 @@ function generateHtml(roomObj) {
 function getRooms() {
     $.ajax({
         type: 'GET',
-        url: '/servlet?tableName=room&action=GET_ALL&rights=4',
+        url: '/servlet?tableName=room&action=GET_ALL&rights=4&localePage=contentServices&locale=' + locale,
         success: function(data) {
-            generateRooms(data);
+            generateRooms(data['data']);
+            setData(data['local']);
         }
     });
 }
-
 function preparationGenerateRooms() {
     getTemplateRoom();
     getRooms();

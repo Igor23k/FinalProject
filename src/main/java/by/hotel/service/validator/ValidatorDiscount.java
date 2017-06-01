@@ -1,7 +1,5 @@
 package by.hotel.service.validator;
 
-import by.hotel.bean.Discount;
-import by.hotel.bean.Role;
 import by.hotel.service.exception.IncorrectDiscountNameException;
 
 import java.util.Map;

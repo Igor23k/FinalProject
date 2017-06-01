@@ -35,7 +35,14 @@ public interface ICrudService<T> {
     /**
      * Update entity.
      * @param params of entity for building.
+     * @return the entity.
      * @throws ServiceException
      */
     T buildEntity(Map<String, String[]> params) throws ServiceException;
+    /**
+     * Get last inserted entity.
+     * @return the entity.
+     * @throws ServiceException
+     */
+    T getLastInsertedEntity() throws ServiceException;
 }

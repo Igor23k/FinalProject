@@ -18,9 +18,30 @@ import java.sql.Connection;
 import java.util.List;
 import java.util.Map;
 
+/**
+ * RoomDaoImpl.java
+ * Class implements methods from interface ICrudServiceExtended and extends from AbstractService class.
+ * getRoomHeaders - method to get room headers.
+ * getRooms - method to get room.
+ * updateRoom - method to update room.
+ * addRoom - method to add room.
+ * removeRoom - method to remove room.
+ * getLastInsertedRoom - method to get last inserted room.
+ * buildRoom - method to build room.
+ * @author Igor Kozlov
+ * @version 1.0
+ */
 public class RoomServiceImpl extends AbstractService implements ICrudServiceExtended<Room> {
+    /**
+     * Field - roomDao
+     */
     private IRoomDao roomDao = new RoomDaoImpl();
 
+    /**
+     * Get room headers.
+     * @return the list of room headers.
+     * @throws ServiceException  if get room headers is failed
+     */
     public List<String> getAllHeaders() throws ServiceException {
         Connection connection = null;
         try {
@@ -33,6 +54,11 @@ public class RoomServiceImpl extends AbstractService implements ICrudServiceExte
         }
     }
 
+    /**
+     * Get rooms.
+     * @return the list of rooms.
+     * @throws DAOException if get rooms is failed
+     */
     public List<Room> getAllEntities() throws ServiceException {
         Connection connection = null;
         try {
@@ -45,12 +71,17 @@ public class RoomServiceImpl extends AbstractService implements ICrudServiceExte
         }
     }
 
-    public List<Room> addEntity(Room entity) throws ServiceException {
+    /**
+     * Add room.
+     * @param room the operand to have as a room.
+     * @throws ServiceException if add room is failed
+     */
+    public List<Room> addEntity(Room room) throws ServiceException {
         List<Room> rooms;
         Connection connection = null;
         try {
             connection = getConnection();
-            roomDao.addRoom(entity, connection);
+            roomDao.addRoom(room, connection);
             rooms = roomDao.getRooms(connection);
         } catch (DAOException e) {
             throw new ServiceException(e);
@@ -60,6 +91,11 @@ public class RoomServiceImpl extends AbstractService implements ICrudServiceExte
         return rooms;
     }
 
+    /**
+     * Remove room.
+     * @param room the operand to have as a room.
+     * @throws ServiceException if remove room is failed
+     */
     public void removeEntity(Room room) throws ServiceException {
         Connection connection = null;
         try {
@@ -72,11 +108,16 @@ public class RoomServiceImpl extends AbstractService implements ICrudServiceExte
         }
     }
 
-    public void updateEntity(Room entity) throws ServiceException {
+    /**
+     * Update room.
+     * @param room the operand to have as a room.
+     * @throws ServiceException if update room is failed
+     */
+    public void updateEntity(Room room) throws ServiceException {
         Connection connection = null;
         try {
             connection = getConnection();
-            roomDao.updateRoom(entity, connection);
+            roomDao.updateRoom(room, connection);
         } catch (DAOException e) {
             throw new ServiceException(e);
         } finally {
@@ -84,6 +125,12 @@ public class RoomServiceImpl extends AbstractService implements ICrudServiceExte
         }
     }
 
+    /**
+     * This method build entity by received params.
+     * @param params the operand that stored data to build room.
+     * @return a room.
+     * @throws ServiceException if build room is failed
+     */
     public Room buildEntity(Map<String, String[]> params) throws ServiceException {
         ValidatorRoom validatorRoom = new ValidatorRoom();
         try {
@@ -103,7 +150,10 @@ public class RoomServiceImpl extends AbstractService implements ICrudServiceExte
         return null;
     }
 
-    @Override
+    /**
+     * Get last inserted room.
+     * @throws ServiceException if get last inserted room is failed
+     */
     public Room getLastInsertedEntity() throws ServiceException {
         Connection connection = null;
         try {

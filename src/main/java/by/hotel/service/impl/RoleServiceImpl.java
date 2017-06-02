@@ -14,9 +14,30 @@ import java.sql.Connection;
 import java.util.List;
 import java.util.Map;
 
+/**
+ * RoleDaoImpl.java
+ * Class implements methods from interface ICrudServiceExtended and extends from AbstractService class.
+ * getRoleHeaders - method to get role headers.
+ * getRoles - method to get role.
+ * updateRole - method to update role.
+ * addRole - method to add role.
+ * removeRole - method to remove role.
+ * getLastInsertedRole - method to get last inserted role.
+ * buildRole - method to build role.
+ * @author Igor Kozlov
+ * @version 1.0
+ */
 public class RoleServiceImpl extends AbstractService implements ICrudServiceExtended<Role> {
+    /**
+     * Field - roleDao
+     */
     private IRoleDao roleDao = new RoleDaoImpl();
 
+    /**
+     * Get role headers.
+     * @return the list of role headers.
+     * @throws ServiceException  if get role headers is failed
+     */
     public List<String> getAllHeaders() throws ServiceException {
         Connection connection = null;
         try{
@@ -29,6 +50,11 @@ public class RoleServiceImpl extends AbstractService implements ICrudServiceExte
         }
     }
 
+    /**
+     * Get roles.
+     * @return the list of roles.
+     * @throws ServiceException if get roles is failed
+     */
     public List<Role> getAllEntities() throws ServiceException {
         Connection connection = null;
         try {
@@ -41,12 +67,17 @@ public class RoleServiceImpl extends AbstractService implements ICrudServiceExte
         }
     }
 
-    public List<Role> addEntity(Role entity) throws ServiceException {
+    /**
+     * Add role.
+     * @param role the operand to have as a role.
+     * @throws ServiceException if add role is failed
+     */
+    public List<Role> addEntity(Role role) throws ServiceException {
         Connection connection = null;
         List<Role> roles;
         try {
             connection = getConnection();
-            roleDao.addRole(entity,connection);
+            roleDao.addRole(role,connection);
             roles = roleDao.getRoles(connection);
         } catch (DAOException e) {
             throw new ServiceException(e);
@@ -56,11 +87,16 @@ public class RoleServiceImpl extends AbstractService implements ICrudServiceExte
         return roles;
     }
 
-    public void removeEntity(Role entity) throws ServiceException {
+    /**
+     * Remove role.
+     * @param role the operand to have as a role.
+     * @throws ServiceException if remove role is failed
+     */
+    public void removeEntity(Role role) throws ServiceException {
         Connection connection = null;
         try {
             connection = getConnection();
-            roleDao.removeRole(entity,connection);
+            roleDao.removeRole(role,connection);
         } catch (DAOException e) {
             throw new ServiceException(e);
         }finally {
@@ -68,11 +104,16 @@ public class RoleServiceImpl extends AbstractService implements ICrudServiceExte
         }
     }
 
-    public void updateEntity(Role entity) throws ServiceException {
+    /**
+     * Update role.
+     * @param role the operand to have as a role.
+     * @throws ServiceException if update role is failed
+     */
+    public void updateEntity(Role role) throws ServiceException {
         Connection connection = null;
         try {
             connection = getConnection();
-            roleDao.updateRole(entity,connection);
+            roleDao.updateRole(role,connection);
         } catch (DAOException e) {
             throw new ServiceException(e);
         }finally {
@@ -80,6 +121,12 @@ public class RoleServiceImpl extends AbstractService implements ICrudServiceExte
         }
     }
 
+    /**
+     * This method build entity by received params.
+     * @param params the operand that stored data to build role.
+     * @return a role.
+     * @throws ServiceException if build role is failed
+     */
     public Role buildEntity(Map<String, String[]> params) throws ServiceException {
         ValidatorRole validatorRole = new ValidatorRole();
         try {
@@ -101,7 +148,10 @@ public class RoleServiceImpl extends AbstractService implements ICrudServiceExte
         return null;
     }
 
-    @Override
+    /**
+     * Get last inserted discount.
+     * @throws ServiceException if get last inserted role is failed
+     */
     public Role getLastInsertedEntity() throws ServiceException {
         Connection connection = null;
         try {

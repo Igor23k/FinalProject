@@ -15,11 +15,32 @@ import java.util.Map;
 
 import static by.hotel.dao.constants.Constants.*;
 
+/**
+ * RoomTypeDaoImpl.java
+ * Class implements methods from interface IRoomTypeDao and extends AbstractDao class.
+ * getRoomTypeHeaders - method for get room type headers.
+ * getRoomTypes - method for get room type.
+ * updateRoomType - method for update room type.
+ * addRoomType - method for add room type.
+ * removeRoomType - method for remove room type.
+ * getLastInsertedRoomType - method for get last inserted room type.
+ * fillStatement - method for fill statement.
+ * fillRoomType - method for fill room type.
+ * buildMessage - method for build error message.
+ * @author Igor Kozlov
+ * @version 1.0
+ */
 public class RoomTypeDaoImpl extends AbstractDao implements IRoomTypeDao {
+    /**
+     * Get room type headers .
+     * @param connection the operand to have a connection with DB.
+     * @return the list of roomType headers.
+     * @throws DAOException if get room type headers is failed
+     */
     public List<String> getRoomTypeHeaders(Connection connection) throws DAOException {
         PreparedStatement statement = null;
         ResultSet resultSet = null;
-        List<String> headers = new ArrayList<String>();
+        List<String> headers = new ArrayList<>();
         StringBuilder stringBuilder = new StringBuilder();
         try {
             statement = connection.prepareStatement(GET_ALL_ROOM_TYPES_HEADERS);
@@ -38,6 +59,12 @@ public class RoomTypeDaoImpl extends AbstractDao implements IRoomTypeDao {
         return headers;
     }
 
+    /**
+     * Get roomTypes.
+     * @param connection the operand to have a connection with DB.
+     * @return the list of roomTypes.
+     * @throws DAOException if get room types is failed
+     */
     public List<RoomType> getRoomTypes(Connection connection) throws DAOException {
         PreparedStatement statement = null;
         ResultSet resultSet = null;
@@ -57,6 +84,12 @@ public class RoomTypeDaoImpl extends AbstractDao implements IRoomTypeDao {
         return roomTypes;
     }
 
+    /**
+     * Add discount.
+     * @param roomType the operand to have as a roomType.
+     * @param connection the operand to have a connection with DB.
+     * @throws DAOException if add room type is failed
+     */
     public void addRoomType(RoomType roomType,Connection connection) throws DAOException {
         PreparedStatement statement = null;
         try {
@@ -70,6 +103,12 @@ public class RoomTypeDaoImpl extends AbstractDao implements IRoomTypeDao {
         }
     }
 
+    /**
+     * Remove roomType.
+     * @param roomType the operand to have as a roomType.
+     * @param connection the operand to have a connection with DB.
+     * @throws DAOException if remove room type is failed
+     */
     public void removeRoomType(RoomType roomType,Connection connection) throws DAOException {
         PreparedStatement statement = null;
         try {
@@ -85,6 +124,12 @@ public class RoomTypeDaoImpl extends AbstractDao implements IRoomTypeDao {
         }
     }
 
+    /**
+     * Update roomType.
+     * @param roomType the operand to have as a roomType.
+     * @param connection the operand to have a connection with DB.
+     * @throws DAOException if update room type is failed
+     */
     public void updateRoomType(RoomType roomType,Connection connection) throws DAOException {
         PreparedStatement statement = null;
         try {
@@ -99,7 +144,11 @@ public class RoomTypeDaoImpl extends AbstractDao implements IRoomTypeDao {
         }
     }
 
-    @Override
+    /**
+     * Get last inserted room type.
+     * @param connection the operand to have a connection with DB.
+     * @throws DAOException  if get last inserted room type is failed
+     */
     public RoomType getLastInsertedRoomType(Connection connection) throws DAOException {
         PreparedStatement statement = null;
         RoomType roomType = null;
@@ -120,6 +169,13 @@ public class RoomTypeDaoImpl extends AbstractDao implements IRoomTypeDao {
         return roomType;
     }
 
+    /**
+     * Fill discount object with data.
+     * @param resultSet the operand that contain data from BD.
+     * @param roomTypeBuilder the operand to build a discount.
+     * @return a Discount.
+     * @throws SQLException if statement is null
+     */
     private RoomType fillRoomType(ResultSet resultSet, RoomTypeBuilder roomTypeBuilder) throws SQLException {
         return roomTypeBuilder.id(resultSet.getInt("id"))
                 .roomsCount(resultSet.getInt("roomsCount"))
@@ -131,6 +187,13 @@ public class RoomTypeDaoImpl extends AbstractDao implements IRoomTypeDao {
                 .build();
     }
 
+    /**
+     * Fill statement with data.
+     * @param statement the operand to make a query.
+     * @param roomType the operand to have as a roomType.
+     * @return a PreparedStatement.
+     * @throws SQLException
+     */
     private PreparedStatement fillStatement(PreparedStatement statement, RoomType roomType) throws SQLException {
         statement.setInt(1, roomType.getRoomsCount());
         statement.setInt(2, roomType.getBedsCount());
@@ -141,6 +204,13 @@ public class RoomTypeDaoImpl extends AbstractDao implements IRoomTypeDao {
         return statement;
     }
 
+    /**
+     * Build error message.
+     * @param roomType the operand to have as a discount.
+     * @param errorMessage the operand that contain special error.
+     * @return an error string.
+     * @throws SQLException
+     */
     private String buildMessage(RoomType roomType, String errorMessage){
         Map<String,String> idNames = new HashMap<String, String>();
         idNames.put("id",Integer.toString(roomType.getId()));

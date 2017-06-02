@@ -37,6 +37,15 @@
             }
         }
         $(document.body).addClass(currentPageName = pageName);
+        $.ajax({
+            type: 'GET',
+            url: '/servlet?&rights=4&localePage='+pageName+'&locale=' + locale,
+            success: function(data) {
+                console.log("TUT")
+                console.log(data['local'])
+                setData(data['local']);
+            }
+        });
         if($currentPage = $page) {
             $currentPage[0].style.display = "block";
             $(document).title = currentPageName;
@@ -55,12 +64,11 @@
         var $page = $(document.body).find("section#" + pageName);
 
         var src = $page.attr("src");
-        if( src && $page.find(">:first-child").length == 0) {
-            $.get(src, "html") // it has src and is empty - load it
-                .done(function(html){ currentPage = pageName; $page.html(html); show(pageName,param); })
-                .fail(function(){ $page.html("failed to get:" + src); });
-        } else
-            show(pageName,param);
+        $.get(src, "html") // it has src and is empty - load it
+            .done(function(html){ currentPage = pageName; $page.html(html);
+                show(pageName,param);
+            })
+            .fail(function(){ $page.html("failed to get:" + src); });
     }
 
     // Registration of page's handler function - scope initializer and controller

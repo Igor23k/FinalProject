@@ -6,9 +6,25 @@ import java.util.Map;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
+/**
+ * ErrorStringBuilder.java
+ * Class to provide data for localization.
+ * getLocale - method to get locale.
+ * @author Igor Kozlov
+ * @version 2.0
+ */
 public final class ErrorStringBuilder {
+    /**
+     * Create new empty object
+     */
     private ErrorStringBuilder(){}
 
+    /**
+     * Build error string.
+     * @param rowId - the id of row that couldn't insert.
+     * @param errorMessage - string with error.
+     * @return string error.
+     */
     public static String buildDeleteErrorString(Map<String, String> rowId, String errorMessage){
         List<String> tableNames = getTableNames(errorMessage);
         StringBuilder stringBuilder = new StringBuilder();
@@ -21,8 +37,13 @@ public final class ErrorStringBuilder {
         return stringBuilder.toString();
     }
 
+    /**
+     * Get name of tables from error string.
+     * @param errorMessage - string with error.
+     * @return tables info.
+     */
     private static List<String> getTableNames(String errorMessage){
-        List<String> tablesInfo = new ArrayList<String>();
+        List<String> tablesInfo = new ArrayList<>();
         Pattern pattern = Pattern.compile("`([\\s\\S]+?)`");
         Matcher matcher = pattern.matcher(errorMessage);
         while (matcher.find()){
@@ -31,6 +52,11 @@ public final class ErrorStringBuilder {
         return tablesInfo;
     }
 
+    /**
+     * Build error string.
+     * @param rowId - the id of row that couldn't add.
+     * @return string error.
+     */
     public static String buildAddErrorString(Map<String, String> rowId){
         StringBuilder errorStringBuilder = new StringBuilder();
         StringBuilder keysStringBuilder = new StringBuilder();

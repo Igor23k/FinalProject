@@ -1,12 +1,27 @@
 package by.hotel.service.validator;
 
-import by.hotel.service.exception.IncorrectRoomNameException;
-import by.hotel.service.exception.IncorrectRoomPathException;
-import by.hotel.service.exception.IncorrectRoomPhoneNumberException;
+import by.hotel.service.exception.*;
 
 import java.util.Map;
 
+/**
+ * ValidatorRoom.java
+ * Class contain  methods to validate.
+ * validate - main method to validate parameters.
+ * validateNameRoom - validate name room.
+ * validatePhone - validate phone.
+ * validatePath - validate path.
+ * @version 2.0
+ * @autor Igor Kozlov
+ */
 public class ValidatorRoom extends AbstractValidator {
+    /**
+     * Validate parameters.
+     * @return boolean value.
+     * @throws IncorrectRoomNameException if room name is incorrect
+     * @throws IncorrectRoomPhoneNumberException if room phone is incorrect
+     * @throws IncorrectRoomPathException if room path is incorrect
+     */
     public boolean validate(Map<String, String[]> data) throws IncorrectRoomNameException, IncorrectRoomPhoneNumberException, IncorrectRoomPathException {
         if (validateNameRoom(data.get("name")[0]) & validatePhone(data.get("phone")[0])  & validatePath(data.get("path")[0])) {
             return true;
@@ -14,6 +29,11 @@ public class ValidatorRoom extends AbstractValidator {
         return false;
     }
 
+    /**
+     * Validate parameters.
+     * @return boolean value.
+     * @throws IncorrectRoomNameException if room name is incorrect
+     */
     private boolean validateNameRoom(String nameRole) throws IncorrectRoomNameException {
         if (nameRole.length() <= 45 & nameRole.length() >= 5) {
             return true;
@@ -21,6 +41,11 @@ public class ValidatorRoom extends AbstractValidator {
         throw new IncorrectRoomNameException("Incorrect room name!");
     }
 
+    /**
+     * Validate parameters.
+     * @return boolean value.
+     * @throws IncorrectRoomPhoneNumberException if room phone is incorrect
+     */
     private boolean validatePhone(String phone) throws IncorrectRoomPhoneNumberException {
         if (phone.length() <= 45 & phone.length() > 5) {
             return true;
@@ -28,6 +53,11 @@ public class ValidatorRoom extends AbstractValidator {
         throw new IncorrectRoomPhoneNumberException("Incorrect room phone number!");
     }
 
+    /**
+     * Validate parameters.
+     * @return boolean value.
+     * @throws IncorrectRoomPathException if room path is incorrect
+     */
     private boolean validatePath(String path) throws IncorrectRoomPathException {
         if (path.length() <= 200 & path.length() > 5) {
             return true;

@@ -1,5 +1,11 @@
 package by.hotel.dao.exception;
 
+/**
+ * DAOException.java
+ * Class extends Exception class and override his methods.
+ * @author Igor Kozlov
+ * @version 1.0
+ */
 public class DAOException extends Exception {
     private static final long serialVersionUID = 1L;
     public DAOException(){

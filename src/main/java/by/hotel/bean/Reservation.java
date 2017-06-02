@@ -5,6 +5,7 @@ import by.hotel.builder.ReservationBuilder;
 import java.sql.Date;
 
 /**
+ * Reservation.java
  * The class store objects with properties
  * <b> id </ b>, <b> dateIn </ b>, <b> dateOut </ b>,
  * <b> costAdditionalServices </ b>, <b> user </ b> and <b> discount </ b>.

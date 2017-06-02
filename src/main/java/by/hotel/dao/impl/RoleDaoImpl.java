@@ -15,7 +15,28 @@ import java.util.Map;
 
 import static by.hotel.dao.constants.Constants.*;
 
+/**
+ * RoleDaoImpl.java
+ * Class implements methods from interface IRoleDao and extends from AbstractDao class.
+ * getRoleHeaders - method for get role headers.
+ * getRoles - method for get role.
+ * updateRole - method for update role.
+ * addRole - method for add role.
+ * removeRole - method for remove role.
+ * getLastInsertedRole - method for get last inserted role.
+ * fillStatement - method for fill statement.
+ * fillRole - method for fill role.
+ * buildMessage - method for build error message.
+ * @author Igor Kozlov
+ * @version 1.0
+ */
 public class RoleDaoImpl extends AbstractDao implements IRoleDao {
+    /**
+     * Get role headers.
+     * @param connection the operand to have a connection with DB.
+     * @return the list of role headers.
+     * @throws DAOException if get role headers is failed
+     */
     public List<String> getRoleHeaders(Connection connection) throws DAOException {
         PreparedStatement statement = null;
         ResultSet resultSet = null;
@@ -38,6 +59,12 @@ public class RoleDaoImpl extends AbstractDao implements IRoleDao {
         return headers;
     }
 
+    /**
+     * Get roles.
+     * @param connection the operand to have a connection with DB.
+     * @return the list of roles.
+     * @throws DAOException if get roles is failed
+     */
     public List<Role> getRoles(Connection connection) throws DAOException {
         PreparedStatement statement = null;
         ResultSet resultSet = null;
@@ -67,6 +94,12 @@ public class RoleDaoImpl extends AbstractDao implements IRoleDao {
         return roles;
     }
 
+    /**
+     * Add role.
+     * @param role the operand to have as a role.
+     * @param connection the operand to have a connection with DB.
+     * @throws DAOException if add role is failed
+     */
     public void addRole(Role role,Connection connection) throws DAOException {
         PreparedStatement statement = null;
         try {
@@ -80,6 +113,12 @@ public class RoleDaoImpl extends AbstractDao implements IRoleDao {
         }
     }
 
+    /**
+     * Remove role.
+     * @param role the operand to have as a role.
+     * @param connection the operand to have a connection with DB.
+     * @throws DAOException if remove role is failed
+     */
     public void removeRole(Role role,Connection connection) throws DAOException {
         PreparedStatement statement = null;
         try {
@@ -95,6 +134,12 @@ public class RoleDaoImpl extends AbstractDao implements IRoleDao {
         }
     }
 
+    /**
+     * Update role.
+     * @param role the operand to have as a role.
+     * @param connection the operand to have a connection with DB.
+     * @throws DAOException if update role is failed
+     */
     public void updateRole(Role role,Connection connection) throws DAOException {
         PreparedStatement statement = null;
         try {
@@ -109,7 +154,11 @@ public class RoleDaoImpl extends AbstractDao implements IRoleDao {
         }
     }
 
-    @Override
+    /**
+     * Get last inserted discount.
+     * @param connection the operand to have a connection with DB.
+     * @throws DAOException if get last inserted role is failed
+     */
     public Role getLastInsertedRole(Connection connection) throws DAOException {
         PreparedStatement statement = null;
         Role role = null;
@@ -130,6 +179,13 @@ public class RoleDaoImpl extends AbstractDao implements IRoleDao {
         return role;
     }
 
+    /**
+     * Fill discount object with data.
+     * @param resultSet the operand that contain data from BD.
+     * @param roleBuilder the operand to build a discount.
+     * @return a Discount.
+     * @throws SQLException if statement is null
+     */
     private Role fillRole(ResultSet resultSet, RoleBuilder roleBuilder) throws SQLException {
         return roleBuilder.id(resultSet.getInt("id"))
                 .nameRole(resultSet.getString("nameRole"))
@@ -143,6 +199,13 @@ public class RoleDaoImpl extends AbstractDao implements IRoleDao {
                 .build();
     }
 
+    /**
+     * Fill statement with data.
+     * @param statement the operand to make a query.
+     * @param role the operand to have as a role.
+     * @return a PreparedStatement.
+     * @throws SQLException
+     */
     private PreparedStatement fillStatement(PreparedStatement statement, Role role) throws SQLException {
         statement.setString(1, role.getNameRole());
         statement.setInt(2, role.getUpdate());
@@ -155,8 +218,15 @@ public class RoleDaoImpl extends AbstractDao implements IRoleDao {
         return statement;
     }
 
+    /**
+     * Build error message.
+     * @param role the operand to have as a discount.
+     * @param errorMessage the operand that contain special error.
+     * @return an error string.
+     * @throws SQLException
+     */
     private String buildMessage(Role role, String errorMessage){
-        Map<String,String> idNames = new HashMap<String, String>();
+        Map<String,String> idNames = new HashMap<>();
         idNames.put("id",Integer.toString(role.getId()));
         return ErrorStringBuilder.buildDeleteErrorString(idNames,errorMessage);
     }

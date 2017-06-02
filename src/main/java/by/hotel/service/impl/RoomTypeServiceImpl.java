@@ -14,9 +14,30 @@ import java.sql.Connection;
 import java.util.List;
 import java.util.Map;
 
+/**
+ * RoomTypeDaoImpl.java
+ * Class implements methods from interface ICrudServiceExtended and extends AbstractService class.
+ * getRoomTypeHeaders - method to get room type headers.
+ * getRoomTypes - method to get room type.
+ * updateRoomType - method to update room type.
+ * addRoomType - method to add room type.
+ * removeRoomType - method to remove room type.
+ * getLastInsertedRoomType - method to get last inserted room type.
+ * buildRoomType - method to build room type.
+ * @author Igor Kozlov
+ * @version 1.0
+ */
 public class RoomTypeServiceImpl extends AbstractService implements ICrudServiceExtended<RoomType> {
+    /**
+     * Field - roomTypeDao
+     */
     private IRoomTypeDao roomTypeDao = new RoomTypeDaoImpl();
 
+    /**
+     * Get room type headers .
+     * @return the list of roomType headers.
+     * @throws ServiceException  if get room type headers is failed
+     */
     public List<String> getAllHeaders() throws ServiceException {
         Connection connection = null;
         try {
@@ -29,6 +50,11 @@ public class RoomTypeServiceImpl extends AbstractService implements ICrudService
         }
     }
 
+    /**
+     * Get roomTypes.
+     * @return the list of roomTypes.
+     * @throws ServiceException if get room types is failed
+     */
     public List<RoomType> getAllEntities() throws ServiceException {
         Connection connection = null;
         try {
@@ -41,12 +67,17 @@ public class RoomTypeServiceImpl extends AbstractService implements ICrudService
         }
     }
 
-    public List<RoomType> addEntity(RoomType entity) throws ServiceException {
+    /**
+     * Add discount.
+     * @param roomType the operand to have as a roomType.
+     * @throws ServiceException if add room type is failed
+     */
+    public List<RoomType> addEntity(RoomType roomType) throws ServiceException {
         Connection connection = null;
         List<RoomType> roomTypes;
         try {
             connection = getConnection();
-            roomTypeDao.addRoomType(entity, connection);
+            roomTypeDao.addRoomType(roomType, connection);
             roomTypes = roomTypeDao.getRoomTypes(connection);
         } catch (DAOException e) {
             throw new ServiceException(e);
@@ -56,6 +87,11 @@ public class RoomTypeServiceImpl extends AbstractService implements ICrudService
         return roomTypes;
     }
 
+    /**
+     * Remove roomType.
+     * @param roomType the operand to have as a roomType.
+     * @throws ServiceException if remove room type is failed
+     */
     public void removeEntity(RoomType roomType) throws ServiceException {
         Connection connection = null;
         try {
@@ -68,11 +104,16 @@ public class RoomTypeServiceImpl extends AbstractService implements ICrudService
         }
     }
 
-    public void updateEntity(RoomType entity) throws ServiceException {
+    /**
+     * Update roomType.
+     * @param roomType the operand to have as a roomType.
+     * @throws ServiceException if update room type is failed
+     */
+    public void updateEntity(RoomType roomType) throws ServiceException {
         Connection connection = null;
         try {
             connection = getConnection();
-            roomTypeDao.updateRoomType(entity, connection);
+            roomTypeDao.updateRoomType(roomType, connection);
         } catch (DAOException e) {
             throw new ServiceException(e);
         } finally {
@@ -80,6 +121,12 @@ public class RoomTypeServiceImpl extends AbstractService implements ICrudService
         }
     }
 
+    /**
+     * This method build entity by received params.
+     * @param params the operand that stored data to build room type.
+     * @return a room type.
+     * @throws ServiceException if build room type is failed
+     */
     public RoomType buildEntity(Map<String, String[]> params) throws ServiceException {
         ValidatorRoomType validatorRoomType = new ValidatorRoomType();
         try {
@@ -101,7 +148,10 @@ public class RoomTypeServiceImpl extends AbstractService implements ICrudService
         return null;
     }
 
-    @Override
+    /**
+     * Get last inserted room type.
+     * @throws ServiceException if get last inserted room type is failed
+     */
     public RoomType getLastInsertedEntity() throws ServiceException {
         Connection connection = null;
         try {

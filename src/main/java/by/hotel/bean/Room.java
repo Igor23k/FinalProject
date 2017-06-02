@@ -1,6 +1,7 @@
 package by.hotel.bean;
 
 /**
+ * Room.java
  * The class store objects with properties
  * <b> id </ b>, <b> floor </ b>, <b> path </ b>,
  * <b> phone </ b>, <b> name </ b> and <b> roomType </ b>.

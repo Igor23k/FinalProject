@@ -15,9 +15,31 @@ import java.sql.Connection;
 import java.util.List;
 import java.util.Map;
 
+/**
+ * DiscountServiceImpl.java
+ * Class implements methods from interface ICrudServiceExtended and extends from AbstractService class.
+ * getDiscountHeaders - method to get discount headers.
+ * getDiscounts - method to get discount.
+ * updateDiscount - method to update discount.
+ * addDiscount - method to add discount.
+ * removeDiscount - method to remove discount.
+ * getLastInsertedDiscount - method to get last inserted discount.
+ * buildDiscount - method to build discount.
+ * @author Igor Kozlov
+ * @version 1.0
+ */
 public class DiscountServiceImpl extends AbstractService implements ICrudServiceExtended<Discount> {
+
+    /**
+     * Field - discountDao
+     */
     private IDiscountDao discountDao = new DiscountDaoImpl();
 
+    /**
+     * Get discount headers.
+     * @return the list of discount headers.
+     * @throws ServiceException  if get discount headers is failed
+     */
     public List<String> getAllHeaders() throws ServiceException {
         Connection connection = null;
         try {
@@ -30,6 +52,11 @@ public class DiscountServiceImpl extends AbstractService implements ICrudService
         }
     }
 
+    /**
+     * Get discounts.
+     * @return the list of discounts.
+     * @throws ServiceException if get discounts is failed
+     */
     public List<Discount> getAllEntities() throws ServiceException {
         Connection connection = null;
         try {
@@ -42,12 +69,17 @@ public class DiscountServiceImpl extends AbstractService implements ICrudService
         }
     }
 
-    public List<Discount> addEntity(Discount entity) throws ServiceException {
+    /**
+     * Add discount.
+     * @param discount the operand to have as a discount.
+     * @throws ServiceException if add discount is failed
+     */
+    public List<Discount> addEntity(Discount discount) throws ServiceException {
         Connection connection = null;
         List<Discount> discounts;
         try {
             connection = getConnection();
-            discountDao.addDiscount(entity,connection);
+            discountDao.addDiscount(discount,connection);
             discounts = discountDao.getDiscounts(connection);
         }catch (DAOException e){
             throw new ServiceException(e);
@@ -57,6 +89,11 @@ public class DiscountServiceImpl extends AbstractService implements ICrudService
         return discounts;
     }
 
+    /**
+     * Remove discount.
+     * @param discount the operand to have as a discount.
+     * @throws ServiceException if remove discount is failed
+     */
     public void removeEntity(Discount discount) throws ServiceException {
         Connection connection = null;
         try {
@@ -69,11 +106,16 @@ public class DiscountServiceImpl extends AbstractService implements ICrudService
         }
     }
 
-    public void updateEntity(Discount entity) throws ServiceException {
+    /**
+     * Update discount.
+     * @param discount the operand to have as a discount.
+     * @throws ServiceException if update discount is failed
+     */
+    public void updateEntity(Discount discount) throws ServiceException {
         Connection connection = null;
         try {
             connection = getConnection();
-            discountDao.updateDiscount(entity,connection);
+            discountDao.updateDiscount(discount,connection);
         }catch (DAOException e){
             throw new ServiceException(e);
         }finally {
@@ -81,6 +123,12 @@ public class DiscountServiceImpl extends AbstractService implements ICrudService
         }
     }
 
+    /**
+     * This method build entity by received params.
+     * @param params the operand that stored data to build discount.
+     * @return a discount.
+     * @throws ServiceException if build discount is failed
+     */
     public Discount buildEntity(Map<String, String[]> params) throws ServiceException {
         ValidatorDiscount validatorDiscount = new ValidatorDiscount();
         try {
@@ -95,7 +143,10 @@ public class DiscountServiceImpl extends AbstractService implements ICrudService
         return null;
     }
 
-    @Override
+    /**
+     * Get last inserted discount.
+     * @throws ServiceException if get last inserted discount is failed
+     */
     public Discount getLastInsertedEntity() throws ServiceException {
         Connection connection = null;
         try {

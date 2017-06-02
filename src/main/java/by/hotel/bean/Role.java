@@ -1,7 +1,9 @@
 package by.hotel.bean;
 
 import by.hotel.builder.RoleBuilder;
+
 /**
+ * Role.java
  * The class store objects with properties
  * <b> id </ b>, <b> update </ b>, <b> delete </ b>, <b> nameRole </ b>,
  * <b> insert </ b>, <b> create </ b>, <b> select </ b>, <b> drop </ b>,

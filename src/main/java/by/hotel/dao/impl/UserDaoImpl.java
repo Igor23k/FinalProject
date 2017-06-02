@@ -18,7 +18,28 @@ import java.util.List;
 
 import static by.hotel.dao.constants.Constants.*;
 
+/**
+ * UserDaoImpl.java
+ * Class implements methods from interfaces IUserDao,IAuthDao and extends from AbstractDao class.
+ * getUserHeaders - method for get user headers.
+ * getUsers - method for get user.
+ * updateUser - method for update user.
+ * addUser - method for add user.
+ * removeUser - method for remove user.
+ * getLastInsertedUser - method for get last inserted user.
+ * fillStatement - method for fill user.
+ * fillUser - method for fill user.
+ * buildMessage - method for build error message.
+ * @author Igor Kozlov
+ * @version 1.0
+ */
 public class UserDaoImpl extends AbstractDao implements IUserDao,IAuthDao {
+    /**
+     * Get user headers.
+     * @param connection the operand to have a connection with DB.
+     * @return the list of user headers.
+     * @throws DAOException if get user headers is failed
+     */
     public List<String> getUserHeaders(Connection connection) throws DAOException {
         PreparedStatement statement = null;
         ResultSet resultSet = null;
@@ -42,6 +63,12 @@ public class UserDaoImpl extends AbstractDao implements IUserDao,IAuthDao {
         return headers;
     }
 
+    /**
+     * Get users.
+     * @param connection the operand to have a connection with DB.
+     * @return the list of users.
+     * @throws DAOException if get users is failed
+     */
     public List<User> getUsers(Connection connection) throws DAOException {
         PreparedStatement statement = null;
         ResultSet resultSet = null;
@@ -61,6 +88,12 @@ public class UserDaoImpl extends AbstractDao implements IUserDao,IAuthDao {
         return users;
     }
 
+    /**
+     * Add user.
+     * @param user the operand to have as a user.
+     * @param connection the operand to have a connection with DB.
+     * @throws DAOException if add user is failed
+     */
     public void addUser(User user,Connection connection) throws DAOException {
         PreparedStatement statement = null;
         try {
@@ -74,6 +107,12 @@ public class UserDaoImpl extends AbstractDao implements IUserDao,IAuthDao {
         }
     }
 
+    /**
+     * Remove user.
+     * @param user the operand to have as a user.
+     * @param connection the operand to have a connection with DB.
+     * @throws DAOException if remove user is failed
+     */
     public void removeUser(User user,Connection connection) throws DAOException {
         PreparedStatement statement = null;
         try {
@@ -87,6 +126,12 @@ public class UserDaoImpl extends AbstractDao implements IUserDao,IAuthDao {
         }
     }
 
+    /**
+     * Update user.
+     * @param user the operand to have as a user.
+     * @param connection the operand to have a connection with DB.
+     * @throws DAOException if update user is failed
+     */
     public void updateUser(User user,Connection connection) throws DAOException {
         PreparedStatement statement = null;
         try {
@@ -100,7 +145,13 @@ public class UserDaoImpl extends AbstractDao implements IUserDao,IAuthDao {
             closeStatement(statement, null);
         }
     }
-
+    /**
+     * Get user.
+     * @param id the operand to use as id of user.
+     * @param connection the operand to have a connection with DB.
+     * @return the user.
+     * @throws DAOException if get user is failed
+     */
     public User getUser(Integer id,Connection connection) throws DAOException {
         PreparedStatement statement = null;
         ResultSet resultSet = null;
@@ -119,7 +170,11 @@ public class UserDaoImpl extends AbstractDao implements IUserDao,IAuthDao {
         return user;
     }
 
-    @Override
+    /**
+     * Get last inserted user.
+     * @param connection the operand to have a connection with DB.
+     * @throws DAOException  if get last inserted user is failed
+     */
     public User getLastInsertedUser(Connection connection) throws DAOException {
         PreparedStatement statement = null;
         User user = null;
@@ -139,6 +194,14 @@ public class UserDaoImpl extends AbstractDao implements IUserDao,IAuthDao {
         return user;
     }
 
+    /**
+     * Perform an authorisation.
+     * @param email  the operand to use as email of user.
+     * @param password the operand to use as password of user.
+     * @param connection the operand to have a connection with DB.
+     * @return a user.
+     * @throws DAOException if authorisation user is failed
+     */
     public User authorisation(String email, String password, Connection connection) throws DAOException{
         UserBuilder userBuilder = new UserBuilder();
         PreparedStatement statement = null;
@@ -159,12 +222,27 @@ public class UserDaoImpl extends AbstractDao implements IUserDao,IAuthDao {
         return null;
     }
 
+    /**
+     * Fill statement with data.
+     * @param statement the operand to make a query.
+     * @param email the operand to have a user's email.
+     * @param password the operand to have as a user's password.
+     * @return a PreparedStatement.
+     * @throws SQLException if statement is null
+     */
     private PreparedStatement fillStatement(PreparedStatement statement, String email, String password) throws SQLException {
         statement.setString(1, email);
         statement.setString(2, password);
         return statement;
     }
 
+    /**
+     * Fill statement with data.
+     * @param statement the operand to make a query.
+     * @param user the operand to have as a user.
+     * @return a PreparedStatement.
+     ** @throws SQLException if statement is null
+     */
     private PreparedStatement fillStatement(PreparedStatement statement, User user) throws SQLException {
         statement.setString(1, user.getPassportNumber());
         statement.setString(2, user.getName());
@@ -180,6 +258,13 @@ public class UserDaoImpl extends AbstractDao implements IUserDao,IAuthDao {
         return statement;
     }
 
+    /**
+     * Fill discount object with data.
+     * @param resultSet the operand that contain data from BD.
+     * @param userBuilder the operand to build a discount.
+     * @return a Discount.
+     * @throws SQLException
+     */
     private User fillUser(ResultSet resultSet, UserBuilder userBuilder) throws SQLException {
         RoleBuilder roleBuilder = new RoleBuilder();
         return userBuilder.id(resultSet.getInt("id"))

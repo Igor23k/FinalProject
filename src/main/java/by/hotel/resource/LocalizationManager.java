@@ -2,14 +2,34 @@ package by.hotel.resource;
 
 import java.util.*;
 
+/**
+ * LocalizationManager.java
+ * Class to provide data for localization.
+ * getValue - method to get values from resources.
+ * @author Igor Kozlov
+ * @version 1.0
+ */
 public class LocalizationManager {
+    /**
+     * Field - field to store pageLabels.
+     */
     private ResourceBundle pageLabels = ResourceBundle.getBundle("localization.pagecontent_generalLabels");
+    /**
+     * Field - field to store generalLabels.
+     */
     private ResourceBundle generalLabels = ResourceBundle.getBundle("localization.pagecontent_generalLabels");
+    /**
+     * Field - field to store localeProvider.
+     */
     private LocaleProvider localeProvider = LocaleProvider.getInstance();
 
+    /**
+     * Get values from resources.
+     * @return singleton object.
+     */
     public Map getValue(String locale, String localePage) {
-        pageLabels = ResourceBundle.getBundle("localization.pagecontent_" + localePage, localeProvider.getCommand(locale));
-        generalLabels = ResourceBundle.getBundle("localization.pagecontent_generalLabels", localeProvider.getCommand(locale));
+        pageLabels = ResourceBundle.getBundle("localization.pagecontent_" + localePage, localeProvider.getLocale(locale));
+        generalLabels = ResourceBundle.getBundle("localization.pagecontent_generalLabels", localeProvider.getLocale(locale));
         Enumeration bundlePageKeys = pageLabels.getKeys();
         Enumeration bundleGeneralKeys = generalLabels.getKeys();
         Map<String, String> result = new HashMap();

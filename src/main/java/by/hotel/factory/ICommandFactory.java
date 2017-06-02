@@ -3,6 +3,7 @@ package by.hotel.factory;
 import by.hotel.command.ICommand;
 
 /**
+ * ICommandFactory.java
  * Simple get command operation.
  * @author Igor Kozlov
  * @version 1.0

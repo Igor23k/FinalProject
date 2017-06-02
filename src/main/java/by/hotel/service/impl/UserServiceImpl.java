@@ -16,9 +16,30 @@ import java.sql.Connection;
 import java.util.List;
 import java.util.Map;
 
+/**
+ * UserDaoImpl.java
+ * Class implements methods from interfaces IUserDao,IAuthDao and extends from AbstractDao class.
+ * getUserHeaders - method to get user headers.
+ * getUsers - method to get user.
+ * updateUser - method to update user.
+ * addUser - method to add user.
+ * removeUser - method to remove user.
+ * getLastInsertedUser - method to get last inserted user.
+ * buildUser - method to build user.
+ * @author Igor Kozlov
+ * @version 1.0
+ */
 public class UserServiceImpl extends AbstractService implements ICrudServiceExtended<User> {
+    /**
+     * Field - userDao
+     */
     private IUserDao userDao = new UserDaoImpl();
 
+    /**
+     * Get user headers.
+     * @return the list of user headers.
+     * @throws ServiceException  if get user headers is failed
+     */
     public List<String> getAllHeaders() throws ServiceException {
         Connection connection = null;
         try {
@@ -31,6 +52,11 @@ public class UserServiceImpl extends AbstractService implements ICrudServiceExte
         }
     }
 
+    /**
+     * Get users.
+     * @return the list of users.
+     * @throws ServiceException if get users is failed
+     */
     public List<User> getAllEntities() throws ServiceException {
         Connection connection = null;
         try {
@@ -43,6 +69,12 @@ public class UserServiceImpl extends AbstractService implements ICrudServiceExte
         }
     }
 
+    /**
+     * Get user.
+     * @param id the operand to use as id of user.
+     * @return the user.
+     * @throws ServiceException if get user is failed
+     */
     public User getEntity(Integer id) throws ServiceException {
         Connection connection = null;
         User user;
@@ -57,12 +89,17 @@ public class UserServiceImpl extends AbstractService implements ICrudServiceExte
         return user;
     }
 
-    public List<User> addEntity(User entity) throws ServiceException {
+    /**
+     * Add user.
+     * @param user the operand to have as a user.
+     * @throws ServiceException if add user is failed
+     */
+    public List<User> addEntity(User user) throws ServiceException {
         Connection connection = null;
         List<User> users;
         try {
             connection = getConnection();
-            userDao.addUser(entity, connection);
+            userDao.addUser(user, connection);
             users = userDao.getUsers(connection);
         } catch (DAOException e) {
             throw new ServiceException(e);
@@ -72,6 +109,11 @@ public class UserServiceImpl extends AbstractService implements ICrudServiceExte
         return users;
     }
 
+    /**
+     * Remove user.
+     * @param user the operand to have as a user.
+     * @throws ServiceException if remove user is failed
+     */
     public void removeEntity(User user) throws ServiceException {
         Connection connection = null;
         try {
@@ -84,11 +126,16 @@ public class UserServiceImpl extends AbstractService implements ICrudServiceExte
         }
     }
 
-    public void updateEntity(User entity) throws ServiceException {
+    /**
+     * Update user.
+     * @param user the operand to have as a user.
+     * @throws ServiceException if update user is failed
+     */
+    public void updateEntity(User user) throws ServiceException {
         Connection connection = null;
         try {
             connection = getConnection();
-            userDao.updateUser(entity, connection);
+            userDao.updateUser(user, connection);
         } catch (DAOException e) {
             throw new ServiceException(e);
         } finally {
@@ -96,6 +143,12 @@ public class UserServiceImpl extends AbstractService implements ICrudServiceExte
         }
     }
 
+    /**
+     * This method build entity by received params.
+     * @param params the operand that stored data to build user.
+     * @return a user.
+     * @throws ServiceException if build user is failed
+     */
     public User buildEntity(Map<String, String[]> params) throws ServiceException {
         ValidatorUser validatorUser = new ValidatorUser();
         String password;
@@ -126,7 +179,10 @@ public class UserServiceImpl extends AbstractService implements ICrudServiceExte
         return null;
     }
 
-    @Override
+    /**
+     * Get last inserted user.
+     * @throws ServiceException if get last inserted user is failed
+     */
     public User getLastInsertedEntity() throws ServiceException {
         Connection connection = null;
         try {

@@ -2,6 +2,7 @@ package by.hotel.bean;
 
 import by.hotel.builder.UserBuilder;
 /**
+ * User.java
  * The class store objects with properties
  * <b> id </ b>, <b> roomsCount </ b>, <b> bedsCount </ b>,
  * <b> bathroomsCount </ b>, <b> size </ b>, <b> size </ b> and <b> additionalInfo </ b>.

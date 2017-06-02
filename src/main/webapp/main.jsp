@@ -97,7 +97,6 @@
         <ul class="nav nav-pills" style="align:center;">
             <li><a id="mainRef" href="#contentMain" class="current">${data.mainRef}</a></li>
             <li><a id="services" href="#contentServices">${data.services}</a></li>
-            <li><a id="gallery" href="#contentGallery">${data.gallery}</a></li>
             <li><a id="testimonials" href="#contentTestimonials">${data.testimonials}</a></li>
             <li><a id="booking" href="#contentBooking">${data.booking}</a></li>
             <li><a id="singin" href="#entry">${data.singin}</a></li>

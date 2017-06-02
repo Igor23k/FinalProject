@@ -1,5 +1,11 @@
 package by.hotel.dao.constants;
 
+/**
+ * Constants.java
+ * Class contains strings that using for querier to BD.
+ * @author Igor Kozlov
+ * @version 4.5
+ */
 public class Constants {
     public static final String GET_ALL_NAMES_TABLES = "SHOW TABLES FROM `db_hotel`";
 
@@ -41,14 +47,6 @@ public class Constants {
     //          "FROM (`db_hotel`.`reservation` LEFT OUTER JOIN `db_hotel`.`user` ON `reservation`.`idUser` = `user`.`id`)";
     public static final String GET_ALL_RESERVATIONS_HEADERS = "SELECT `id`, `dateIn`, `dateOut` FROM `db_hotel`.`reservation`";
 
-
-    public static final String GET_ALL_PARKING_SPACES = "SELECT `id`, `level`, `isReserved` FROM `db_hotel`.`parking_space`";
-    public static final String ADD_PARKING_SPACE = "INSERT INTO `db_hotel`.`parking_space` (`level`, `isReserved`) VALUES (?,?)";
-    public static final String REMOVE_PARKING_SPACE = "DELETE FROM `db_hotel`.`parking_space` WHERE `id`=?";
-    public static final String UPDATE_PARKING_SPACE = "UPDATE `db_hotel`.`parking_space` SET `level`=?, `isReserved`=? WHERE `id`=?";
-    public static final String GET_PARKING_SPACE = GET_ALL_PARKING_SPACES.concat(" WHERE `id`=?");
-    public static final String GET_ALL_PARKING_SPACES_HEADERS = "SELECT `id`, `level` FROM `db_hotel`.`parking_space`";
-
     public static final String GET_ALL_RESERVATION_PARKING_SPACES = "SELECT `idParkingSpace`,`idReservation`, `level`, `isReserved`, `idUser`, `user`.`name`, `surname`, `passportNumber`,`mobilePhone`, `dateIn`, `dateOut`, `costAdditionalServices`, `idDiscount`,`discount`.`name` AS `discount_name`"  +
             "FROM ((((`db_hotel`.`reservation_parking_space`" +
             "LEFT OUTER JOIN `db_hotel`.`reservation`" +
@@ -59,10 +57,6 @@ public class Constants {
             "ON `reservation_parking_space`.`idParkingSpace` = `parking_space`.`id`)" +
             "LEFT OUTER JOIN `db_hotel`.`discount`" +
             "ON `idDiscount` = `discount`.`id`)";
-    public static final String ADD_RESERVATION_PARKING_SPACE = "INSERT INTO `db_hotel`.`reservation_parking_space` (`idParkingSpace`, `idReservation`) VALUES (?,?)";
-    public static final String REMOVE_RESERVATION_PARKING_SPACE = "DELETE FROM `db_hotel`.`reservation_parking_space` WHERE `idParkingSpace`=? AND `idReservation`=?";
-    public static final String UPDATE_RESERVATION_PARKING_SPACE = "UPDATE `db_hotel`.`reservation_parking_space` SET `idParkingSpace`=?, `idReservation`=? WHERE `idParkingSpace`=? AND `idReservation`=?";
-    public static final String GET_RESERVATION_PARKING_SPACE = GET_ALL_RESERVATION_PARKING_SPACES.concat(" WHERE `idParkingSpace` = ? AND `idReservation` = ?");
 
     public static final String GET_ALL_RESERVATION_ROOMS = "SELECT `idRoom`,`idRoomType`,`floor`, `phone`, `roomsCount`, `bedsCount`,`costPerDay`, `additionalInfo`,`idReservation`,`idUser`, `user`.`name`, `surname`, `passportNumber`,`mobilePhone`, `dateIn`, `dateOut`, `costAdditionalServices`, `idDiscount`,`discount`.`name` AS `discountName`" +
             "FROM (((((`db_hotel`.`reservation_room`" +

@@ -15,7 +15,28 @@ import java.util.Map;
 
 import static by.hotel.dao.constants.Constants.*;
 
+/**
+ * DiscountDaoImpl.java
+ * Class implements methods from interface IDiscountDao and extends from AbstractDao class.
+ * getDiscountHeaders - method for get discount headers.
+ * getDiscounts - method for get discount.
+ * updateDiscount - method for update discount.
+ * addDiscount - method for add discount.
+ * removeDiscount - method for remove discount.
+ * getLastInsertedDiscount - method for get last inserted discount.
+ * fillStatement - method for fill statement.
+ * fillDiscount - method for fill discount.
+ * buildMessage - method for build error message.
+ * @author Igor Kozlov
+ * @version 1.0
+ */
 public class DiscountDaoImpl extends AbstractDao implements IDiscountDao {
+    /**
+     * Get discount headers.
+     * @param connection the operand to have a connection with DB.
+     * @return the list of discount headers.
+     * @throws DAOException if get headers is failed
+     */
     public List<String> getDiscountHeaders(Connection connection) throws DAOException {
         PreparedStatement statement = null;
         ResultSet resultSet = null;
@@ -38,6 +59,12 @@ public class DiscountDaoImpl extends AbstractDao implements IDiscountDao {
         return headers;
     }
 
+    /**
+     * Get discounts.
+     * @param connection the operand to have a connection with DB.
+     * @return the list of discounts.
+     * @throws DAOException if get discounts is failed
+     */
     public List<Discount> getDiscounts(Connection connection) throws DAOException {
         PreparedStatement statement = null;
         ResultSet resultSet = null;
@@ -57,6 +84,12 @@ public class DiscountDaoImpl extends AbstractDao implements IDiscountDao {
         return discounts;
     }
 
+    /**
+     * Add discount.
+     * @param discount the operand to have as a discount.
+     * @param connection the operand to have a connection with DB.
+     * @throws DAOException if add discount is failed
+     */
     public void addDiscount(Discount discount, Connection connection) throws DAOException {
         PreparedStatement statement = null;
         try {
@@ -70,6 +103,12 @@ public class DiscountDaoImpl extends AbstractDao implements IDiscountDao {
         }
     }
 
+    /**
+     * Remove discount.
+     * @param discount the operand to have as a discount.
+     * @param connection the operand to have a connection with DB.
+     * @throws DAOException if remove discount is failed
+     */
     public void removeDiscount(Discount discount, Connection connection) throws DAOException {
         PreparedStatement statement = null;
         try {
@@ -85,6 +124,12 @@ public class DiscountDaoImpl extends AbstractDao implements IDiscountDao {
         }
     }
 
+    /**
+     * Update discount.
+     * @param discount the operand to have as a discount.
+     * @param connection the operand to have a connection with DB.
+     * @throws DAOException if update discount is failed
+     */
     public void updateDiscount(Discount discount, Connection connection) throws DAOException {
         PreparedStatement statement = null;
         try {
@@ -99,7 +144,11 @@ public class DiscountDaoImpl extends AbstractDao implements IDiscountDao {
         }
     }
 
-    @Override
+    /**
+     * Get last inserted discount.
+     * @param connection the operand to have a connection with DB.
+     * @throws DAOException if get last inserted discount is failed
+     */
     public Discount getLastInsertedDiscount(Connection connection) throws DAOException {
         PreparedStatement statement = null;
         Discount discount = null;
@@ -120,19 +169,40 @@ public class DiscountDaoImpl extends AbstractDao implements IDiscountDao {
         return discount;
     }
 
+    /**
+     * Fill statement with data.
+     * @param statement the operand to make a query.
+     * @param discount the operand to have as a discount.
+     * @return a PreparedStatement.
+     * @throws SQLException if statement is null
+     */
     private PreparedStatement fillStatement(PreparedStatement statement, Discount discount) throws SQLException {
         statement.setString(1, discount.getName());
         return statement;
     }
 
+    /**
+     * Fill discount object with data.
+     * @param resultSet the operand that contain data from BD.
+     * @param discountBuilder the operand to build a discount.
+     * @return a Discount.
+     * @throws SQLException
+     */
     private Discount fillDiscount(ResultSet resultSet, DiscountBuilder discountBuilder) throws SQLException {
         return discountBuilder.id(resultSet.getInt("id"))
                 .name(resultSet.getString("name"))
                 .build();
     }
 
+    /**
+     * Build error message.
+     * @param discount the operand to have as a discount.
+     * @param errorMessage the operand that contain special error.
+     * @return an error string.
+     * @throws SQLException
+     */
     private String buildMessage(Discount discount, String errorMessage) {
-        Map<String, String> idNames = new HashMap<String, String>();
+        Map<String, String> idNames = new HashMap<>();
         idNames.put("id", Integer.toString(discount.getId()));
         return ErrorStringBuilder.buildDeleteErrorString(idNames, errorMessage);
     }

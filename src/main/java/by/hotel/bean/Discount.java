@@ -3,6 +3,7 @@ package by.hotel.bean;
 import by.hotel.builder.DiscountBuilder;
 
 /**
+ * Discount.java
  * The class store objects with properties
  * <b> id </ b> and <b> name </ b>.
  * @autor Igor Kozlov

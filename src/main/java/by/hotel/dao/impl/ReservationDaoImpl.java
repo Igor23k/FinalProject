@@ -18,7 +18,28 @@ import java.util.Map;
 
 import static by.hotel.dao.constants.Constants.*;
 
+/**
+ * ReservationDaoImpl.java
+ * Class implements methods from interface IReservationDao and extends from AbstractDao class.
+ * getReservationHeaders - method for get reservation headers.
+ * getReservations - method for get reservation.
+ * updateReservation - method for update reservation.
+ * addReservation - method for add reservation.
+ * removeReservation - method for remove reservation.
+ * getLastInsertedReservation - method for get last inserted reservation.
+ * fillStatement - method for fill statement.
+ * fillDiscount - method for fill reservation.
+ * buildMessage - method for build error message.
+ * @author Igor Kozlov
+ * @version 1.0
+ */
 public class ReservationDaoImpl extends AbstractDao implements IReservationDao {
+    /**
+     * Get reservation headers.
+     * @param connection the operand to have a connection with DB.
+     * @return the list of reservation headers.
+     * @throws DAOException if get reservation headers is failed
+     */
     public List<String> getReservationHeaders(Connection connection) throws DAOException {
         PreparedStatement statement = null;
         ResultSet resultSet = null;
@@ -42,6 +63,12 @@ public class ReservationDaoImpl extends AbstractDao implements IReservationDao {
         return headers;
     }
 
+    /**
+     * Get reservations.
+     * @param connection the operand to have a connection with DB.
+     * @return the list of reservations.
+     * @throws DAOException if get reservations is failed
+     */
     public List<Reservation> getAllReservations(Connection connection) throws DAOException {
         PreparedStatement statement = null;
         ResultSet resultSet = null;
@@ -61,11 +88,12 @@ public class ReservationDaoImpl extends AbstractDao implements IReservationDao {
         return reservations;
     }
 
-    @Override
-    public Reservation getReservation(Integer id, Connection connection) throws DAOException {
-        return null;
-    }
-
+    /**
+     * Add reservation.
+     * @param reservation the operand to have as a reservation.
+     * @param connection the operand to have a connection with DB.
+     * @throws DAOException if add reservation is failed
+     */
     public void addReservation(Reservation reservation,Connection connection) throws DAOException {
         PreparedStatement statement = null;
         try {
@@ -79,6 +107,12 @@ public class ReservationDaoImpl extends AbstractDao implements IReservationDao {
         }
     }
 
+    /**
+     * Remove reservation.
+     * @param reservation the operand to have as a reservation.
+     * @param connection the operand to have a connection with DB.
+     * @throws DAOException if remove reservation is failed
+     */
     public void removeReservation(Reservation reservation,Connection connection) throws DAOException {
         PreparedStatement statement = null;
         try {
@@ -95,6 +129,12 @@ public class ReservationDaoImpl extends AbstractDao implements IReservationDao {
         }
     }
 
+    /**
+     * Update reservation.
+     * @param reservation the operand to have as a reservation.
+     * @param connection the operand to have a connection with DB.
+     * @throws DAOException if update reservation is failed
+     */
     public void updateReservation(Reservation reservation,Connection connection) throws DAOException {
         PreparedStatement statement = null;
         try {
@@ -109,7 +149,11 @@ public class ReservationDaoImpl extends AbstractDao implements IReservationDao {
         }
     }
 
-    @Override
+    /**
+     * Get last inserted reservation.
+     * @param connection the operand to have a connection with DB.
+     * @throws DAOException if get last inserted reservation is failed
+     */
     public Reservation getLastInsertedReservation(Connection connection) throws DAOException {
         PreparedStatement statement = null;
         Reservation reservation = null;
@@ -138,6 +182,13 @@ public class ReservationDaoImpl extends AbstractDao implements IReservationDao {
         return reservation;
     }
 
+    /**
+     * Fill statement with data.
+     * @param statement the operand to make a query.
+     * @param reservation the operand to have as a reservation.
+     * @return a PreparedStatement.
+     * @throws SQLException if statement is null
+     */
     private PreparedStatement fillStatement(PreparedStatement statement, Reservation reservation) throws SQLException {
         statement.setInt(1, reservation.getUser().getId());
         statement.setDate(2, reservation.getDateIn());
@@ -147,6 +198,13 @@ public class ReservationDaoImpl extends AbstractDao implements IReservationDao {
         return statement;
     }
 
+    /**
+     * Fill discount object with data.
+     * @param resultSet the operand that contain data from BD.
+     * @param reservationBuilder the operand to build a discount.
+     * @return a Discount.
+     * @throws SQLException
+     */
     private Reservation fillReservation(ResultSet resultSet, ReservationBuilder reservationBuilder) throws SQLException {
         UserBuilder userBuilder = new UserBuilder();
         DiscountBuilder discountBuilder = new DiscountBuilder();
@@ -166,6 +224,13 @@ public class ReservationDaoImpl extends AbstractDao implements IReservationDao {
                 .build();
     }
 
+    /**
+     * Build error message.
+     * @param reservation the operand to have as a discount.
+     * @param errorMessage the operand that contain special error.
+     * @return an error string.
+     * @throws SQLException
+     */
     private String buildMessage(Reservation reservation, String errorMessage){
         Map<String,String> idNames = new HashMap<String, String>();
         idNames.put("id",Integer.toString(reservation.getId()));

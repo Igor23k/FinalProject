@@ -13,8 +13,24 @@ import java.sql.Driver;
 import java.sql.SQLException;
 import java.util.Properties;
 
+/**
+ * AbstractService.java
+ * Class contain common methods for services.
+ * initConnectionPool - method to initialization connection pool.
+ * getConnection - method to get connection.
+ * closeConnection - method to close connection.
+ * @version 2.0
+ * @autor Igor Kozlov
+ */
 public class AbstractService {
+    /**
+     * Field -  logger.
+     */
     private static final Logger logger;
+
+    /**
+     * Field -  dataSource.
+     */
     private static HikariDataSource dataSource;
 
     static {
@@ -27,6 +43,9 @@ public class AbstractService {
         }
     }
 
+    /**
+     * Initialization connection pool.
+     */
     private static void initConnectionPool(){
         InputStream inputStream =null;
         Properties properties=new Properties();
@@ -47,6 +66,11 @@ public class AbstractService {
         }
     }
 
+    /**
+     * Get a connection.
+     * @return service that implements interface ICrudService.
+     * @throws ServiceException if connection is null
+     */
     public final Connection getConnection() throws ServiceException{
         Connection connection;
         try{
@@ -57,6 +81,11 @@ public class AbstractService {
         return connection;
     }
 
+    /**
+     * Close a connection.
+     * @param  connection to make queries to BD
+     * @throws ServiceException if connection close is incorrect
+     */
     public void closeConnection(Connection connection) throws ServiceException {
         try {
             if(connection != null){

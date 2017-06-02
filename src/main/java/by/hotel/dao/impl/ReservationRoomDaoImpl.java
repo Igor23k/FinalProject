@@ -15,7 +15,28 @@ import java.util.Map;
 
 import static by.hotel.dao.constants.Constants.*;
 
+/**
+ * ReservationRoomDaoImpl.java
+ * Class implements methods from interface IReservationRoomDao and extends from AbstractDao class.
+ * getReservationRoomHeaders - method for get reservation room headers.
+ * getReservationRooms - method for get reservation room.
+ * updateReservationRoom - method for update reservation room.
+ * addReservationRoom - method for add reservation room.
+ * removeReservationRoom - method for remove reservation room.
+ * getLastInsertedReservationRoom - method for get last inserted reservation room.
+ * fillStatement - method for fill statement.
+ * fillReservationRoom - method for fill reservation room.
+ * buildMessage - method for build error message.
+ * @author Igor Kozlov
+ * @version 1.0
+ */
 public class ReservationRoomDaoImpl extends AbstractDao implements IReservationRoomDao {
+    /**
+     * Get reservationRooms.
+     * @param connection the operand to have a connection with DB.
+     * @return the list of reservationRooms.
+     * @throws DAOException if get reservation rooms is failed
+     */
     public List<ReservationRoom> getReservationRooms(Connection connection) throws DAOException {
         PreparedStatement statement = null;
         ResultSet resultSet = null;
@@ -35,6 +56,12 @@ public class ReservationRoomDaoImpl extends AbstractDao implements IReservationR
         return reservationRooms;
     }
 
+    /**
+     * Add reservationRoom.
+     * @param reservationRoom the operand to have as a reservationRoom.
+     * @param connection the operand to have a connection with DB.
+     * @throws DAOException if add reservation room is failed
+     */
     public void addReservationRoom(ReservationRoom reservationRoom,Connection connection) throws DAOException {
         PreparedStatement statement = null;
         try {
@@ -50,6 +77,12 @@ public class ReservationRoomDaoImpl extends AbstractDao implements IReservationR
         }
     }
 
+    /**
+     * Remove reservationRoom.
+     * @param reservationRoom the operand to have as a reservationRoom.
+     * @param connection the operand to have a connection with DB.
+     * @throws DAOException if remove reservation room is failed
+     */
     public void removeReservationRoom(ReservationRoom reservationRoom,Connection connection) throws DAOException {
         PreparedStatement statement = null;
         try {
@@ -63,11 +96,21 @@ public class ReservationRoomDaoImpl extends AbstractDao implements IReservationR
         }
     }
 
+    /**
+     * Update reservationRoom.
+     * @param reservationRoom the operand to have as a reservationRoom.
+     * @param connection the operand to have a connection with DB.
+     * @throws DAOException if update reservation room is failed
+     */
     public void updateReservationRoom(ReservationRoom reservationRoom,Connection connection) throws DAOException {
         throw new UnsupportedOperationException("Unsupported operation!");
     }
 
-    @Override
+    /**
+     * Get last inserted reservationRoom.
+     * @param connection the operand to have a connection with DB.
+     * @throws DAOException if get last inserted reservation room is failed
+     */
     public ReservationRoom getLastInsertedReservationRoom(Connection connection) throws DAOException {
         PreparedStatement statement = null;
         ReservationRoom reservationRoom = null;
@@ -88,6 +131,13 @@ public class ReservationRoomDaoImpl extends AbstractDao implements IReservationR
         return reservationRoom;
     }
 
+    /**
+     * Fill discount object with data.
+     * @param resultSet the operand that contain data from BD.
+     * @param reservationRoomBuilder the operand to build a discount.
+     * @return a Discount.
+     * @throws SQLException if statement is null
+     */
     private ReservationRoom fillReservationRoom(ResultSet resultSet, ReservationRoomBuilder reservationRoomBuilder) throws SQLException {
         RoomBuilder roomBuilder = new RoomBuilder();
         UserBuilder userBuilder = new UserBuilder();
@@ -124,6 +174,13 @@ public class ReservationRoomDaoImpl extends AbstractDao implements IReservationR
                 .build();
     }
 
+    /**
+     * Fill statement with data.
+     * @param statement the operand to make a query.
+     * @param reservationRoom the operand to have as a reservationRoom.
+     * @return a PreparedStatement.
+     * @throws SQLException
+     */
     private PreparedStatement fillStatement(PreparedStatement statement, ReservationRoom reservationRoom) throws SQLException {
         statement.setInt(1, reservationRoom.getRoom().getId());
         statement.setInt(2, reservationRoom.getReservation().getId());
@@ -131,8 +188,14 @@ public class ReservationRoomDaoImpl extends AbstractDao implements IReservationR
         return statement;
     }
 
+    /**
+     * Build error message.
+     * @param reservationRoom the operand to have as a discount.
+     * @return an error string.
+     * @throws SQLException
+     */
     private String buildMessage(ReservationRoom reservationRoom){
-        Map<String,String> idNames = new HashMap<String, String>();
+        Map<String,String> idNames = new HashMap<>();
         idNames.put("reservation",Integer.toString(reservationRoom.getReservation().getId()));
         idNames.put("room",Integer.toString(reservationRoom.getRoom().getId()));
         return ErrorStringBuilder.buildAddErrorString(idNames);

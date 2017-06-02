@@ -236,9 +236,7 @@ function generateOption(arrayObj, value, arrayType) {
 
 function generateChilds(arrayObj) {
     for(var arrayType in arrayObj) {
-
         var editBodyUpdate = $('#myModalUpdate').find('#id' + arrayType[0].toUpperCase() + arrayType.slice(1) +'');
-
         var editBodyAdd = $('#myModalAdd').find('#id' + arrayType[0].toUpperCase() + arrayType.slice(1) +'');
         if(editBodyUpdate[0].childElementCount==0)
             for(var value in arrayObj[arrayType]) {
@@ -265,10 +263,12 @@ function generateSelectChilds() {
             type: 'GET',
             url: '/servlet?action=GET_ALL_HEADERS&rights=127&locale=ru&localePage=admin&' + tables,
             success: function (data) {
-                data=data['data'];
+                Data = data['data'];
+                console.log(Data);
                 for (var value in futureQueryForID) {
-                    arrayObj[value] = data[mapStringTable[value]];
+                    arrayObj[value] = Data[mapStringTable[value]];
                 }
+                console.log(arrayObj);
                 generateChilds(arrayObj);
             }
         });

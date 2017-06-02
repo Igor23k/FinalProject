@@ -10,8 +10,24 @@ import by.hotel.service.exception.ServiceException;
 import java.sql.Connection;
 import java.util.List;
 
+/**
+ * TablesInfoDaoImpl.java
+ * Class implements methods from interface ITablesInfoService and extends from AbstractService class.
+ * getNamesTables - method for get name tables.
+ * @author Igor Kozlov
+ * @version 1.0
+ */
 public class TablesInfoServiceImpl extends AbstractService implements ITablesInfoService {
+    /**
+     * Field - tablesInfoDao
+     */
     ITablesInfoDao tablesInfoDao = new TablesInfoDaoImpl();
+
+    /**
+     * Get table names.
+     * @return a list of table names.
+     * @throws ServiceException  if get table names is failed
+     */
     public List<String> getAllTablesNames() throws ServiceException {
         Connection connection = null;
         try {

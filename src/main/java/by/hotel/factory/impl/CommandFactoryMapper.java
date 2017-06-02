@@ -7,7 +7,17 @@ import by.hotel.factory.ICommandFactory;
 import java.util.HashMap;
 import java.util.Map;
 
+/**
+ * CommandFactoryMapper.java
+ * Class implements methods from interface ICommandFactory.
+ * getLocale - method to get command  that implements ICommand interface.
+ * @author Igor Kozlov
+ * @version 2.0
+ */
 public final class CommandFactoryMapper implements ICommandFactory {
+    /**
+     * Field -  field to store commands.
+     */
     final private static Map<String, ICommand> commands = new HashMap();
 
     static {
@@ -21,14 +31,32 @@ public final class CommandFactoryMapper implements ICommandFactory {
         commands.put("REGISTRATION", new Registration());
     }
 
+    /**
+     * Holder.java
+     * This internal class is a template Singleton.
+     * @author Igor Kozlov
+     * @version 1.0
+     */
     private static class Holder{
+        /**
+         * Field - this field need to be singleton of CommandFactoryMapper class.
+         */
         private final static CommandFactoryMapper INSTANCE = new CommandFactoryMapper();
     }
 
+    /**
+     * Get a singleton object.
+     * @return singleton object.
+     */
     public static CommandFactoryMapper getInstance(){
         return Holder.INSTANCE;
     }
 
+    /**
+     * Get a command by name.
+     * @param commandName the operand to get an operation.
+     * @return command that implements interface ICommand.
+     */
     public ICommand getCommand(String commandName) {
         return commands.get(commandName.toUpperCase());
     }

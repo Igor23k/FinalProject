@@ -21,9 +21,29 @@ import java.text.SimpleDateFormat;
 import java.util.List;
 import java.util.Map;
 
+/**
+ * ReservationServiceImpl.java
+ * Class implements methods from interface ICrudServiceExtended and extends from AbstractService class.
+ * getReservationHeaders - method to get reservation headers.
+ * getReservations - method to get reservation.
+ * updateReservation - method to update reservation.
+ * addReservation - method to add reservation.
+ * removeReservation - method to remove reservation.
+ * buildReservation - method to build reservation.
+ * @author Igor Kozlov
+ * @version 1.0
+ */
 public class ReservationServiceImpl extends AbstractService implements ICrudServiceExtended<Reservation> {
+    /**
+     * Field - reservationDao
+     */
     IReservationDao reservationDao = new ReservationDaoImpl();
 
+    /**
+     * Get reservation headers.
+     * @return the list of reservation headers.
+     * @throws ServiceException  if get reservation headers is failed
+     */
     public List<String> getAllHeaders() throws ServiceException {
         Connection connection = null;
         try {
@@ -36,6 +56,11 @@ public class ReservationServiceImpl extends AbstractService implements ICrudServ
         }
     }
 
+    /**
+     * Get reservations.
+     * @return the list of reservations.
+     * @throws ServiceException if get reservations is failed
+     */
     public List<Reservation> getAllEntities() throws ServiceException {
         Connection connection = null;
         try {
@@ -48,26 +73,17 @@ public class ReservationServiceImpl extends AbstractService implements ICrudServ
         }
     }
 
-    public Reservation getEntity(Integer id) throws ServiceException {
-        Connection connection = null;
-        Reservation reservation;
-        try {
-            connection = getConnection();
-            reservation = reservationDao.getReservation(id, connection);
-        } catch (DAOException e) {
-            throw new ServiceException(e);
-        } finally {
-            closeConnection(connection);
-        }
-        return reservation;
-    }
-
-    public List<Reservation> addEntity(Reservation entity) throws ServiceException {
+    /**
+     * Add reservation.
+     * @param reservation the operand to have as a reservation.
+     * @throws ServiceException if add reservation is failed
+     */
+    public List<Reservation> addEntity(Reservation reservation) throws ServiceException {
         List<Reservation> reservations;
         Connection connection = null;
         try {
             connection = getConnection();
-            reservationDao.addReservation(entity, connection);
+            reservationDao.addReservation(reservation, connection);
             reservations = reservationDao.getAllReservations(connection);
         } catch (DAOException e) {
             throw new ServiceException(e);
@@ -77,6 +93,11 @@ public class ReservationServiceImpl extends AbstractService implements ICrudServ
         return reservations;
     }
 
+    /**
+     * Remove reservation.
+     * @param reservation the operand to have as a reservation.
+     * @throws ServiceException if remove reservation is failed
+     */
     public void removeEntity(Reservation reservation) throws ServiceException {
         Connection connection = null;
         try {
@@ -89,11 +110,16 @@ public class ReservationServiceImpl extends AbstractService implements ICrudServ
         }
     }
 
-    public void updateEntity(Reservation entity) throws ServiceException {
+    /**
+     * Update reservation.
+     * @param reservation the operand to have as a reservation.
+     * @throws ServiceException if update reservation is failed
+     */
+    public void updateEntity(Reservation reservation) throws ServiceException {
         Connection connection = null;
         try {
             connection = getConnection();
-            reservationDao.updateReservation(entity, connection);
+            reservationDao.updateReservation(reservation, connection);
         } catch (DAOException e) {
             throw new ServiceException(e);
         } finally {
@@ -101,6 +127,12 @@ public class ReservationServiceImpl extends AbstractService implements ICrudServ
         }
     }
 
+    /**
+     * This method build entity by received params.
+     * @param params the operand that stored data to build reservation.
+     * @return a reservation.
+     * @throws ServiceException if build reservation is failed
+     */
     public Reservation buildEntity(Map<String, String[]> params) throws ServiceException {
         ValidatorReservation validatorReservation = new ValidatorReservation();
         try {
@@ -119,7 +151,10 @@ public class ReservationServiceImpl extends AbstractService implements ICrudServ
         return null;
     }
 
-    @Override
+    /**
+     * Get last inserted reservation.
+     * @throws ServiceException if get last inserted reservation is failed
+     */
     public Reservation getLastInsertedEntity() throws ServiceException {
         Connection connection = null;
         try {

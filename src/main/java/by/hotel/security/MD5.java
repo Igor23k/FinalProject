@@ -3,7 +3,17 @@ package by.hotel.security;
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
 
+/**
+ * MD5.java
+ * Class to data encryption using an algorithm MD5.
+ * crypt - method to crypt data.
+ * @author Igor Kozlov
+ * @version 1.0
+ */
 public class MD5 {
+    /**
+     * Field - digester.
+     */
     private static MessageDigest digester;
 
     static {
@@ -15,6 +25,11 @@ public class MD5 {
         }
     }
 
+    /**
+     * Get a singleton object.
+     * @param str - unencrypted string.
+     * @return encrypted string.
+     */
     public static String crypt(String str) {
         if (str == null || str.length() == 0) {
             throw new IllegalArgumentException("String to encript cannot be null or zero length");

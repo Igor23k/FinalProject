@@ -11,7 +11,20 @@ import by.hotel.service.impl.UserServiceImpl;
 
 import javax.servlet.http.HttpServletRequest;
 
+/**
+ * Registration.java
+ * Class implements methods from interface ICommand.
+ * Execute - simple command operation.
+ * @author Igor Kozlov
+ * @version 1.0
+ */
 public class Registration implements ICommand {
+    /**
+     * Function for user registration
+     * @param request the operand to use for getting different values.
+     * @return registered  user
+     * @throws CommandException if registration is failed
+     */
     public Object execute(HttpServletRequest request) throws CommandException {
         try {
             User user;

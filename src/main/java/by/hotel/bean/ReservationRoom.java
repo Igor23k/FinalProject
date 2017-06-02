@@ -3,6 +3,7 @@ package by.hotel.bean;
 import by.hotel.builder.ReservationRoomBuilder;
 
 /**
+ * ReservationRoom.java
  * The class store objects with properties
  * <b> room </ b> and <b> reservation </ b>.
  * @autor Igor Kozlov

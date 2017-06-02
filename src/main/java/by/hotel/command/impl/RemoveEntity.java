@@ -8,7 +8,20 @@ import by.hotel.service.exception.ServiceException;
 
 import javax.servlet.http.HttpServletRequest;
 
+/**
+ * RemoveEntity.java
+ * Class implements methods from interface ICommand.
+ * Execute - simple command operation.
+ * @author Igor Kozlov
+ * @version 1.0
+ */
 public class RemoveEntity implements ICommand {
+    /**
+     * Function for remove entity
+     * @param request the operand to use for getting different values.
+     * @return id removed entity
+     * @throws CommandException if remove entity is failed
+     */
     public Object execute(HttpServletRequest request) throws CommandException {
         String result = null;
         try {

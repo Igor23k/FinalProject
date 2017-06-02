@@ -98,6 +98,12 @@ public class UserServiceImpl extends AbstractService implements ICrudServiceExte
 
     public User buildEntity(Map<String, String[]> params) throws ServiceException {
         ValidatorUser validatorUser = new ValidatorUser();
+        String password;
+        if (Integer.parseInt(params.get("id")[0]) != 0){
+            password = params.get("password")[0];
+        }else {
+            password = MD5.crypt(params.get("password")[0]);
+        }
         try {
             if (validatorUser.validate(params)) {
                 return new UserBuilder().id(Integer.parseInt(params.get("id")[0]))
@@ -105,7 +111,7 @@ public class UserServiceImpl extends AbstractService implements ICrudServiceExte
                         .surname(params.get("surname")[0])
                         .login(params.get("login")[0])
                         .email(params.get("email")[0])
-                        .password((MD5.crypt(params.get("password")[0])))
+                        .password(password)
                         .passportNumber(params.get("passportNumber")[0])
                         .mobilePhone(params.get("mobilePhone")[0])
                         .role(new RoleBuilder().id(Integer.parseInt(params.get("role")[0])).build())

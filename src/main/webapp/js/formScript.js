@@ -43,7 +43,6 @@ function loadTemplate(url) {
 function getUpdateDataUser() {
     var editBodyAdd = $('#mainFormPersonalInfo');
     var result = '';
-    console.log(editBodyAdd);
     $(editBodyAdd).each(function(){
         $("div",this).each(function() {
             if(this.className=='col-sm-9') {
@@ -62,6 +61,7 @@ function getUpdateDataUser() {
     });
     result = result.concat('&','id','=', currentUser.id);
     result = result.concat('&','role','=', currentUser.role.id);
+    result = result.concat('&','password','=', currentUser.password);
     return result;
 }
 
@@ -83,7 +83,7 @@ function updatePersonalInfo() {
     var mobilePhone = document.getElementById("mobilePhone");
     var login = document.getElementById("login");
     var passportNumber = document.getElementById("passportNumber");
-
+    var password = currentUser['password'];
     if(!validName(name.value) || !validName(surname.value) || !validPhone(mobilePhone.value) || !validEmail(email.value) ||
         !validLogin(login.value) || !validPassport(passportNumber.value))
     {

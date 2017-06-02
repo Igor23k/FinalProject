@@ -32,7 +32,7 @@ public class MainServlet extends HttpServlet {
             String localePage = request.getParameter("localePage");
             Map<String, String[]> list = request.getParameterMap();
             CommandFactoryMapper commandFactoryMapper = CommandFactoryMapper.getInstance();
-            if (request.getParameter("action") != null) {
+                if (request.getParameter("action") != null) {
                 ICommand command = commandFactoryMapper.getCommand(request.getParameter("action"));
                 result = command.execute(request);
             }

@@ -61,7 +61,7 @@
                         +375(29)179-07-46
                         <br>
                         <div id="idAdminRef" style="display: none">
-                            <a id="admin" href="/servlet?page=admin.jsp&action=ADMIN_START">${data.admin}</a>
+                            <a id="admin" href="/servlet?page=admin.jsp&action=ADMIN_START&locale=ru&localePage=admin">${data.admin}</a>
                         </div>
                     </div>
 

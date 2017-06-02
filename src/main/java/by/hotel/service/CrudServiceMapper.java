@@ -10,9 +10,7 @@ public class CrudServiceMapper {
 
     static {
         services.put("DISCOUNT", new DiscountServiceImpl());
-        services.put("PARKING_SPACE", new ParkingSpaceServiceImpl());
         services.put("RESERVATION", new ReservationServiceImpl());
-        services.put("RESERVATION_PARKING_SPACE", new ReservationParkingSpaceServiceImpl());
         services.put("RESERVATION_ROOM", new ReservationRoomServiceImpl());
         services.put("ROOM", new RoomServiceImpl());
         services.put("ROOM_TYPE", new RoomTypeServiceImpl());

@@ -2,6 +2,8 @@ package by.hotel.dao.impl;
 
 import by.hotel.dao.AbstractDao;
 import by.hotel.dao.ITablesInfoDao;
+import by.hotel.dao.connectionpool.ConnectionPool;
+import by.hotel.dao.exception.ConnectionPoolException;
 import by.hotel.dao.exception.DAOException;
 
 import java.sql.Connection;
@@ -21,25 +23,30 @@ import static by.hotel.dao.constants.Constants.GET_ALL_NAMES_TABLES;
  * @version 1.0
  */
 public class TablesInfoDaoImpl extends AbstractDao implements ITablesInfoDao {
+
+    private static ConnectionPool connectionPool = ConnectionPool.getInstance();
+
     /**
      * Get table names.
-     * @param connection the operand to have a connection with DB.
      * @return a list of table names.
      * @throws DAOException  if get info tables is failed
      */
-    public List<String> getNamesTables(Connection connection) throws DAOException {
+    public List<String> getNamesTables() throws DAOException {
         PreparedStatement statement=null;
         ResultSet resultSet=null;
-        List<String> namesTables=new ArrayList<String>();
+        List<String> namesTables=new ArrayList<>();
+        Connection connection = null;
         try {
+            connection = connectionPool.takeConnection();
             statement=connection.prepareStatement(GET_ALL_NAMES_TABLES);
             resultSet=statement.executeQuery();
             while(resultSet.next()){
                 namesTables.add(resultSet.getString("Tables_in_db_hotel"));
             }
-        }catch (SQLException e){
+        }catch (SQLException | ConnectionPoolException e){
             throw new DAOException(e);
-        }finally {
+        } finally {
+            connectionPool.closeConnection(connection, statement);
             closeStatement(statement, resultSet);
         }
         return namesTables;

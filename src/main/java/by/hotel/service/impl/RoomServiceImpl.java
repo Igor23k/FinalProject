@@ -43,14 +43,10 @@ public class RoomServiceImpl extends AbstractService implements ICrudServiceExte
      * @throws ServiceException  if get room headers is failed
      */
     public List<String> getAllHeaders() throws ServiceException {
-        Connection connection = null;
         try {
-            connection = getConnection();
-            return roomDao.getRoomHeaders(connection);
+            return roomDao.getRoomHeaders();
         } catch (DAOException e) {
             throw new ServiceException(e);
-        } finally {
-            closeConnection(connection);
         }
     }
 
@@ -60,14 +56,10 @@ public class RoomServiceImpl extends AbstractService implements ICrudServiceExte
      * @throws DAOException if get rooms is failed
      */
     public List<Room> getAllEntities() throws ServiceException {
-        Connection connection = null;
         try {
-            connection = getConnection();
-            return roomDao.getRooms(connection);
+            return roomDao.getRooms();
         } catch (DAOException e) {
             throw new ServiceException(e);
-        } finally {
-            closeConnection(connection);
         }
     }
 
@@ -78,15 +70,11 @@ public class RoomServiceImpl extends AbstractService implements ICrudServiceExte
      */
     public List<Room> addEntity(Room room) throws ServiceException {
         List<Room> rooms;
-        Connection connection = null;
         try {
-            connection = getConnection();
-            roomDao.addRoom(room, connection);
-            rooms = roomDao.getRooms(connection);
+            roomDao.addRoom(room);
+            rooms = roomDao.getRooms();
         } catch (DAOException e) {
             throw new ServiceException(e);
-        } finally {
-            closeConnection(connection);
         }
         return rooms;
     }
@@ -97,14 +85,10 @@ public class RoomServiceImpl extends AbstractService implements ICrudServiceExte
      * @throws ServiceException if remove room is failed
      */
     public void removeEntity(Room room) throws ServiceException {
-        Connection connection = null;
         try {
-            connection = getConnection();
-            roomDao.removeRoom(room, connection);
+            roomDao.removeRoom(room);
         } catch (DAOException e) {
             throw new ServiceException(e);
-        } finally {
-            closeConnection(connection);
         }
     }
 
@@ -114,14 +98,10 @@ public class RoomServiceImpl extends AbstractService implements ICrudServiceExte
      * @throws ServiceException if update room is failed
      */
     public void updateEntity(Room room) throws ServiceException {
-        Connection connection = null;
         try {
-            connection = getConnection();
-            roomDao.updateRoom(room, connection);
+            roomDao.updateRoom(room);
         } catch (DAOException e) {
             throw new ServiceException(e);
-        } finally {
-            closeConnection(connection);
         }
     }
 
@@ -155,14 +135,10 @@ public class RoomServiceImpl extends AbstractService implements ICrudServiceExte
      * @throws ServiceException if get last inserted room is failed
      */
     public Room getLastInsertedEntity() throws ServiceException {
-        Connection connection = null;
         try {
-            connection = getConnection();
-            return roomDao.getLastInsertedRoom(connection);
+            return roomDao.getLastInsertedRoom();
         } catch (DAOException e) {
             throw new ServiceException(e);
-        } finally {
-            closeConnection(connection);
         }
     }
 }

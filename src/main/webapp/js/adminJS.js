@@ -72,6 +72,8 @@ function generateModals(obj) {
 }
 
 function updateData(obj) {
+    alert("TET!")
+    console.log(obj)
     var editBody = $('#myModalUpdate').find('#mainForm');
     ($(editBody[0].lastElementChild).find("button")[0]).addEventListener("click",sendUpdateData);
     ($('#myModalUpdate').find('.btn.btn-default')[0]).addEventListener("click", getUpdatedData);
@@ -264,11 +266,9 @@ function generateSelectChilds() {
             url: '/servlet?action=GET_ALL_HEADERS&rights=127&locale=ru&localePage=admin&' + tables,
             success: function (data) {
                 Data = data['data'];
-                console.log(Data);
                 for (var value in futureQueryForID) {
                     arrayObj[value] = Data[mapStringTable[value]];
                 }
-                console.log(arrayObj);
                 generateChilds(arrayObj);
             }
         });

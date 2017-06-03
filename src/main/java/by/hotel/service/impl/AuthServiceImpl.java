@@ -33,14 +33,10 @@ public class AuthServiceImpl extends AbstractService implements IAuthService {
 	 * @throws ServiceException if authorisation user is failed
 	 */
 	public User checkUser(String email, String password)  throws ServiceException{
-		Connection connection = null;
 		try {
-			connection = getConnection();
-			return authDao.authorisation(email,password,connection);
+			return authDao.authorisation(email,password);
 		}catch (DAOException e){
 			throw new ServiceException(e);
-		}finally {
-			closeConnection(connection);
 		}
 	}
 

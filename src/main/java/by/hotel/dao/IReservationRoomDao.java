@@ -15,37 +15,32 @@ import java.util.List;
 public interface IReservationRoomDao {
     /**
      * Get reservation room.
-     * @param connection the operand to have a connection with DB.
      * @return the list of reservations parking spaces.
      * @throws DAOException if get reservation rooms is failed
      */
-    List<ReservationRoom> getReservationRooms(Connection connection) throws DAOException;
+    List<ReservationRoom> getReservationRooms() throws DAOException;
     /**
      * Add reservation room.
      * @param reservationRoom the operand to have as a reservation room.
-     * @param connection the operand to have a connection with DB.
      * @throws DAOException if add reservation room is failed
      */
-    void addReservationRoom(ReservationRoom reservationRoom, Connection connection) throws DAOException;
+    void addReservationRoom(ReservationRoom reservationRoom) throws DAOException;
     /**
      * Remove reservation room.
      * @param reservationRoom the operand to have as a reservation reservation room.
-     * @param connection the operand to have a connection with DB.
      * @throws DAOException if remove reservation room is failed
      */
-    void removeReservationRoom(ReservationRoom reservationRoom, Connection connection) throws DAOException;
+    void removeReservationRoom(ReservationRoom reservationRoom) throws DAOException;
     /**
      * Update reservation room.
      * @param reservationRoom the operand to have as a reservation reservation room.
-     * @param connection the operand to have a connection with DB.
      * @throws DAOException if update reservation room is failed
      */
-    void updateReservationRoom(ReservationRoom reservationRoom, Connection connection) throws DAOException;
+    void updateReservationRoom(ReservationRoom reservationRoom) throws DAOException;
     /**
      * Get last inserted reservation room.
-     * @param connection the operand to have a connection with DB.
      * @throws DAOException if get last inserted reservation room is failed
      */
-    ReservationRoom getLastInsertedReservationRoom(Connection connection) throws DAOException;
+    ReservationRoom getLastInsertedReservationRoom() throws DAOException;
 
 }

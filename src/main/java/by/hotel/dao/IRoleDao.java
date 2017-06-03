@@ -15,44 +15,38 @@ import java.util.List;
 public interface IRoleDao {
     /**
      * Get role headers.
-     * @param connection the operand to have a connection with DB.
      * @return the list of role headers.
      * @throws DAOException if get role headers is failed
      */
-    List<String> getRoleHeaders(Connection connection) throws DAOException;
+    List<String> getRoleHeaders() throws DAOException;
     /**
      * Get role.
-     * @param connection the operand to have a connection with DB.
      * @return the list of roles.
      * @throws DAOException if get roles is failed
      */
-    List<Role> getRoles(Connection connection) throws DAOException;
+    List<Role> getRoles() throws DAOException;
     /**
      * Add role.
      * @param role the operand to have as a user role.
-     * @param connection the operand to have a connection with DB.
      * @throws DAOException if add role is failed
      */
-    void addRole(Role role, Connection connection) throws DAOException;
+    void addRole(Role role) throws DAOException;
     /**
      * Remove role.
      * @param role the operand to have as a user role.
-     * @param connection the operand to have a connection with DB.
      * @throws DAOException if remove role is failed
      */
-    void removeRole(Role role, Connection connection) throws DAOException;
+    void removeRole(Role role) throws DAOException;
     /**
      * Update role
      * @param role the operand to have as a user role.
-     * @param connection the operand to have a connection with DB.
      * @throws DAOException if update role is failed
      */
-    void updateRole(Role role, Connection connection) throws DAOException;
+    void updateRole(Role role) throws DAOException;
     /**
      * Get last inserted role.
-     * @param connection the operand to have a connection with DB.
      * @throws DAOException if get last inserted role is failed
      */
-    Role getLastInsertedRole(Connection connection) throws DAOException;
+    Role getLastInsertedRole() throws DAOException;
 
 }

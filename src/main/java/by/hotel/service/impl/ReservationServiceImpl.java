@@ -45,14 +45,10 @@ public class ReservationServiceImpl extends AbstractService implements ICrudServ
      * @throws ServiceException  if get reservation headers is failed
      */
     public List<String> getAllHeaders() throws ServiceException {
-        Connection connection = null;
         try {
-            connection = getConnection();
-            return reservationDao.getReservationHeaders(connection);
+            return reservationDao.getReservationHeaders();
         } catch (DAOException e) {
             throw new ServiceException(e);
-        } finally {
-            closeConnection(connection);
         }
     }
 
@@ -62,14 +58,10 @@ public class ReservationServiceImpl extends AbstractService implements ICrudServ
      * @throws ServiceException if get reservations is failed
      */
     public List<Reservation> getAllEntities() throws ServiceException {
-        Connection connection = null;
         try {
-            connection = getConnection();
-            return reservationDao.getAllReservations(connection);
+            return reservationDao.getAllReservations();
         } catch (DAOException e) {
             throw new ServiceException(e);
-        } finally {
-            closeConnection(connection);
         }
     }
 
@@ -80,15 +72,11 @@ public class ReservationServiceImpl extends AbstractService implements ICrudServ
      */
     public List<Reservation> addEntity(Reservation reservation) throws ServiceException {
         List<Reservation> reservations;
-        Connection connection = null;
         try {
-            connection = getConnection();
-            reservationDao.addReservation(reservation, connection);
-            reservations = reservationDao.getAllReservations(connection);
+            reservationDao.addReservation(reservation);
+            reservations = reservationDao.getAllReservations();
         } catch (DAOException e) {
             throw new ServiceException(e);
-        } finally {
-            closeConnection(connection);
         }
         return reservations;
     }
@@ -99,14 +87,10 @@ public class ReservationServiceImpl extends AbstractService implements ICrudServ
      * @throws ServiceException if remove reservation is failed
      */
     public void removeEntity(Reservation reservation) throws ServiceException {
-        Connection connection = null;
         try {
-            connection = getConnection();
-            reservationDao.removeReservation(reservation, connection);
+            reservationDao.removeReservation(reservation);
         } catch (DAOException e) {
             throw new ServiceException(e);
-        } finally {
-            closeConnection(connection);
         }
     }
 
@@ -116,14 +100,10 @@ public class ReservationServiceImpl extends AbstractService implements ICrudServ
      * @throws ServiceException if update reservation is failed
      */
     public void updateEntity(Reservation reservation) throws ServiceException {
-        Connection connection = null;
         try {
-            connection = getConnection();
-            reservationDao.updateReservation(reservation, connection);
+            reservationDao.updateReservation(reservation);
         } catch (DAOException e) {
             throw new ServiceException(e);
-        } finally {
-            closeConnection(connection);
         }
     }
 
@@ -156,14 +136,10 @@ public class ReservationServiceImpl extends AbstractService implements ICrudServ
      * @throws ServiceException if get last inserted reservation is failed
      */
     public Reservation getLastInsertedEntity() throws ServiceException {
-        Connection connection = null;
         try {
-            connection = getConnection();
-            return reservationDao.getLastInsertedReservation(connection);
+            return reservationDao.getLastInsertedReservation();
         } catch (DAOException e) {
             throw new ServiceException(e);
-        } finally {
-            closeConnection(connection);
         }
     }
 

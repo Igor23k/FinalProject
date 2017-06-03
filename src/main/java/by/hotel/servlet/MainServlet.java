@@ -27,7 +27,7 @@ import java.util.Map;
 @WebServlet(urlPatterns = {"/servlet"})
 public class MainServlet extends HttpServlet {
     /**
-     * The event logger.
+     * It is a logger which print some messages to log file.
      */
     private static final Logger logger = LogManager.getLogger(MainServlet.class.getName());
 

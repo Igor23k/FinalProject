@@ -39,14 +39,10 @@ public class RoleServiceImpl extends AbstractService implements ICrudServiceExte
      * @throws ServiceException  if get role headers is failed
      */
     public List<String> getAllHeaders() throws ServiceException {
-        Connection connection = null;
         try{
-            connection = getConnection();
-            return roleDao.getRoleHeaders(connection);
+            return roleDao.getRoleHeaders();
         }catch (DAOException e){
             throw new ServiceException(e);
-        }finally {
-            closeConnection(connection);
         }
     }
 
@@ -56,14 +52,10 @@ public class RoleServiceImpl extends AbstractService implements ICrudServiceExte
      * @throws ServiceException if get roles is failed
      */
     public List<Role> getAllEntities() throws ServiceException {
-        Connection connection = null;
         try {
-            connection = getConnection();
-            return roleDao.getRoles(connection);
+            return roleDao.getRoles();
         } catch (DAOException e) {
             throw new ServiceException(e);
-        }finally {
-            closeConnection(connection);
         }
     }
 
@@ -73,16 +65,12 @@ public class RoleServiceImpl extends AbstractService implements ICrudServiceExte
      * @throws ServiceException if add role is failed
      */
     public List<Role> addEntity(Role role) throws ServiceException {
-        Connection connection = null;
         List<Role> roles;
         try {
-            connection = getConnection();
-            roleDao.addRole(role,connection);
-            roles = roleDao.getRoles(connection);
+            roleDao.addRole(role);
+            roles = roleDao.getRoles();
         } catch (DAOException e) {
             throw new ServiceException(e);
-        }finally {
-            closeConnection(connection);
         }
         return roles;
     }
@@ -93,14 +81,10 @@ public class RoleServiceImpl extends AbstractService implements ICrudServiceExte
      * @throws ServiceException if remove role is failed
      */
     public void removeEntity(Role role) throws ServiceException {
-        Connection connection = null;
         try {
-            connection = getConnection();
-            roleDao.removeRole(role,connection);
+            roleDao.removeRole(role);
         } catch (DAOException e) {
             throw new ServiceException(e);
-        }finally {
-            closeConnection(connection);
         }
     }
 
@@ -110,14 +94,10 @@ public class RoleServiceImpl extends AbstractService implements ICrudServiceExte
      * @throws ServiceException if update role is failed
      */
     public void updateEntity(Role role) throws ServiceException {
-        Connection connection = null;
         try {
-            connection = getConnection();
-            roleDao.updateRole(role,connection);
+            roleDao.updateRole(role);
         } catch (DAOException e) {
             throw new ServiceException(e);
-        }finally {
-            closeConnection(connection);
         }
     }
 
@@ -153,14 +133,10 @@ public class RoleServiceImpl extends AbstractService implements ICrudServiceExte
      * @throws ServiceException if get last inserted role is failed
      */
     public Role getLastInsertedEntity() throws ServiceException {
-        Connection connection = null;
         try {
-            connection = getConnection();
-            return roleDao.getLastInsertedRole(connection);
+            return roleDao.getLastInsertedRole();
         }catch (DAOException e){
             throw new ServiceException(e);
-        }finally {
-            closeConnection(connection);
         }
     }
 

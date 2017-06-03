@@ -41,14 +41,10 @@ public class UserServiceImpl extends AbstractService implements ICrudServiceExte
      * @throws ServiceException  if get user headers is failed
      */
     public List<String> getAllHeaders() throws ServiceException {
-        Connection connection = null;
         try {
-            connection = getConnection();
-            return userDao.getUserHeaders(connection);
+            return userDao.getUserHeaders();
         } catch (DAOException e) {
             throw new ServiceException(e);
-        } finally {
-            closeConnection(connection);
         }
     }
 
@@ -58,14 +54,10 @@ public class UserServiceImpl extends AbstractService implements ICrudServiceExte
      * @throws ServiceException if get users is failed
      */
     public List<User> getAllEntities() throws ServiceException {
-        Connection connection = null;
         try {
-            connection = getConnection();
-            return userDao.getUsers(connection);
+            return userDao.getUsers();
         } catch (DAOException e) {
             throw new ServiceException(e);
-        } finally {
-            closeConnection(connection);
         }
     }
 
@@ -76,15 +68,11 @@ public class UserServiceImpl extends AbstractService implements ICrudServiceExte
      * @throws ServiceException if get user is failed
      */
     public User getEntity(Integer id) throws ServiceException {
-        Connection connection = null;
         User user;
         try {
-            connection = getConnection();
-            user = userDao.getUser(id, connection);
+            user = userDao.getUser(id);
         } catch (DAOException e) {
             throw new ServiceException(e);
-        } finally {
-            closeConnection(connection);
         }
         return user;
     }
@@ -95,16 +83,12 @@ public class UserServiceImpl extends AbstractService implements ICrudServiceExte
      * @throws ServiceException if add user is failed
      */
     public List<User> addEntity(User user) throws ServiceException {
-        Connection connection = null;
         List<User> users;
         try {
-            connection = getConnection();
-            userDao.addUser(user, connection);
-            users = userDao.getUsers(connection);
+            userDao.addUser(user);
+            users = userDao.getUsers();
         } catch (DAOException e) {
             throw new ServiceException(e);
-        } finally {
-            closeConnection(connection);
         }
         return users;
     }
@@ -115,14 +99,10 @@ public class UserServiceImpl extends AbstractService implements ICrudServiceExte
      * @throws ServiceException if remove user is failed
      */
     public void removeEntity(User user) throws ServiceException {
-        Connection connection = null;
         try {
-            connection = getConnection();
-            userDao.removeUser(user, connection);
+            userDao.removeUser(user);
         } catch (DAOException e) {
             throw new ServiceException(e);
-        } finally {
-            closeConnection(connection);
         }
     }
 
@@ -132,14 +112,10 @@ public class UserServiceImpl extends AbstractService implements ICrudServiceExte
      * @throws ServiceException if update user is failed
      */
     public void updateEntity(User user) throws ServiceException {
-        Connection connection = null;
         try {
-            connection = getConnection();
-            userDao.updateUser(user, connection);
+            userDao.updateUser(user);
         } catch (DAOException e) {
             throw new ServiceException(e);
-        } finally {
-            closeConnection(connection);
         }
     }
 
@@ -184,14 +160,10 @@ public class UserServiceImpl extends AbstractService implements ICrudServiceExte
      * @throws ServiceException if get last inserted user is failed
      */
     public User getLastInsertedEntity() throws ServiceException {
-        Connection connection = null;
         try {
-            connection = getConnection();
-            return userDao.getLastInsertedUser(connection);
+            return userDao.getLastInsertedUser();
         } catch (DAOException e) {
             throw new ServiceException(e);
-        } finally {
-            closeConnection(connection);
         }
     }
 

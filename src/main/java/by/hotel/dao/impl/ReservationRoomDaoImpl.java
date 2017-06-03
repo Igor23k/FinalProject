@@ -4,6 +4,8 @@ import by.hotel.bean.*;
 import by.hotel.builder.*;
 import by.hotel.dao.AbstractDao;
 import by.hotel.dao.IReservationRoomDao;
+import by.hotel.dao.connectionpool.ConnectionPool;
+import by.hotel.dao.exception.ConnectionPoolException;
 import by.hotel.dao.exception.DAOException;
 import by.hotel.util.ErrorStringBuilder;
 
@@ -31,27 +33,33 @@ import static by.hotel.dao.constants.Constants.*;
  * @version 1.0
  */
 public class ReservationRoomDaoImpl extends AbstractDao implements IReservationRoomDao {
+
+    private static ConnectionPool connectionPool = ConnectionPool.getInstance();
+
     /**
      * Get reservationRooms.
-     * @param connection the operand to have a connection with DB.
      * @return the list of reservationRooms.
      * @throws DAOException if get reservation rooms is failed
      */
-    public List<ReservationRoom> getReservationRooms(Connection connection) throws DAOException {
+    public List<ReservationRoom> getReservationRooms() throws DAOException {
         PreparedStatement statement = null;
         ResultSet resultSet = null;
         List<ReservationRoom> reservationRooms = new ArrayList<>();
         ReservationRoomBuilder reservationRoomBuilder = new ReservationRoomBuilder();
+        Connection connection = null;
         try {
+            connection = connectionPool.takeConnection();
             statement = connection.prepareStatement(GET_ALL_RESERVATION_ROOMS);
             resultSet = statement.executeQuery();
             while (resultSet.next()) {
                 reservationRooms.add(fillReservationRoom(resultSet,reservationRoomBuilder));
             }
-        } catch (SQLException e) {
+        } catch (SQLException | ConnectionPoolException e) {
             throw new DAOException(e);
-        } finally {
+        }finally {
+            connectionPool.closeConnection(connection, statement);
             closeStatement(statement, resultSet);
+
         }
         return reservationRooms;
     }
@@ -59,20 +67,20 @@ public class ReservationRoomDaoImpl extends AbstractDao implements IReservationR
     /**
      * Add reservationRoom.
      * @param reservationRoom the operand to have as a reservationRoom.
-     * @param connection the operand to have a connection with DB.
      * @throws DAOException if add reservation room is failed
      */
-    public void addReservationRoom(ReservationRoom reservationRoom,Connection connection) throws DAOException {
+    public void addReservationRoom(ReservationRoom reservationRoom) throws DAOException {
         PreparedStatement statement = null;
+        Connection connection = null;
         try {
+            connection = connectionPool.takeConnection();
             statement = connection.prepareStatement(ADD_RESERVATION_ROOM);
             statement = fillStatement(statement, reservationRoom);
             statement.execute();
-        }catch (SQLIntegrityConstraintViolationException e){
+        }catch (SQLException | NullPointerException | ConnectionPoolException e) {
             throw new DAOException(buildMessage(reservationRoom),e);
-        } catch (SQLException | NullPointerException e) {
-            throw new DAOException(buildMessage(reservationRoom),e);
-        }finally {
+        } finally {
+            connectionPool.closeConnection(connection, statement);
             closeStatement(statement, null);
         }
     }
@@ -80,18 +88,20 @@ public class ReservationRoomDaoImpl extends AbstractDao implements IReservationR
     /**
      * Remove reservationRoom.
      * @param reservationRoom the operand to have as a reservationRoom.
-     * @param connection the operand to have a connection with DB.
      * @throws DAOException if remove reservation room is failed
      */
-    public void removeReservationRoom(ReservationRoom reservationRoom,Connection connection) throws DAOException {
+    public void removeReservationRoom(ReservationRoom reservationRoom) throws DAOException {
         PreparedStatement statement = null;
+        Connection connection = null;
         try {
+            connection = connectionPool.takeConnection();
             statement = connection.prepareStatement(REMOVE_RESERVATION_ROOM);
             statement = fillStatement(statement, reservationRoom);
             statement.execute();
-        } catch (SQLException e) {
+        } catch (SQLException | ConnectionPoolException e) {
             throw new DAOException(e);
         } finally {
+            connectionPool.closeConnection(connection, statement);
             closeStatement(statement, null);
         }
     }
@@ -99,33 +109,34 @@ public class ReservationRoomDaoImpl extends AbstractDao implements IReservationR
     /**
      * Update reservationRoom.
      * @param reservationRoom the operand to have as a reservationRoom.
-     * @param connection the operand to have a connection with DB.
      * @throws DAOException if update reservation room is failed
      */
-    public void updateReservationRoom(ReservationRoom reservationRoom,Connection connection) throws DAOException {
+    public void updateReservationRoom(ReservationRoom reservationRoom) throws DAOException {
         throw new UnsupportedOperationException("Unsupported operation!");
     }
 
     /**
      * Get last inserted reservationRoom.
-     * @param connection the operand to have a connection with DB.
      * @throws DAOException if get last inserted reservation room is failed
      */
-    public ReservationRoom getLastInsertedReservationRoom(Connection connection) throws DAOException {
+    public ReservationRoom getLastInsertedReservationRoom() throws DAOException {
         PreparedStatement statement = null;
         ReservationRoom reservationRoom = null;
         ResultSet resultSet;
         ReservationRoomBuilder reservationRoomBuilder = new ReservationRoomBuilder();
+        Connection connection = null;
         try {
+            connection = connectionPool.takeConnection();
             statement = connection.prepareStatement(GET_LAST_INSERTED_RESERVATION_ROOM);
             // statement.setString(1,"reservation_room");
             resultSet = statement.executeQuery();
             if (resultSet.next()) {
                 reservationRoom = fillReservationRoom(resultSet, reservationRoomBuilder);
             }
-        } catch (SQLException | NullPointerException e) {
+        } catch (SQLException | NullPointerException | ConnectionPoolException e) {
             throw new DAOException(e);
         } finally {
+            connectionPool.closeConnection(connection, statement);
             closeStatement(statement, null);
         }
         return reservationRoom;

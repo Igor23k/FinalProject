@@ -40,14 +40,10 @@ public class ReservationRoomServiceImpl extends AbstractService implements ICrud
      * @throws ServiceException  if get reservation room is failed
      */
     public List<ReservationRoom> getAllEntities() throws ServiceException {
-        Connection connection = null;
         try {
-            connection = getConnection();
-            return reservationRoomDao.getReservationRooms(connection);
+            return reservationRoomDao.getReservationRooms();
         }catch (DAOException e){
             throw new ServiceException(e);
-        }finally {
-            closeConnection(connection);
         }
     }
 
@@ -58,15 +54,11 @@ public class ReservationRoomServiceImpl extends AbstractService implements ICrud
      */
     public List<ReservationRoom> addEntity(ReservationRoom reservationRoom) throws ServiceException {
         List<ReservationRoom> reservationRooms;
-        Connection connection = null;
         try {
-            connection = getConnection();
-            reservationRoomDao.addReservationRoom(reservationRoom,connection);
-            reservationRooms = reservationRoomDao.getReservationRooms(connection);
+            reservationRoomDao.addReservationRoom(reservationRoom);
+            reservationRooms = reservationRoomDao.getReservationRooms();
         }catch (DAOException e){
             throw new ServiceException(e);
-        }finally {
-            closeConnection(connection);
         }
         return reservationRooms;
     }
@@ -77,14 +69,10 @@ public class ReservationRoomServiceImpl extends AbstractService implements ICrud
      * @throws ServiceException if remove reservation room is failed
      */
     public void removeEntity(ReservationRoom reservationRoom) throws ServiceException {
-        Connection connection = null;
         try {
-            connection = getConnection();
-            reservationRoomDao.removeReservationRoom(reservationRoom,connection);
+            reservationRoomDao.removeReservationRoom(reservationRoom);
         }catch (DAOException e){
             throw new ServiceException(e);
-        }finally {
-            closeConnection(connection);
         }
     }
 
@@ -94,14 +82,10 @@ public class ReservationRoomServiceImpl extends AbstractService implements ICrud
      * @throws ServiceException if update reservation room is failed
      */
     public void updateEntity(ReservationRoom reservationRoom) throws ServiceException {
-        Connection connection = null;
         try {
-            connection = getConnection();
-            reservationRoomDao.updateReservationRoom(reservationRoom,connection);
+            reservationRoomDao.updateReservationRoom(reservationRoom);
         }catch (DAOException e){
             throw new ServiceException(e);
-        }finally {
-            closeConnection(connection);
         }
     }
 
@@ -123,14 +107,10 @@ public class ReservationRoomServiceImpl extends AbstractService implements ICrud
      * @throws ServiceException if get last inserted reservation room is failed
      */
     public ReservationRoom getLastInsertedEntity() throws ServiceException {
-        Connection connection = null;
         try {
-            connection = getConnection();
-            return reservationRoomDao.getLastInsertedReservationRoom(connection);
+            return reservationRoomDao.getLastInsertedReservationRoom();
         }catch (DAOException e){
             throw new ServiceException(e);
-        }finally {
-            closeConnection(connection);
         }
     }
 

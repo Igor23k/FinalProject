@@ -29,14 +29,10 @@ public class TablesInfoServiceImpl extends AbstractService implements ITablesInf
      * @throws ServiceException  if get table names is failed
      */
     public List<String> getAllTablesNames() throws ServiceException {
-        Connection connection = null;
         try {
-            connection = getConnection();
-            return tablesInfoDao.getNamesTables(connection);
+            return tablesInfoDao.getNamesTables();
         }catch (DAOException e){
             throw new ServiceException(e);
-        }finally {
-            closeConnection(connection);
         }
     }
 }

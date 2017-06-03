@@ -5,6 +5,8 @@ import by.hotel.builder.RoomBuilder;
 import by.hotel.builder.RoomTypeBuilder;
 import by.hotel.dao.AbstractDao;
 import by.hotel.dao.IRoomDao;
+import by.hotel.dao.connectionpool.ConnectionPool;
+import by.hotel.dao.exception.ConnectionPoolException;
 import by.hotel.dao.exception.DAOException;
 import by.hotel.util.ErrorStringBuilder;
 
@@ -32,18 +34,22 @@ import static by.hotel.dao.constants.Constants.*;
  * @version 1.0
  */
 public class RoomDaoImpl extends AbstractDao implements IRoomDao {
+
+    private static ConnectionPool connectionPool = ConnectionPool.getInstance();
+
     /**
      * Get room headers.
-     * @param connection the operand to have a connection with DB.
      * @return the list of room headers.
      * @throws DAOException if get room headers is failed
      */
-    public List<String> getRoomHeaders(Connection connection) throws DAOException {
+    public List<String> getRoomHeaders() throws DAOException {
         PreparedStatement statement = null;
         ResultSet resultSet = null;
-        List<String> headers = new ArrayList<String>();
+        List<String> headers = new ArrayList<>();
         StringBuilder stringBuilder = new StringBuilder();
+        Connection connection = null;
         try {
+            connection = connectionPool.takeConnection();
             statement = connection.prepareStatement(GET_ALL_ROOMS_HEADERS);
             resultSet = statement.executeQuery();
             while (resultSet.next()) {
@@ -52,9 +58,10 @@ public class RoomDaoImpl extends AbstractDao implements IRoomDao {
                 headers.add(stringBuilder.toString());
                 stringBuilder.setLength(0);
             }
-        } catch (SQLException e) {
+        } catch (SQLException | ConnectionPoolException e) {
             throw new DAOException(e);
         } finally {
+            connectionPool.closeConnection(connection, statement);
             closeStatement(statement, resultSet);
         }
         return headers;
@@ -62,24 +69,26 @@ public class RoomDaoImpl extends AbstractDao implements IRoomDao {
 
     /**
      * Get rooms.
-     * @param connection the operand to have a connection with DB.
      * @return the list of rooms.
      * @throws DAOException if room rooms is failed
      */
-    public List<Room> getRooms(Connection connection) throws DAOException {
+    public List<Room> getRooms() throws DAOException {
         PreparedStatement statement = null;
         ResultSet resultSet = null;
         List<Room> rooms = new ArrayList<>();
         RoomBuilder roomBuilder = new RoomBuilder();
+        Connection connection = null;
         try {
+            connection = connectionPool.takeConnection();
             statement = connection.prepareStatement(GET_ALL_ROOMS);
             resultSet = statement.executeQuery();
             while (resultSet.next()) {
                 rooms.add(fillRoom(resultSet,roomBuilder));
             }
-        } catch (SQLException e) {
+        } catch (SQLException | ConnectionPoolException e) {
             throw new DAOException(e);
         } finally {
+            connectionPool.closeConnection(connection, statement);
             closeStatement(statement, resultSet);
         }
         return rooms;
@@ -88,18 +97,20 @@ public class RoomDaoImpl extends AbstractDao implements IRoomDao {
     /**
      * Add room.
      * @param room the operand to have as a room.
-     * @param connection the operand to have a connection with DB.
      * @throws DAOException if add room is failed
      */
-    public void addRoom(Room room,Connection connection) throws DAOException {
+    public void addRoom(Room room) throws DAOException {
         PreparedStatement statement = null;
+        Connection connection = null;
         try {
+            connection = connectionPool.takeConnection();
             statement = connection.prepareStatement(ADD_ROOM);
             statement = fillStatement(statement, room);
             statement.execute();
-        } catch (SQLException | NullPointerException e) {
+        } catch (SQLException | NullPointerException | ConnectionPoolException e) {
             throw new DAOException(e);
         } finally {
+            connectionPool.closeConnection(connection, statement);
             closeStatement(statement, null);
         }
     }
@@ -107,20 +118,22 @@ public class RoomDaoImpl extends AbstractDao implements IRoomDao {
     /**
      * Remove room.
      * @param room the operand to have as a room.
-     * @param connection the operand to have a connection with DB.
      * @throws DAOException if remove room is failed
      */
-    public void removeRoom(Room room,Connection connection) throws DAOException {
+    public void removeRoom(Room room) throws DAOException {
         PreparedStatement statement = null;
+        Connection connection = null;
         try {
+            connection = connectionPool.takeConnection();
             statement = connection.prepareStatement(REMOVE_ROOM);
             statement.setInt(1, room.getId());
             statement.execute();
         }catch (SQLIntegrityConstraintViolationException e){
             throw new DAOException(buildMessage(room, e.getMessage()) ,e);
-        } catch (SQLException e) {
+        } catch (SQLException | ConnectionPoolException e) {
             throw new DAOException(e);
         } finally {
+            connectionPool.closeConnection(connection, statement);
             closeStatement(statement, null);
         }
     }
@@ -128,35 +141,38 @@ public class RoomDaoImpl extends AbstractDao implements IRoomDao {
     /**
      * Update room.
      * @param room the operand to have as a room.
-     * @param connection the operand to have a connection with DB.
      * @throws DAOException if update room is failed
      */
-    public void updateRoom(Room room,Connection connection) throws DAOException {
+    public void updateRoom(Room room) throws DAOException {
         PreparedStatement statement = null;
+        Connection connection = null;
         try {
+            connection = connectionPool.takeConnection();
             statement = connection.prepareStatement(UPDATE_ROOM);
             statement = fillStatement(statement, room);
             statement.setInt(6, room.getId());
             statement.execute();
-        } catch (SQLException e) {
+        } catch (SQLException | ConnectionPoolException e) {
             throw new DAOException(e);
         } finally {
+            connectionPool.closeConnection(connection, statement);
             closeStatement(statement, null);
         }
     }
 
     /**
      * Get last inserted room.
-     * @param connection the operand to have a connection with DB.
      * @throws DAOException  if get last inserted room is failed
      */
-    public Room getLastInsertedRoom(Connection connection) throws DAOException {
+    public Room getLastInsertedRoom() throws DAOException {
         PreparedStatement statement = null;
         Room room = null;
         ResultSet resultSet;
         RoomBuilder roomBuilder = new RoomBuilder();
         RoomTypeBuilder roomTypeBuilder  = new RoomTypeBuilder();
+        Connection connection = null;
         try {
+            connection = connectionPool.takeConnection();
             statement = connection.prepareStatement(GET_LAST_INSERTED_ROOM);
             // statement.setString(1,room");
             resultSet = statement.executeQuery();
@@ -172,7 +188,10 @@ public class RoomDaoImpl extends AbstractDao implements IRoomDao {
             }
         } catch (SQLException | NullPointerException e) {
             throw new DAOException(e);
+        } catch (ConnectionPoolException e) {
+            throw new DAOException(e);
         } finally {
+            connectionPool.closeConnection(connection, statement);
             closeStatement(statement, null);
         }
         return room;

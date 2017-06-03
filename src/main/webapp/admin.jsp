@@ -35,7 +35,7 @@
                     </table>
                     <br>
                     <button type="button" style="width: 100%" onclick="Click()" class="btn btn-primary">Сайт
-                        <a id="idHrefAdmin" href="main.jsp"></a>
+                        <a id="idHrefAdmin" href="http://localhost:8080/servlet?rights=4&page=main.jsp&locale=ru&localePage=contentMain"></a>
                     </button>
                 </div>
                 <div class="col-lg-12" style="float: right;width: 85%;">

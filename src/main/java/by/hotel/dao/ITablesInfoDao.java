@@ -14,9 +14,8 @@ import java.util.List;
 public interface ITablesInfoDao {
     /**
      * Get table names.
-     * @param connection the operand to have a connection with DB.
      * @return the list of table names.
      * @throws DAOException  if get info tables is failed
      */
-    List<String> getNamesTables(Connection connection) throws DAOException;
+    List<String> getNamesTables() throws DAOException;
 }

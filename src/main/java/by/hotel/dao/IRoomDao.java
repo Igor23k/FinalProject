@@ -15,44 +15,38 @@ import java.util.List;
 public interface IRoomDao {
     /**
      * Get room headers.
-     * @param connection the operand to have a connection with DB.
      * @return the list of room headers.
      * @throws DAOException if get room headers is failed
      */
-    List<String> getRoomHeaders(Connection connection) throws DAOException;
+    List<String> getRoomHeaders() throws DAOException;
     /**
      * Get room.
-     * @param connection the operand to have a connection with DB.
      * @return the list of rooms.
      * @throws DAOException if room rooms is failed
      */
-    List<Room> getRooms(Connection connection) throws DAOException;
+    List<Room> getRooms() throws DAOException;
     /**
      * Add room.
      * @param room the operand to have as a room.
-     * @param connection the operand to have a connection with DB.
      * @throws DAOException if add room is failed
      */
-    void addRoom(Room room, Connection connection) throws DAOException;
+    void addRoom(Room room) throws DAOException;
     /**
      * Remove room.
      * @param room the operand to have as a room.
-     * @param connection the operand to have a connection with DB.
      * @throws DAOException if remove room is failed
      */
-    void removeRoom(Room room, Connection connection) throws DAOException;
+    void removeRoom(Room room) throws DAOException;
     /**
      * Update room.
      * @param room the operand to have as a room.
-     * @param connection the operand to have a connection with DB.
      * @throws DAOException if update room is failed
      */
-    void updateRoom(Room room, Connection connection) throws DAOException;
+    void updateRoom(Room room) throws DAOException;
     /**
      * Get last inserted room.
-     * @param connection the operand to have a connection with DB.
      * @throws DAOException  if get last inserted room is failed
      */
-    Room getLastInsertedRoom(Connection connection) throws DAOException;
+    Room getLastInsertedRoom() throws DAOException;
 
 }

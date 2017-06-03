@@ -41,14 +41,10 @@ public class DiscountServiceImpl extends AbstractService implements ICrudService
      * @throws ServiceException  if get discount headers is failed
      */
     public List<String> getAllHeaders() throws ServiceException {
-        Connection connection = null;
         try {
-            connection = getConnection();
-            return discountDao.getDiscountHeaders(connection);
+            return discountDao.getDiscountHeaders();
         }catch (DAOException e){
             throw new ServiceException(e);
-        }finally {
-            closeConnection(connection);
         }
     }
 
@@ -58,14 +54,10 @@ public class DiscountServiceImpl extends AbstractService implements ICrudService
      * @throws ServiceException if get discounts is failed
      */
     public List<Discount> getAllEntities() throws ServiceException {
-        Connection connection = null;
         try {
-            connection = getConnection();
-            return discountDao.getDiscounts(connection);
+            return discountDao.getDiscounts();
         }catch (DAOException e){
             throw new ServiceException(e);
-        }finally {
-            closeConnection(connection);
         }
     }
 
@@ -75,16 +67,12 @@ public class DiscountServiceImpl extends AbstractService implements ICrudService
      * @throws ServiceException if add discount is failed
      */
     public List<Discount> addEntity(Discount discount) throws ServiceException {
-        Connection connection = null;
         List<Discount> discounts;
         try {
-            connection = getConnection();
-            discountDao.addDiscount(discount,connection);
-            discounts = discountDao.getDiscounts(connection);
+            discountDao.addDiscount(discount);
+            discounts = discountDao.getDiscounts();
         }catch (DAOException e){
             throw new ServiceException(e);
-        }finally {
-            closeConnection(connection);
         }
         return discounts;
     }
@@ -95,14 +83,10 @@ public class DiscountServiceImpl extends AbstractService implements ICrudService
      * @throws ServiceException if remove discount is failed
      */
     public void removeEntity(Discount discount) throws ServiceException {
-        Connection connection = null;
         try {
-            connection = getConnection();
-            discountDao.removeDiscount(discount,connection);
+            discountDao.removeDiscount(discount);
         }catch (DAOException e){
             throw new ServiceException(e);
-        }finally {
-            closeConnection(connection);
         }
     }
 
@@ -112,14 +96,10 @@ public class DiscountServiceImpl extends AbstractService implements ICrudService
      * @throws ServiceException if update discount is failed
      */
     public void updateEntity(Discount discount) throws ServiceException {
-        Connection connection = null;
         try {
-            connection = getConnection();
-            discountDao.updateDiscount(discount,connection);
+            discountDao.updateDiscount(discount);
         }catch (DAOException e){
             throw new ServiceException(e);
-        }finally {
-            closeConnection(connection);
         }
     }
 
@@ -148,14 +128,10 @@ public class DiscountServiceImpl extends AbstractService implements ICrudService
      * @throws ServiceException if get last inserted discount is failed
      */
     public Discount getLastInsertedEntity() throws ServiceException {
-        Connection connection = null;
         try {
-            connection = getConnection();
-            return discountDao.getLastInsertedDiscount(connection);
+            return discountDao.getLastInsertedDiscount();
         }catch (DAOException e){
             throw new ServiceException(e);
-        }finally {
-            closeConnection(connection);
         }
     }
 

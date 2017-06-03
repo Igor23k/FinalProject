@@ -39,14 +39,10 @@ public class RoomTypeServiceImpl extends AbstractService implements ICrudService
      * @throws ServiceException  if get room type headers is failed
      */
     public List<String> getAllHeaders() throws ServiceException {
-        Connection connection = null;
         try {
-            connection = getConnection();
-            return roomTypeDao.getRoomTypeHeaders(connection);
+            return roomTypeDao.getRoomTypeHeaders();
         } catch (DAOException e) {
             throw new ServiceException(e);
-        } finally {
-            closeConnection(connection);
         }
     }
 
@@ -56,14 +52,10 @@ public class RoomTypeServiceImpl extends AbstractService implements ICrudService
      * @throws ServiceException if get room types is failed
      */
     public List<RoomType> getAllEntities() throws ServiceException {
-        Connection connection = null;
         try {
-            connection = getConnection();
-            return roomTypeDao.getRoomTypes(connection);
+            return roomTypeDao.getRoomTypes();
         } catch (DAOException e) {
             throw new ServiceException(e);
-        } finally {
-            closeConnection(connection);
         }
     }
 
@@ -73,16 +65,12 @@ public class RoomTypeServiceImpl extends AbstractService implements ICrudService
      * @throws ServiceException if add room type is failed
      */
     public List<RoomType> addEntity(RoomType roomType) throws ServiceException {
-        Connection connection = null;
         List<RoomType> roomTypes;
         try {
-            connection = getConnection();
-            roomTypeDao.addRoomType(roomType, connection);
-            roomTypes = roomTypeDao.getRoomTypes(connection);
+            roomTypeDao.addRoomType(roomType);
+            roomTypes = roomTypeDao.getRoomTypes();
         } catch (DAOException e) {
             throw new ServiceException(e);
-        } finally {
-            closeConnection(connection);
         }
         return roomTypes;
     }
@@ -93,14 +81,10 @@ public class RoomTypeServiceImpl extends AbstractService implements ICrudService
      * @throws ServiceException if remove room type is failed
      */
     public void removeEntity(RoomType roomType) throws ServiceException {
-        Connection connection = null;
         try {
-            connection = getConnection();
-            roomTypeDao.removeRoomType(roomType, connection);
+            roomTypeDao.removeRoomType(roomType);
         } catch (DAOException e) {
             throw new ServiceException(e);
-        } finally {
-            closeConnection(connection);
         }
     }
 
@@ -110,14 +94,10 @@ public class RoomTypeServiceImpl extends AbstractService implements ICrudService
      * @throws ServiceException if update room type is failed
      */
     public void updateEntity(RoomType roomType) throws ServiceException {
-        Connection connection = null;
         try {
-            connection = getConnection();
-            roomTypeDao.updateRoomType(roomType, connection);
+            roomTypeDao.updateRoomType(roomType);
         } catch (DAOException e) {
             throw new ServiceException(e);
-        } finally {
-            closeConnection(connection);
         }
     }
 
@@ -153,14 +133,10 @@ public class RoomTypeServiceImpl extends AbstractService implements ICrudService
      * @throws ServiceException if get last inserted room type is failed
      */
     public RoomType getLastInsertedEntity() throws ServiceException {
-        Connection connection = null;
         try {
-            connection = getConnection();
-            return roomTypeDao.getLastInsertedRoomType(connection);
+            return roomTypeDao.getLastInsertedRoomType();
         } catch (DAOException e) {
             throw new ServiceException(e);
-        } finally {
-            closeConnection(connection);
         }
     }
 

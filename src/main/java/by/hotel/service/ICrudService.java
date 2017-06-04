@@ -20,16 +20,20 @@ public interface ICrudService<T> {
     List<T> getAllEntities() throws ServiceException;
     /**
      * Add entity.
+     * @param entity - the param to add.
+     * @return the list of entities.
      * @throws ServiceException if add entity is failed
      */
     List<T> addEntity(T entity) throws ServiceException;
     /**
      * Remove entity.
+     * @param entity - the param to remove.
      * @throws ServiceException if remove entity is failed
      */
     void removeEntity(T entity) throws ServiceException;
     /**
      * Update entity.
+     * @param entity - the param to update.
      * @throws ServiceException if update entity is failed
      */
     void updateEntity(T entity) throws ServiceException;

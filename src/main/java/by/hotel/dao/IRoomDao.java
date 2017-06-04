@@ -45,6 +45,7 @@ public interface IRoomDao {
     void updateRoom(Room room) throws DAOException;
     /**
      * Get last inserted room.
+     * @return a last inserted room.
      * @throws DAOException  if get last inserted room is failed
      */
     Room getLastInsertedRoom() throws DAOException;

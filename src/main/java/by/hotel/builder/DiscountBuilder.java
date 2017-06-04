@@ -6,8 +6,7 @@ import by.hotel.bean.Discount;
  * DiscountBuilder.java
  * The class store objects with properties and methods.
  * This class is a template Builder.
- * <b> id </ b> and <b> name </ b>.
- * @autor Igor Kozlov
+ * @author Igor Kozlov
  * @version 1.0
  */
 public class DiscountBuilder {

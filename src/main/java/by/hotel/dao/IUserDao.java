@@ -52,6 +52,7 @@ public interface IUserDao {
     User getUser(Integer id) throws DAOException;
     /**
      * Get last inserted user.
+     * @return a last inserted user.
      * @throws DAOException  if get last inserted user is failed
      */
     User getLastInsertedUser() throws DAOException;

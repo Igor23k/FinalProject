@@ -45,6 +45,7 @@ public interface IDiscountDao {
     void updateDiscount(Discount discount) throws DAOException;
     /**
      * Get last inserted discount.
+     * @return a discount.
      * @throws DAOException if get last inserted discount is failed
      */
     Discount getLastInsertedDiscount() throws DAOException;

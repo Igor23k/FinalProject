@@ -49,6 +49,7 @@ function getReservationData(editBody) {
         result = result.concat('&','idUser','=', '0');
     result = result.concat('&','accepted','=', '0');
     result = result.concat('&','idDiscount','=', '1');
+    result = result.concat('&','id','=', '0');
 
     return result;
 }

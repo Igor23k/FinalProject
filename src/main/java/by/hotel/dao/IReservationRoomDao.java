@@ -39,12 +39,14 @@ public interface IReservationRoomDao {
     void updateReservationRoom(ReservationRoom reservationRoom) throws DAOException;
     /**
      * Get last inserted reservation room.
+     * @return a last inserted reservation room.
      * @throws DAOException if get last inserted reservation room is failed
      */
     ReservationRoom getLastInsertedReservationRoom() throws DAOException;
 
     /**
      * Get reservation rooms by key.
+     * @param key the operand to get specific reservation room.
      * @return the list of reservation rooms by key.
      * @throws DAOException if get reservation rooms is failed
      */

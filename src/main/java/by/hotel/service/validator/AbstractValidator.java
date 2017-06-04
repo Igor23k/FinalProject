@@ -7,11 +7,12 @@ import java.util.Map;
  * Class contain common method to validators.
  * validate - method to validate parameters.
  * @version 2.0
- * @autor Igor Kozlov
+ * @author Igor Kozlov
  */
 public abstract class AbstractValidator {
     /**
      * Validate parameters.
+     * @param data - the param that needed to validate.
      * @return boolean value.
      * @throws Exception if parameters is incorrect
      */

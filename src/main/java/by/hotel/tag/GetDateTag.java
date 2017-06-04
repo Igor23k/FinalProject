@@ -25,6 +25,7 @@ public class GetDateTag extends TagSupport {
     private String locale = "ru";
 
     /**
+     * @param locale -  the locale to be set.
      * Function for set value of locale {@link GetDateTag#locale}
      */
     public void setLocale(String locale) {

@@ -6,10 +6,7 @@ import by.hotel.bean.Role;
  * RoleBuilder.java
  * The class store objects with properties and methods.
  * This class is a template Builder.
- * <b> id </ b>, <b> update </ b>, <b> delete </ b>, <b> nameRole </ b>,
- * <b> insert </ b>, <b> create </ b>, <b> select </ b>, <b> drop </ b>,
- * and <b> grant </ b>.
- * @autor Igor Kozlov
+ * @author Igor Kozlov
  * @version 1.0
  */
 public class RoleBuilder {

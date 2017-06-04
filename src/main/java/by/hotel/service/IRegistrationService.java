@@ -12,6 +12,7 @@ import by.hotel.service.exception.ServiceException;
 public interface IRegistrationService {
     /**
      * Registration user.
+     * @param user - the param to registration.
      * @return the user.
      * @throws ServiceException if user registration is failed
      */

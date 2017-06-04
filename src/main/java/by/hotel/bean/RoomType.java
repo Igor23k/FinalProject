@@ -5,9 +5,7 @@ import by.hotel.builder.RoomTypeBuilder;
 /**
  * RoomType.java
  * The class store objects with properties
- * <b> id </ b>, <b> roomsCount </ b>, <b> bedsCount </ b>,
- * <b> bathroomsCount </ b>, <b> size </ b>, <b> size </ b> and <b> additionalInfo </ b>.
- * @autor Igor Kozlov
+ * @author Igor Kozlov
  * @version 1.0
  */
 
@@ -70,6 +68,7 @@ public class RoomType {
 
     /**
      * Function for set value of id {@link RoomType#id}
+     * @param id - the id to be set.
      */
     public void setId(int id) {
         this.id = id;
@@ -85,6 +84,7 @@ public class RoomType {
 
     /**
      * Function for set value of roomsCount {@link RoomType#roomsCount}
+     * @param roomsCount - the roomsCount to be set.
      */
     public void setRoomsCount(int roomsCount) {
         this.roomsCount = roomsCount;
@@ -100,6 +100,7 @@ public class RoomType {
 
     /**
      * Function for set value of bedsCount {@link RoomType#bedsCount}
+     * @param bedsCount - the bedsCount to be set.
      */
     public void setBedsCount(int bedsCount) {
         this.bedsCount = bedsCount;
@@ -115,6 +116,7 @@ public class RoomType {
 
     /**
      * Function for set value of costPerDay {@link RoomType#costPerDay}
+     * @param costPerDay - the costPerDay to be set.
      */
     public void setCostPerDay(float costPerDay) {
         this.costPerDay = costPerDay;
@@ -130,6 +132,7 @@ public class RoomType {
 
     /**
      * Function for set value of additionalInfo {@link RoomType#additionalInfo}
+     * @param additionalInfo - the additionalInfo to be set.
      */
     public void setAdditionalInfo(String additionalInfo) {
         this.additionalInfo = additionalInfo;
@@ -145,6 +148,7 @@ public class RoomType {
 
     /**
      * Function for set value of bathroomsCount {@link RoomType#bathroomsCount}
+     * @param bathroomsCount - the bathroomsCount to be set.
      */
     public void setBathroomsCount(int bathroomsCount) {
         this.bathroomsCount = bathroomsCount;
@@ -160,6 +164,7 @@ public class RoomType {
 
     /**
      * Function for set value of size {@link RoomType#size}
+     * @param size - the size to be set.
      */
     public void setSize(int size) {
         this.size = size;

@@ -3,8 +3,6 @@ package by.hotel.bean;
 /**
  * Room.java
  * The class store objects with properties
- * <b> id </ b>, <b> floor </ b>, <b> path </ b>,
- * <b> phone </ b>, <b> name </ b> and <b> roomType </ b>.
  * @autor Igor Kozlov
  * @version 1.0
  */
@@ -63,6 +61,7 @@ public class Room {
 
     /**
      * Function for set value of id {@link Room#id}
+     * @param id - the id to be set.
      */
     public void setId(int id) {
         this.id = id;
@@ -78,6 +77,7 @@ public class Room {
 
     /**
      * Function for set value of roomType {@link Room#roomType}
+     * @param roomType - the roomType to be set.
      */
     public void setRoomType(RoomType roomType) {
         this.roomType = roomType;
@@ -93,6 +93,7 @@ public class Room {
 
     /**
      * Function for set value of floor {@link Room#floor}
+     * @param floor - the floor to be set.
      */
     public void setFloor(int floor) {
         this.floor = floor;
@@ -108,6 +109,7 @@ public class Room {
 
     /**
      * Function for set value of phone {@link Room#phone}
+     * @param phone - the phone to be set.
      */
     public void setPhone(String phone) {
         this.phone = phone;
@@ -123,6 +125,7 @@ public class Room {
 
     /**
      * Function for set value of name {@link Room#name}
+     * @param name - the name to be set.
      */
     public void setName(String name) {
         this.name = name;
@@ -138,6 +141,7 @@ public class Room {
 
     /**
      * Function for set value of path {@link Room#path}
+     * @param path - the path to be set.
      */
     public void setPath(String path) {
         this.path = path;

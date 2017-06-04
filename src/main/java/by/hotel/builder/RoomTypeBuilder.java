@@ -6,9 +6,7 @@ import by.hotel.bean.RoomType;
  * RoomTypeBuilder.java
  * The class store objects with properties and methods.
  * This class is a template Builder.
- * <b> id </ b>, <b> roomsCount </ b>, <b> bedsCount </ b>,
- * <b> bathroomsCount </ b>, <b> size </ b>, <b> size </ b> and <b> additionalInfo </ b>.
- * @autor Igor Kozlov
+ * @author Igor Kozlov
  * @version 1.0
  */
 public class RoomTypeBuilder {

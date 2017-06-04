@@ -5,8 +5,7 @@ import by.hotel.builder.DiscountBuilder;
 /**
  * Discount.java
  * The class store objects with properties
- * <b> id </ b> and <b> name </ b>.
- * @autor Igor Kozlov
+ * @author Igor Kozlov
  * @version 1.0
  */
 public class Discount {
@@ -43,6 +42,7 @@ public class Discount {
     }
 
     /**
+     * @param id - the id to be set.
      * Function for set value of id {@link Discount#id}
      */
     public void setId(int id) {
@@ -59,6 +59,7 @@ public class Discount {
 
     /**
      * Function for set value of name {@link Discount#name}
+     * @param name - the name to be set.
      */
     public void setName(String name) {
         this.name = name;

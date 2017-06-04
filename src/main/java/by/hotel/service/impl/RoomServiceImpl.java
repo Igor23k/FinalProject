@@ -54,7 +54,7 @@ public class RoomServiceImpl extends AbstractService implements ICrudServiceExte
     /**
      * Get rooms.
      * @return the list of rooms.
-     * @throws DAOException if get rooms is failed
+     * @throws ServiceException if get rooms is failed
      */
     public List<Room> getAllEntities() throws ServiceException {
         try {

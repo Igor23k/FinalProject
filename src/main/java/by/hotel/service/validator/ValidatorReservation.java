@@ -15,7 +15,7 @@ import java.util.Map;
  * validateDate - validate date.
  * validateUnsignedIntDigit - validate cost additional services.
  * @version 2.0
- * @autor Igor Kozlov
+ * @author Igor Kozlov
  */
 public class ValidatorReservation extends AbstractValidator {
 
@@ -26,6 +26,7 @@ public class ValidatorReservation extends AbstractValidator {
 
     /**
      * Validate parameters.
+     * @param data - the param that needed to validate.
      * @return boolean value.
      * @throws IncorrectDateException if date is incorrect
      * @throws IncorrectCostException if cost is incorrect

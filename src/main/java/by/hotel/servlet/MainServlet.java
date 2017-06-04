@@ -23,7 +23,7 @@ import java.util.Map;
  * Class represents a requests handler.
  * Class extents from HttpServlet
  * @version 1.0
- * @autor Igor Kozlov
+ * @author Igor Kozlov
  */
 @WebServlet(urlPatterns = {"/servlet"})
 public class MainServlet extends HttpServlet {

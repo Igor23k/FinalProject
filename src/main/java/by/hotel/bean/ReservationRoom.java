@@ -5,8 +5,7 @@ import by.hotel.builder.ReservationRoomBuilder;
 /**
  * ReservationRoom.java
  * The class store objects with properties
- * <b> room </ b> and <b> reservation </ b>.
- * @autor Igor Kozlov
+ * @author Igor Kozlov
  * @version 1.0
  */
 public class ReservationRoom {
@@ -42,6 +41,7 @@ public class ReservationRoom {
 
     /**
      * Function for set value of room {@link ReservationRoom#room}
+     * @param room - the room to be set.
      */
     public void setRoom(Room room) {
         this.room = room;
@@ -57,6 +57,7 @@ public class ReservationRoom {
 
     /**
      * Function for set value of reservation {@link ReservationRoom#reservation}
+     * @param reservation - the reservation to be set.
      */
     public void setReservation(Reservation reservation) {
         this.reservation = reservation;

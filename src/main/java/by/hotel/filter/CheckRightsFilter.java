@@ -55,7 +55,8 @@ public class CheckRightsFilter implements Filter {
      * @param request the operand to use to get different values.
      * @param response the operand to use to send response.
      * @param chain the operand to use to transfer control.
-     * @throws IOException,ServletException
+     * @throws IOException if operations with request or response are failed.
+     * @throws ServletException if operations with request or response are failed.
      */
     public void doFilter(ServletRequest request, ServletResponse response, FilterChain chain) throws IOException, ServletException {
 
@@ -64,12 +65,11 @@ public class CheckRightsFilter implements Filter {
         if(request.getParameter("action")!= null) {
             requiredRight = rights.get(request.getParameter("action"));
         }
-        //userRights = Integer.parseInt(request.getParameter("rights"));
-        userRights = 127;
+        userRights = Integer.parseInt(request.getParameter("rights"));
         if ((requiredRight & userRights) == requiredRight) {
             chain.doFilter(request, response);
         } else {
-            request.getRequestDispatcher("errorPage").forward(request, response);
+            request.getRequestDispatcher("/error.jsp").forward(request, response);
         }
     }
     /**

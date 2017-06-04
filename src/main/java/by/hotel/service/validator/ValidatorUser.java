@@ -18,11 +18,12 @@ import java.util.regex.Pattern;
  * validateLogin - validate login.
  * validateEmail - validate email.
  * @version 2.0
- * @autor Igor Kozlov
+ * @author Igor Kozlov
  */
 public class ValidatorUser extends AbstractValidator {
     /**
      * Validate parameters.
+     * @param data - the param that needed to validate.
      * @return boolean value.
      * @throws IncorrectUserNameException if user's name is incorrect.
      * @throws IncorrectPassportNumberException if passport number is incorrect

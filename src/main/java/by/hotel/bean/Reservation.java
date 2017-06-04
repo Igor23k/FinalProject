@@ -7,9 +7,7 @@ import java.sql.Date;
 /**
  * Reservation.java
  * The class store objects with properties
- * <b> id </ b>, <b> dateIn </ b>, <b> dateOut </ b>,
- * <b> accepted </ b>, <b> user </ b> and <b> discount </ b>.
- * @autor Igor Kozlov
+ * @author Igor Kozlov
  * @version 1.0
  */
 public class Reservation {
@@ -24,11 +22,11 @@ public class Reservation {
     /**
      * Property - dateIn
      */
-    private Date dateIn;
+    private String dateIn;
     /**
      * Property - dateOut
      */
-    private Date dateOut;
+    private String dateOut;
     /**
      * Property - user
      */
@@ -65,6 +63,7 @@ public class Reservation {
 
     /**
      * Function for set value of id {@link Reservation#id}
+     * @param id - the id to be set.
      */
     public void setId(int id) {
         this.id = id;
@@ -74,14 +73,15 @@ public class Reservation {
      * Function for get value {@link Reservation#dateIn}
      * @return value of date In
      */
-    public Date getDateIn() {
+    public String getDateIn() {
         return dateIn;
     }
 
     /**
      * Function for set value of date In {@link Reservation#dateIn}
+     * @param dateIn - the dateIn to be set.
      */
-    public void setDateIn(Date dateIn) {
+    public void setDateIn(String dateIn) {
         this.dateIn = dateIn;
     }
 
@@ -89,14 +89,15 @@ public class Reservation {
      * Function for get value {@link Reservation#dateOut}
      * @return value of date Out
      */
-    public Date getDateOut() {
+    public String getDateOut() {
         return dateOut;
     }
 
     /**
      * Function for set value of date Out {@link Reservation#dateOut}
+     * @param dateOut - the dateOut to be set.
      */
-    public void setDateOut(Date dateOut) {
+    public void setDateOut(String dateOut) {
         this.dateOut = dateOut;
     }
 
@@ -110,6 +111,7 @@ public class Reservation {
 
     /**
      * Function for set value of Cost Additional Services {@link Reservation#accepted}
+     * @param accepted - the accepted to be set.
      */
     public void setAccepted(int accepted) {
         this.accepted = accepted;
@@ -125,6 +127,7 @@ public class Reservation {
 
     /**
      * Function for set value of discount {@link Reservation#discount}
+     * @param discount - the discount to be set.
      */
     public void setDiscount(Discount discount) {
         this.discount = discount;
@@ -140,6 +143,7 @@ public class Reservation {
 
     /**
      * Function for set value of user {@link Reservation#user}
+     * @param user - the user to be set.
      */
     public void setUser(User user) {
         this.user = user;

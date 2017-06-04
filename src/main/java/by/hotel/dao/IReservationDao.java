@@ -45,6 +45,7 @@ public interface IReservationDao {
     void updateReservation(Reservation reservation) throws DAOException;
     /**
      * Get last inserted reservation.
+     * @return a last inserted reservation.
      * @throws DAOException if get last inserted reservation is failed
      */
     Reservation getLastInsertedReservation() throws DAOException;

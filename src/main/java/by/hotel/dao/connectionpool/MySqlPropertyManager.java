@@ -1,5 +1,6 @@
 package by.hotel.dao.connectionpool;
 
+import by.hotel.dao.exception.DAOException;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
@@ -29,6 +30,7 @@ public class MySqlPropertyManager {
 	/**
 	 * The inner class for implementation singleton. It holds
 	 * MySqlPropertyManager instance.
+	 * @return MySqlPropertyManager object.
 	 */
 	private static class Holder {
 		private static final MySqlPropertyManager INSTANCE = new MySqlPropertyManager();
@@ -36,6 +38,7 @@ public class MySqlPropertyManager {
 
 	/**
 	 * The method gives MySqlPropertyManager singleton instance.
+	 * @return a MySqlPropertyManager object.
 	 */
 	public static MySqlPropertyManager getInstance() {
 		return Holder.INSTANCE;

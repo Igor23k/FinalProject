@@ -184,13 +184,9 @@ public class ReservationRoomDaoImpl extends AbstractDao implements IReservationR
         DiscountBuilder discountBuilder = new DiscountBuilder();
         ReservationBuilder reservationBuilder = new ReservationBuilder();
         Reservation reservation = reservationBuilder.id(resultSet.getInt("idReservation"))
-                .dateIn(resultSet.getDate("dateIn"))
-                .dateOut(resultSet.getDate("dateOut"))
+                .dateIn(resultSet.getString("dateIn"))
+                .dateOut(resultSet.getString("dateOut"))
                 .user(userBuilder.id(resultSet.getInt("idUser"))
-                        .passportNumber(resultSet.getString("passportNumber"))
-                        .name(resultSet.getString("name"))
-                        .surname(resultSet.getString("surname"))
-                        .mobilePhone(resultSet.getString("mobilePhone"))
                         .build())
                 .accepted(resultSet.getInt("accepted"))
                 .discount(discountBuilder.id(resultSet.getInt("idDiscount"))
@@ -199,10 +195,6 @@ public class ReservationRoomDaoImpl extends AbstractDao implements IReservationR
                 .build();
         Room room = roomBuilder.id(resultSet.getInt("idRoom"))
                 .roomType(roomTypeBuilder.id(resultSet.getInt("idRoomType"))
-                        .roomsCount(resultSet.getInt("roomsCount"))
-                        .bedsCount(resultSet.getInt("bedsCount"))
-                        .costPerDay(resultSet.getInt("costPerDay"))
-                        .additionalInfo(resultSet.getString("additionalInfo"))
                         .build())
                 .floor(resultSet.getInt("floor"))
                 .phone(resultSet.getString("phone"))

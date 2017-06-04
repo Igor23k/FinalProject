@@ -45,6 +45,7 @@ public interface IRoleDao {
     void updateRole(Role role) throws DAOException;
     /**
      * Get last inserted role.
+     * @return a last inserted role.
      * @throws DAOException if get last inserted role is failed
      */
     Role getLastInsertedRole() throws DAOException;

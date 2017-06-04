@@ -12,11 +12,12 @@ import java.util.Map;
  * validateNameRole - validate name role.
  * validateRight - validate rights.
  * @version 2.0
- * @autor Igor Kozlov
+ * @author Igor Kozlov
  */
 public class ValidatorRole extends AbstractValidator{
     /**
      * Validate parameters.
+     * @param data - the param that needed to validate.
      * @return boolean value.
      * @throws IncorrectRightRoleException if right is incorrect
      * @throws IncorrectNameRoleException if name role is incorrect

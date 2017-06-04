@@ -15,7 +15,7 @@ import java.sql.Statement;
  * Class contain common methods for dao classes.
 
  * @version 2.0
- * @autor Igor Kozlov
+ * @author Igor Kozlov
  */
 public abstract class AbstractDao {
     /**
@@ -38,6 +38,9 @@ public abstract class AbstractDao {
 
     /**
      * The method closes a statement.
+     * @param statement - the param that needed to close.
+     * @param resultSet - the param that needed to close.
+     * @throws DAOException if close the statement or resultSet is failed.
      */
     public void closeStatement(Statement statement, ResultSet resultSet) throws DAOException {
         try {

@@ -5,10 +5,7 @@ import by.hotel.builder.RoleBuilder;
 /**
  * Role.java
  * The class store objects with properties
- * <b> id </ b>, <b> update </ b>, <b> delete </ b>, <b> nameRole </ b>,
- * <b> insert </ b>, <b> create </ b>, <b> select </ b>, <b> drop </ b>,
- * and <b> grant </ b>.
- * @autor Igor Kozlov
+ * @author Igor Kozlov
  * @version 1.0
  */
 public class Role {
@@ -80,6 +77,7 @@ public class Role {
 
     /**
      * Function for set value of id {@link Role#id}
+     * @param id - the id to be set.
      */
     public void setId(int id) {
         this.id = id;
@@ -95,6 +93,7 @@ public class Role {
 
     /**
      * Function for set value of room {@link Role#nameRole}
+     * @param nameRole - the nameRole to be set.
      */
     public void setNameRole(String nameRole) {
         this.nameRole = nameRole;
@@ -110,6 +109,7 @@ public class Role {
 
     /**
      * Function for set value of room {@link Role#update}
+     * @param update - the update to be set.
      */
     public void setUpdate(byte update) {
         this.update = update;
@@ -125,6 +125,7 @@ public class Role {
 
     /**
      * Function for set value of delete {@link Role#delete}
+     * @param delete - the delete to be set.
      */
     public void setDelete(byte delete) {
         this.delete = delete;
@@ -139,6 +140,7 @@ public class Role {
     }
     /**
      * Function for set value of insert {@link Role#insert}
+     * @param insert - the insert to be set.
      */
     public void setInsert(byte insert) {
         this.insert = insert;
@@ -154,6 +156,7 @@ public class Role {
 
     /**
      * Function for set value of create {@link Role#create}
+     * @param create - the create to be set.
      */
     public void setCreate(byte create) {
         this.create = create;
@@ -169,6 +172,7 @@ public class Role {
 
     /**
      * Function for set value of select {@link Role#select}
+     * @param select - the select to be set.
      */
     public void setSelect(byte select) {
         this.select = select;
@@ -184,6 +188,7 @@ public class Role {
 
     /**
      * Function for set value of drop {@link Role#drop}
+     * @param drop - the drop to be set.
      */
     public void setDrop(byte drop) {
         this.drop = drop;
@@ -199,6 +204,7 @@ public class Role {
 
     /**
      * Function for set value of grant {@link Role#grant}
+     * @param grant - the grant to be set.
      */
     public void setGrant(byte grant) {
         this.grant = grant;

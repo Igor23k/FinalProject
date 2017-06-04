@@ -10,9 +10,7 @@ import java.sql.Date;
  * ReservationBuilder.java
  * The class store objects with properties and methods.
  * This class is a template Builder.
- * <b> id </ b>, <b> dateIn </ b>, <b> dateOut </ b>,
- * <b> costAdditionalServices </ b>, <b> user </ b> and <b> discount </ b>.
- * @autor Igor Kozlov
+ * @author Igor Kozlov
  * @version 1.0
  */
 public class ReservationBuilder {
@@ -27,11 +25,11 @@ public class ReservationBuilder {
     /**
      * Property - dateIn
      */
-    private Date dateIn;
+    private String dateIn;
     /**
      * Property - dateOut
      */
-    private Date dateOut;
+    private String dateOut;
     /**
      * Property - user
      */
@@ -63,7 +61,7 @@ public class ReservationBuilder {
      *@param dateIn - the dateIn to be set.
      *@return object of class ReservationBuilder
      */
-    public ReservationBuilder dateIn(Date dateIn){
+    public ReservationBuilder dateIn(String dateIn){
         this.dateIn = dateIn;
         return this;
     }
@@ -72,7 +70,7 @@ public class ReservationBuilder {
      *@param dateOut - the dateOut to be set.
      *@return object of class ReservationBuilder
      */
-    public ReservationBuilder dateOut(Date dateOut){
+    public ReservationBuilder dateOut(String dateOut){
         this.dateOut = dateOut;
         return this;
     }
@@ -107,7 +105,7 @@ public class ReservationBuilder {
      * Function for get value {@link ReservationBuilder#dateIn}
      * @return value of date In
      */
-    public Date getDateIn() {
+    public String getDateIn() {
         return dateIn;
     }
 
@@ -115,7 +113,7 @@ public class ReservationBuilder {
      * Function for get value {@link ReservationBuilder#dateOut}
      * @return value of date Out
      */
-    public Date getDateOut() {
+    public String getDateOut() {
         return dateOut;
     }
 

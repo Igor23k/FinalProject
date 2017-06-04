@@ -33,7 +33,8 @@ public class CharsetFilter implements Filter {
      * @param request the operand to use to get different values.
      * @param response the operand to use to send response.
      * @param chain the operand to use to transfer control.
-     * @throws IOException,ServletException
+     * @throws IOException if set charset encoding is failed.
+     * @throws ServletException if set charset encoding is failed.
      */
     @Override
     public void doFilter(ServletRequest request, ServletResponse response, FilterChain chain) throws IOException, ServletException {

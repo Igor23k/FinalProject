@@ -45,6 +45,7 @@ public interface IRoomTypeDao {
     void updateRoomType(RoomType roomType) throws DAOException;
     /**
      * Get last inserted room type.
+     * @return a last inserted room type.
      * @throws DAOException  if get last inserted room type is failed
      */
     RoomType getLastInsertedRoomType() throws DAOException;

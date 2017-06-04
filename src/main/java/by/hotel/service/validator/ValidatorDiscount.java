@@ -10,11 +10,12 @@ import java.util.Map;
  * validate - main method to validate parameters.
  * validateNameDiscount - validate discount name.
  * @version 2.0
- * @autor Igor Kozlov
+ * @author Igor Kozlov
  */
 public class ValidatorDiscount extends AbstractValidator {
     /**
      * Validate parameters.
+     * @param data - the param that needed to validate.
      * @return boolean value.
      * @throws IncorrectDiscountNameException if discount name is incorrect
      */

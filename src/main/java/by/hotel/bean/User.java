@@ -4,9 +4,7 @@ import by.hotel.builder.UserBuilder;
 /**
  * User.java
  * The class store objects with properties
- * <b> id </ b>, <b> roomsCount </ b>, <b> bedsCount </ b>,
- * <b> bathroomsCount </ b>, <b> size </ b>, <b> size </ b> and <b> additionalInfo </ b>.
- * @autor Igor Kozlov
+ * @author Igor Kozlov
  * @version 1.0
  */
 
@@ -78,6 +76,7 @@ public class User {
 
     /**
      * Function for set value of id {@link User#id}
+     * @param id - the id to be set.
      */
     public void setId(int id) {
         this.id = id;
@@ -93,6 +92,7 @@ public class User {
 
     /**
      * Function for set value of passportNumber {@link User#passportNumber}
+     * @param passportNumber - the passportNumber to be set.
      */
     public void setPassportNumber(String passportNumber) {
         this.passportNumber = passportNumber;
@@ -116,6 +116,7 @@ public class User {
 
     /**
      * Function for set value of login {@link User#login}
+     * @param login - the login to be set.
      */
     public void setLogin(String login) {
         this.login = login;
@@ -123,6 +124,7 @@ public class User {
 
     /**
      * Function for set value of name {@link User#name}
+     * @param name - the name to be set.
      */
     public void setName(String name) {
         this.name = name;
@@ -138,7 +140,7 @@ public class User {
 
     /**
      * Function for get value {@link User#surname}
-     * @return value of surname
+     * @param surname - the surname to be set.
      */
     public void setSurname(String surname) {
         this.surname = surname;
@@ -154,6 +156,7 @@ public class User {
 
     /**
      * Function for set value of mobilePhone {@link User#mobilePhone}
+     * @param mobilePhone - the mobilePhone to be set.
      */
     public void setMobilePhone(String mobilePhone) {
         this.mobilePhone = mobilePhone;
@@ -169,6 +172,7 @@ public class User {
 
     /**
      * Function for set value of password {@link User#password}
+     * @param password - the password to be set.
      */
     public void setPassword(String password) {
         this.password = password;
@@ -184,6 +188,7 @@ public class User {
 
     /**
      * Function for set value of role {@link User#role}
+     * @param role - the role to be set.
      */
     public void setRole(Role role) {
         this.role = role;
@@ -199,6 +204,7 @@ public class User {
 
     /**
      * Function for set value of email {@link User#email}
+     * @param email - the email to be set.
      */
     public void setEmail(String email) {
         this.email = email;

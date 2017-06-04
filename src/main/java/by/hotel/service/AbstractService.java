@@ -3,9 +3,8 @@ package by.hotel.service;
 /**
  * AbstractService.java
  * Class can contain common methods for services.
-
  * @version 2.0
- * @autor Igor Kozlov
+ * @author Igor Kozlov
  */
 public class AbstractService {
 

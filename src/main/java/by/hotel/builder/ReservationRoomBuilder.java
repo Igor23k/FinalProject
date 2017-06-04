@@ -8,8 +8,7 @@ import by.hotel.bean.Room;
  * ReservationRoomBuilder.java
  * The class store objects with properties and methods.
  * This class is a template Builder.
- * <b> room </ b> and <b> reservation </ b>.
- * @autor Igor Kozlov
+ * @author Igor Kozlov
  * @version 1.0
  */
 public class ReservationRoomBuilder {

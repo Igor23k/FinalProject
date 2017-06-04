@@ -15,11 +15,12 @@ import java.util.Map;
  * validateCostPerDayDigit - validate cost per day.
  * validateAdditionalInfo - validate additional info.
  * @version 2.0
- * @autor Igor Kozlov
+ * @author Igor Kozlov
  */
 public class ValidatorRoomType extends AbstractValidator{
     /**
      * Validate parameters.
+     * @param data - the param that needed to validate.
      * @return boolean value.
      * @throws IncorrectRoomBathroomsException if room bathrooms is incorrect
      * @throws IncorrectRoomsCountException if rooms count is incorrect

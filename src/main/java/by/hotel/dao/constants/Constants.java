@@ -86,7 +86,7 @@ public class Constants {
 
 
     public static final String GET_LAST_INSERTED_DISCOUNT = "SELECT * FROM `db_hotel`.`discount` WHERE `id`=LAST_INSERT_ID()";
-    public static final String GET_LAST_INSERTED_RESERVATION = "SELECT * FROM `db_hotel`.`reservation` ORDER BY id DESC LIMIT 1";
+    public static final String GET_LAST_INSERTED_RESERVATION = GET_ALL_RESERVATIONS.concat("ORDER BY id DESC LIMIT 1");
     public static final String GET_LAST_INSERTED_ROLE = "SELECT * FROM `db_hotel`.`role` WHERE `id`=LAST_INSERT_ID()";
     public static final String GET_LAST_INSERTED_ROOM = "SELECT * FROM `db_hotel`.`room` WHERE `id`=LAST_INSERT_ID()";
     public static final String GET_LAST_INSERTED_ROOM_TYPE = "SELECT * FROM `db_hotel`.`room_type` WHERE `id`=LAST_INSERT_ID()";

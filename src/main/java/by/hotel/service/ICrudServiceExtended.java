@@ -21,6 +21,7 @@ public interface ICrudServiceExtended<T> extends ICrudService<T> {
 
     /**
      * Get all entity headers.
+     * @param key - the param to get entities by key.
      * @return the list of entities by key.
      * @throws ServiceException if get entities is failed
      */

@@ -12,11 +12,12 @@ import java.util.Map;
  * validatePhone - validate phone.
  * validatePath - validate path.
  * @version 2.0
- * @autor Igor Kozlov
+ * @author Igor Kozlov
  */
 public class ValidatorRoom extends AbstractValidator {
     /**
      * Validate parameters.
+     * @param data - the param that needed to validate.
      * @return boolean value.
      * @throws IncorrectRoomNameException if room name is incorrect
      * @throws IncorrectRoomPhoneNumberException if room phone is incorrect

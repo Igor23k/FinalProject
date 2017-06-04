@@ -1,6 +1,7 @@
 package by.hotel.dao.connectionpool;
 
 import by.hotel.dao.exception.ConnectionPoolException;
+import by.hotel.service.exception.IncorrectNameRoleException;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
@@ -64,8 +65,7 @@ public final class ConnectionPool {
     }
 
     /**
-     * The inner class for implementation singleton. It holds ConnectionPool
-     * instance.
+     * The inner class for implementation singleton. It holds ConnectionPool instance.
      */
     private static class Holder {
         private static final ConnectionPool INSTANCE = new ConnectionPool();
@@ -73,6 +73,7 @@ public final class ConnectionPool {
 
     /**
      * The method gives ConnectionPool singleton instance.
+     * @return ConnectionPool object.
      */
     public static synchronized ConnectionPool getInstance() {
         return Holder.INSTANCE;
@@ -80,6 +81,7 @@ public final class ConnectionPool {
 
     /**
      * Directly creates a connection pool
+     * @throws ConnectionPoolException if init connection pool is failed.
      */
     public void initPoolData() throws ConnectionPoolException {
         try {
@@ -125,8 +127,8 @@ public final class ConnectionPool {
 
     /**
      * The method take Connection from BlockingQueue.
-     *
      * @return PooledConnection
+     * @throws ConnectionPoolException if take connection is failed.
      */
     public PooledConnection takeConnection() throws ConnectionPoolException {
          PooledConnection connection = null;
@@ -165,7 +167,6 @@ public final class ConnectionPool {
      * @param connection the operand to get a connection.
      * @param statement the operand to get a statement.
      * @param preparedStatement the operand to get a preparedStatement.
-     * @exception SQLException
      */
     public void closeConnection(Connection connection, Statement statement,
                                 PreparedStatement preparedStatement) {

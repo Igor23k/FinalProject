@@ -25,6 +25,8 @@ public class LocalizationManager {
 
     /**
      * Get values from resources.
+     * @param locale the operand to use get data with this locale.
+     * @param localePage the operand to get locale data to specific page.
      * @return singleton object.
      */
     public Map getValue(String locale, String localePage) {

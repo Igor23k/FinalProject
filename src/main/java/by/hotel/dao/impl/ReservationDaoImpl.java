@@ -182,13 +182,7 @@ public class ReservationDaoImpl extends AbstractDao implements IReservationDao {
             // statement.setString(1,"reservation");
             resultSet = statement.executeQuery();
             if (resultSet.next()) {
-                reservation = reservationBuilder.id(resultSet.getInt("id"))
-                        .dateIn(resultSet.getDate("dateIn"))
-                        .dateOut(resultSet.getDate("dateOut"))
-                        .accepted(resultSet.getInt("accepted"))
-                        .user(userBuilder.id(resultSet.getInt("idUser")).build())
-                        .discount(discountBuilder.id(resultSet.getInt("idDiscount")).build())
-                        .build();
+                reservation = fillReservation(resultSet,reservationBuilder);
             }
         } catch (SQLException | NullPointerException | ConnectionPoolException e) {
             throw new DAOException(e);
@@ -208,8 +202,8 @@ public class ReservationDaoImpl extends AbstractDao implements IReservationDao {
      */
     private PreparedStatement fillStatement(PreparedStatement statement, Reservation reservation) throws SQLException {
         statement.setInt(1, reservation.getUser().getId());
-        statement.setDate(2, reservation.getDateIn());
-        statement.setDate(3, reservation.getDateOut());
+        statement.setString(2, reservation.getDateIn());
+        statement.setString(3, reservation.getDateOut());
         statement.setInt(4, reservation.getAccepted());
         statement.setInt(5,reservation.getDiscount().getId());
         return statement;
@@ -226,8 +220,8 @@ public class ReservationDaoImpl extends AbstractDao implements IReservationDao {
         UserBuilder userBuilder = new UserBuilder();
         DiscountBuilder discountBuilder = new DiscountBuilder();
         return reservationBuilder.id(resultSet.getInt("id"))
-                .dateIn(resultSet.getDate("dateIn"))
-                .dateOut(resultSet.getDate("dateOut"))
+                .dateIn(resultSet.getString("dateIn"))
+                .dateOut(resultSet.getString("dateOut"))
                 .user(userBuilder.id(resultSet.getInt("idUser"))
                         .passportNumber(resultSet.getString("passportNumber"))
                         .name(resultSet.getString("name"))
@@ -249,7 +243,7 @@ public class ReservationDaoImpl extends AbstractDao implements IReservationDao {
      * @throws SQLException
      */
     private String buildMessage(Reservation reservation, String errorMessage){
-        Map<String,String> idNames = new HashMap<String, String>();
+        Map<String,String> idNames = new HashMap<>();
         idNames.put("id",Integer.toString(reservation.getId()));
         return ErrorStringBuilder.buildDeleteErrorString(idNames,errorMessage);
     }

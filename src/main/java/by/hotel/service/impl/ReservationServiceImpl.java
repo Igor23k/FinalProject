@@ -140,15 +140,15 @@ public class ReservationServiceImpl extends AbstractService implements ICrudServ
                 }else{
                     idRoom = Integer.parseInt(String.valueOf(1));
                 }
-                return new ReservationBuilder().id(idRoom)
-                        .dateIn(new Date(new SimpleDateFormat("yyyy-MM-dd").parse(params.get("dateIn")[0]).getTime()))
-                        .dateOut(new Date(new SimpleDateFormat("yyyy-MM-dd").parse(params.get("dateOut")[0]).getTime()))
+                return new ReservationBuilder().id(Integer.parseInt(params.get("id")[0]))
+                        .dateIn(params.get("dateIn")[0])
+                        .dateOut(params.get("dateOut")[0])
                         .accepted(Integer.parseInt(params.get("accepted")[0]))
                         .user(new UserBuilder().id(Integer.parseInt(params.get("idUser")[0])).build())
                         .discount(new DiscountBuilder().id(Integer.parseInt(params.get("idDiscount")[0])).build())
                         .build();
             }
-        } catch (ParseException | IncorrectDateException | IncorrectCostException e) {
+        } catch (IncorrectDateException | IncorrectCostException e) {
             throw new ServiceException(e);
         }
         return null;

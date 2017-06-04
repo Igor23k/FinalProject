@@ -10,7 +10,7 @@ import java.util.Map;
  * Class represents a storage of services
  * getService - method to get service  that implements ICrudService interface.
  * @version 2.0
- * @autor Igor Kozlov
+ * @author Igor Kozlov
  */
 public class CrudServiceMapper {
     /**

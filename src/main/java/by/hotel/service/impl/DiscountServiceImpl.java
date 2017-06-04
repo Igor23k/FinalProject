@@ -1,6 +1,7 @@
 package by.hotel.service.impl;
 
 import by.hotel.bean.Discount;
+import by.hotel.bean.ReservationRoom;
 import by.hotel.builder.DiscountBuilder;
 import by.hotel.dao.IDiscountDao;
 import by.hotel.dao.impl.DiscountDaoImpl;
@@ -133,6 +134,11 @@ public class DiscountServiceImpl extends AbstractService implements ICrudService
         }catch (DAOException e){
             throw new ServiceException(e);
         }
+    }
+
+    @Override
+    public List<Discount> getAllEntitiesByKey(Integer key) throws ServiceException {
+        throw new UnsupportedOperationException();
     }
 
 }

@@ -143,6 +143,34 @@ public class ReservationRoomDaoImpl extends AbstractDao implements IReservationR
     }
 
     /**
+     * Get reservationRooms by key.
+     * @return the list of reservationRooms by key.
+     * @throws DAOException if get reservation rooms is failed
+     */
+    public List<ReservationRoom> getReservationRoomsByKey(Integer key) throws DAOException {
+        PreparedStatement statement = null;
+        ResultSet resultSet = null;
+        List<ReservationRoom> reservationRooms = new ArrayList<>();
+        ReservationRoomBuilder reservationRoomBuilder = new ReservationRoomBuilder();
+        Connection connection = null;
+        try {
+            connection = connectionPool.takeConnection();
+            statement = connection.prepareStatement(GET_RESERVATION_ROOM_BY_USER);
+            statement.setInt(1,key);
+            resultSet = statement.executeQuery();
+            while (resultSet.next()) {
+                reservationRooms.add(fillReservationRoom(resultSet,reservationRoomBuilder));
+            }
+        } catch (SQLException | ConnectionPoolException e) {
+            throw new DAOException(e);
+        }finally {
+            connectionPool.closeConnection(connection, statement);
+            closeStatement(statement, resultSet);
+        }
+        return reservationRooms;
+    }
+
+    /**
      * Fill discount object with data.
      * @param resultSet the operand that contain data from BD.
      * @param reservationRoomBuilder the operand to build a discount.
@@ -164,7 +192,7 @@ public class ReservationRoomDaoImpl extends AbstractDao implements IReservationR
                         .surname(resultSet.getString("surname"))
                         .mobilePhone(resultSet.getString("mobilePhone"))
                         .build())
-                .costAdditionalServices(resultSet.getInt("costAdditionalServices"))
+                .accepted(resultSet.getInt("accepted"))
                 .discount(discountBuilder.id(resultSet.getInt("idDiscount"))
                         .name(resultSet.getString("discountName"))
                         .build())

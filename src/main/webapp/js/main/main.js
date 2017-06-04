@@ -62,12 +62,13 @@ function preparationMain() {
 }
 
 function setData(data) {
-    //alert("tut");
-    console.log("---------------------")
-    console.log(data);
     for(var key in data) {
         //alert(key);
         if (document.getElementById(key) !=null){
+            if(key == "singinHeader" && sessionStorage.length != 0){
+                data[key] = sessionStorage['login']
+                //alert(key)
+            }
             document.getElementById(key).innerHTML = data[key];
         }
     }
@@ -84,10 +85,7 @@ function changeLocale(loc) {
             console.log(data['local']['address']);
             console.log("uuuuuuuuuuuu");*/
             locale = loc;
-            console.log("2222222222")
-            console.log(data)
             setData(data['local']);
         }
-
     });
 }

@@ -185,7 +185,7 @@ public class ReservationDaoImpl extends AbstractDao implements IReservationDao {
                 reservation = reservationBuilder.id(resultSet.getInt("id"))
                         .dateIn(resultSet.getDate("dateIn"))
                         .dateOut(resultSet.getDate("dateOut"))
-                        .costAdditionalServices(resultSet.getInt("costAdditionalServices"))
+                        .accepted(resultSet.getInt("accepted"))
                         .user(userBuilder.id(resultSet.getInt("idUser")).build())
                         .discount(discountBuilder.id(resultSet.getInt("idDiscount")).build())
                         .build();
@@ -210,7 +210,7 @@ public class ReservationDaoImpl extends AbstractDao implements IReservationDao {
         statement.setInt(1, reservation.getUser().getId());
         statement.setDate(2, reservation.getDateIn());
         statement.setDate(3, reservation.getDateOut());
-        statement.setInt(4, reservation.getCostAdditionalServices());
+        statement.setInt(4, reservation.getAccepted());
         statement.setInt(5,reservation.getDiscount().getId());
         return statement;
     }
@@ -234,7 +234,7 @@ public class ReservationDaoImpl extends AbstractDao implements IReservationDao {
                         .surname(resultSet.getString("surname"))
                         .mobilePhone(resultSet.getString("mobilePhone"))
                         .build())
-                .costAdditionalServices(resultSet.getInt("costAdditionalServices"))
+                .accepted(resultSet.getInt("accepted"))
                 .discount(discountBuilder.id(resultSet.getInt("idDiscount"))
                         .name(resultSet.getString("discountName"))
                         .build())

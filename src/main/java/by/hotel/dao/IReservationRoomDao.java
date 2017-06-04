@@ -15,7 +15,7 @@ import java.util.List;
 public interface IReservationRoomDao {
     /**
      * Get reservation room.
-     * @return the list of reservations parking spaces.
+     * @return the list of reservation rooms.
      * @throws DAOException if get reservation rooms is failed
      */
     List<ReservationRoom> getReservationRooms() throws DAOException;
@@ -43,4 +43,11 @@ public interface IReservationRoomDao {
      */
     ReservationRoom getLastInsertedReservationRoom() throws DAOException;
 
+    /**
+     * Get reservation rooms by key.
+     * @return the list of reservation rooms by key.
+     * @throws DAOException if get reservation rooms is failed
+     */
+    List<ReservationRoom> getReservationRoomsByKey(Integer key) throws DAOException;
 }
+

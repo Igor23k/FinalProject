@@ -22,6 +22,7 @@ public final class CommandFactoryMapper implements ICommandFactory {
 
     static {
         commands.put("GET_ALL", new GetAllEntities());
+        commands.put("GET_ALL_BY_KEY", new GetAllEntitiesByKey());
         commands.put("ADD", new AddEntity());
         commands.put("REMOVE", new RemoveEntity());
         commands.put("UPDATE", new UpdateEntity());

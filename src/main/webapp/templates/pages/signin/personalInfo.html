@@ -41,13 +41,23 @@
                     </div>
                 </div>
                 <div class="form-group">
-                    <div class="col-sm-8">
-                        <button onclick="" style="width:100%" id="idAcceptUpdatePersonalInfo" onclick="updatePersonalInfo()" class="btn btn-success">Подтвердить</button>
+                    <div class="col-sm-4">
+                        <button style="width:100%" id="idAcceptUpdatePersonalInfo" onclick="updatePersonalInfo()" class="btn btn-success">Подтвердить</button>
                     </div>
                     <div class="col-sm-4">
-                        <button onclick="" style="width:100%" id="idLogOutUser" onclick="LogOut()" class="btn btn-warning">Выход</button>
+                        <button style="width:100%" id="idLogOutUser" onclick="LogOut()" class="btn btn-warning">Выход</button>
                     </div>
+                    <br/><br/>
+
+                        <h3>Подтвержденные заявки</h3>
+
+                    <script type="text/javascript">
+                        preparationGenerateReservations();
+                    </script>
+
                 </div>
             </div>
         </div>
+
+
     </div>

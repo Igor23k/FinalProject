@@ -1,5 +1,6 @@
 package by.hotel.service.impl;
 
+import by.hotel.bean.Room;
 import by.hotel.bean.User;
 import by.hotel.builder.RoleBuilder;
 import by.hotel.builder.UserBuilder;
@@ -143,7 +144,7 @@ public class UserServiceImpl extends AbstractService implements ICrudServiceExte
                         .password(password)
                         .passportNumber(params.get("passportNumber")[0])
                         .mobilePhone(params.get("mobilePhone")[0])
-                        .role(new RoleBuilder().id(Integer.parseInt(params.get("role")[0])).build())
+                        .role(new RoleBuilder().id(Integer.parseInt(params.get("idRole")[0])).build())
                         .build();
             }
         } catch (IncorrectPassportNumberException
@@ -165,6 +166,11 @@ public class UserServiceImpl extends AbstractService implements ICrudServiceExte
         } catch (DAOException e) {
             throw new ServiceException(e);
         }
+    }
+
+    @Override
+    public List<User> getAllEntitiesByKey(Integer key) throws ServiceException {
+        throw new UnsupportedOperationException();
     }
 
 }

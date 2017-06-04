@@ -1,3 +1,4 @@
+<%@ taglib prefix="ex" uri="WEB-INF/custom.tld"%>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jstl/fmt" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
@@ -39,6 +40,7 @@
 </head>
 <body class="contentMain" onload="new ElementMaxHeight();">
 <div id="main">
+    <ex:GetDate/>
     <div class="dropdown">
         <div class="dropbtn">RU</div>
         <div class="dropdown-content">
@@ -63,6 +65,9 @@
                         <div id="idAdminRef" style="display: none">
                             <a id="admin" href="/servlet?page=admin.jsp&action=ADMIN_START&locale=ru&localePage=admin">${data.admin}</a>
                         </div>
+                        <div id="idPersonalAreaRef" style="display: none">
+                            <a id="personalArea" href="#personalInfo">${data.personalArea}</a>
+                        </div>
                     </div>
 
                 </div>
@@ -85,6 +90,7 @@
             </div>
         </div>
     </div>
+
     <div id="content">
         <section id=contentMain class="container" src="/templates/pages/main/contentMain.html"></section>
         <section id=contentBooking class="container" src="/templates/pages/booking/contentBooking.html"></section>
@@ -92,6 +98,7 @@
         <section id=contentServices class="container" src="/templates/pages/services/contentServices.html"></section>
         <section id=entry class="container" src="/templates/pages/signin/entry.html"></section>
         <section id=contentTestimonials class="container" src="/templates/pages/testimonials/contentTestimonials.html"></section>
+        <section id=personalInfo class="container" src="/templates/pages/signin/personalInfo.html"></section>
     </div>
     <div id="footer" style="width: 976px;margin: auto">
         <ul class="nav nav-pills" style="align:center;">

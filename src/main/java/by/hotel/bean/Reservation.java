@@ -8,7 +8,7 @@ import java.sql.Date;
  * Reservation.java
  * The class store objects with properties
  * <b> id </ b>, <b> dateIn </ b>, <b> dateOut </ b>,
- * <b> costAdditionalServices </ b>, <b> user </ b> and <b> discount </ b>.
+ * <b> accepted </ b>, <b> user </ b> and <b> discount </ b>.
  * @autor Igor Kozlov
  * @version 1.0
  */
@@ -18,9 +18,9 @@ public class Reservation {
      */
     private int id;
     /**
-     * Property - costAdditionalServices
+     * Property - accepted
      */
-    private int costAdditionalServices;
+    private int accepted;
     /**
      * Property - dateIn
      */
@@ -51,7 +51,7 @@ public class Reservation {
         this.dateIn = reservationBuilder.getDateIn();
         this.dateOut = reservationBuilder.getDateOut();
         this.user = reservationBuilder.getUser();
-        this.costAdditionalServices = reservationBuilder.getCostAdditionalServices();
+        this.accepted = reservationBuilder.getAccepted();
         this.discount = reservationBuilder.getDiscount();
     }
 
@@ -101,18 +101,18 @@ public class Reservation {
     }
 
     /**
-     * Function for get value {@link Reservation#costAdditionalServices}
-     * @return value of Cost Additional Services
+     * Function for get value {@link Reservation#accepted}
+     * @return value of accepted
      */
-    public int getCostAdditionalServices() {
-        return costAdditionalServices;
+    public int getAccepted() {
+        return accepted;
     }
 
     /**
-     * Function for set value of Cost Additional Services {@link Reservation#costAdditionalServices}
+     * Function for set value of Cost Additional Services {@link Reservation#accepted}
      */
-    public void setCostAdditionalServices(int costAdditionalServices) {
-        this.costAdditionalServices = costAdditionalServices;
+    public void setAccepted(int accepted) {
+        this.accepted = accepted;
     }
 
     /**
@@ -150,7 +150,7 @@ public class Reservation {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         Reservation that = (Reservation) o;
-        if (costAdditionalServices != that.costAdditionalServices) return false;
+        if (accepted != that.accepted) return false;
         if (!dateIn.equals(that.dateIn)) return false;
         if (!dateOut.equals(that.dateOut)) return false;
         if (user != null ? !user.equals(that.user) : that.user != null) return false;
@@ -162,7 +162,7 @@ public class Reservation {
         int result = dateIn.hashCode();
         result = 31 * result + dateOut.hashCode();
         result = 31 * result + (user != null ? user.hashCode() : 0);
-        result = 31 * result + costAdditionalServices;
+        result = 31 * result + accepted;
         result = 31 * result + (discount != null ? discount.hashCode() : 0);
         return result;
     }

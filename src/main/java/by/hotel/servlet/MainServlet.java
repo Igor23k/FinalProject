@@ -4,6 +4,7 @@ import by.hotel.command.ICommand;
 import by.hotel.command.exception.CommandException;
 import by.hotel.factory.impl.CommandFactoryMapper;
 import by.hotel.resource.LocalizationManager;
+import by.hotel.tag.GetDateTag;
 import com.google.gson.Gson;
 import com.google.gson.JsonObject;
 import org.apache.logging.log4j.LogManager;
@@ -42,11 +43,12 @@ public class MainServlet extends HttpServlet {
             Object data;
             String locale;
             Gson gsonData = new Gson();
+            GetDateTag dateTag = new GetDateTag();
             String page = request.getParameter("page");
             String localePage = request.getParameter("localePage");
             Map<String, String[]> list = request.getParameterMap();
             CommandFactoryMapper commandFactoryMapper = CommandFactoryMapper.getInstance();
-                if (request.getParameter("action") != null) {
+            if (request.getParameter("action") != null) {
                 ICommand command = commandFactoryMapper.getCommand(request.getParameter("action"));
                 result = command.execute(request);
             }
@@ -57,7 +59,7 @@ public class MainServlet extends HttpServlet {
                 locale = "ru";
             }
             data = localizationManager.getValue(locale,localePage);
-
+            dateTag.setLocale(locale);
             if (page != null) {
                 request.setAttribute("items", result);
                 request.setAttribute("data", data);

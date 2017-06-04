@@ -1,12 +1,15 @@
 package by.hotel.service.impl;
 
 import by.hotel.bean.Reservation;
+import by.hotel.bean.ReservationRoom;
 import by.hotel.builder.DiscountBuilder;
 import by.hotel.builder.ReservationBuilder;
 import by.hotel.builder.UserBuilder;
 import by.hotel.dao.IReservationDao;
+import by.hotel.dao.IReservationRoomDao;
 import by.hotel.dao.exception.DAOException;
 import by.hotel.dao.impl.ReservationDaoImpl;
+import by.hotel.dao.impl.ReservationRoomDaoImpl;
 import by.hotel.service.AbstractService;
 import by.hotel.service.ICrudServiceExtended;
 import by.hotel.service.exception.IncorrectCostException;
@@ -18,6 +21,7 @@ import java.sql.Connection;
 import java.sql.Date;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -38,6 +42,9 @@ public class ReservationServiceImpl extends AbstractService implements ICrudServ
      * Field - reservationDao
      */
     IReservationDao reservationDao = new ReservationDaoImpl();
+    IReservationRoomDao reservationRoomDao = new ReservationRoomDaoImpl();
+    Map<String, String[]> params = new HashMap<>();
+    Integer idRoom;
 
     /**
      * Get reservation headers.
@@ -72,8 +79,18 @@ public class ReservationServiceImpl extends AbstractService implements ICrudServ
      */
     public List<Reservation> addEntity(Reservation reservation) throws ServiceException {
         List<Reservation> reservations;
+        ICrudServiceExtended reservationRoomService = new ReservationRoomServiceImpl();
         try {
             reservationDao.addReservation(reservation);
+            String[] oneParamReservation = new String[1];
+            String[] oneParamRoom = new String[1];
+            oneParamReservation[0] = String.valueOf(reservationDao.getLastInsertedReservation().getId());
+            Map<String, String[]> params = new HashMap<>();
+            params.put("idReservation",oneParamReservation);
+            oneParamRoom[0] = String.valueOf(idRoom);
+            params.put("idRoom", oneParamRoom);
+
+            reservationRoomDao.addReservationRoom((ReservationRoom)reservationRoomService.buildEntity(params));
             reservations = reservationDao.getAllReservations();
         } catch (DAOException e) {
             throw new ServiceException(e);
@@ -117,10 +134,16 @@ public class ReservationServiceImpl extends AbstractService implements ICrudServ
         ValidatorReservation validatorReservation = new ValidatorReservation();
         try {
             if (validatorReservation.validate(params)) {
-                return new ReservationBuilder().id(Integer.parseInt(params.get("id")[0]))
+                this.params = params;
+                if (params.keySet().contains("idRoom")){
+                    idRoom = Integer.parseInt(params.get("idRoom")[0]);
+                }else{
+                    idRoom = Integer.parseInt(String.valueOf(1));
+                }
+                return new ReservationBuilder().id(idRoom)
                         .dateIn(new Date(new SimpleDateFormat("yyyy-MM-dd").parse(params.get("dateIn")[0]).getTime()))
                         .dateOut(new Date(new SimpleDateFormat("yyyy-MM-dd").parse(params.get("dateOut")[0]).getTime()))
-                        .costAdditionalServices(Integer.parseInt(params.get("costAdditionalServices")[0]))
+                        .accepted(Integer.parseInt(params.get("accepted")[0]))
                         .user(new UserBuilder().id(Integer.parseInt(params.get("idUser")[0])).build())
                         .discount(new DiscountBuilder().id(Integer.parseInt(params.get("idDiscount")[0])).build())
                         .build();
@@ -141,6 +164,11 @@ public class ReservationServiceImpl extends AbstractService implements ICrudServ
         } catch (DAOException e) {
             throw new ServiceException(e);
         }
+    }
+
+    @Override
+    public List<Reservation> getAllEntitiesByKey(Integer key) throws ServiceException {
+        throw new UnsupportedOperationException();
     }
 
 }

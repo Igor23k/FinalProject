@@ -24,7 +24,10 @@ function getReservationData(editBody) {
             if(this.className=='col-sm-9') {
                 var key = $(this.firstElementChild).attr('name');
                 var value = $(this.firstElementChild).val();
-                if(key == 'id' && value == ''){
+                if (key == 'id'){
+                    key = 'idRoom'
+                }
+                if(key == 'idRoom' && value == ''){
                     value ="0";
                 }else{
                     if($(this.firstElementChild).get(0).tagName == 'SELECT'){
@@ -44,7 +47,7 @@ function getReservationData(editBody) {
         result = result.concat('&','idUser','=', currentUser['id']);
     else
         result = result.concat('&','idUser','=', '0');
-    result = result.concat('&','costAdditionalServices','=', '0');
+    result = result.concat('&','accepted','=', '0');
     result = result.concat('&','idDiscount','=', '1');
 
     return result;

@@ -21,9 +21,9 @@ public class ReservationBuilder {
      */
     private int id;
     /**
-     * Property - costAdditionalServices
+     * Property - accepted
      */
-    private int costAdditionalServices;
+    private int accepted;
     /**
      * Property - dateIn
      */
@@ -77,12 +77,12 @@ public class ReservationBuilder {
         return this;
     }
 
-    /**  Function for set value {@link ReservationBuilder#costAdditionalServices}
-     *@param costAdditionalServices - the costAdditionalServices to be set.
+    /**  Function for set value {@link ReservationBuilder#accepted}
+     *@param accepted - the costAdditionalServices to be set.
      *@return object of class ReservationBuilder
      */
-    public ReservationBuilder costAdditionalServices(int costAdditionalServices){
-        this.costAdditionalServices = costAdditionalServices;
+    public ReservationBuilder accepted(int accepted){
+        this.accepted = accepted;
         return this;
     }
 
@@ -128,11 +128,11 @@ public class ReservationBuilder {
     }
 
     /**
-     * Function for get value {@link ReservationBuilder#costAdditionalServices}
-     * @return value of Cost Additional Services
+     * Function for get value {@link ReservationBuilder#accepted}
+     * @return value of accepted
      */
-    public int getCostAdditionalServices() {
-        return costAdditionalServices;
+    public int getAccepted() {
+        return accepted;
     }
 
     /**

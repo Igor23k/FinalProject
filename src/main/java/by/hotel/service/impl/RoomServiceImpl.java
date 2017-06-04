@@ -1,6 +1,7 @@
 package by.hotel.service.impl;
 
 import by.hotel.bean.Room;
+import by.hotel.bean.RoomType;
 import by.hotel.builder.RoomBuilder;
 import by.hotel.builder.RoomTypeBuilder;
 import by.hotel.dao.IRoomDao;
@@ -140,5 +141,10 @@ public class RoomServiceImpl extends AbstractService implements ICrudServiceExte
         } catch (DAOException e) {
             throw new ServiceException(e);
         }
+    }
+
+    @Override
+    public List<Room> getAllEntitiesByKey(Integer key) throws ServiceException {
+        throw new UnsupportedOperationException();
     }
 }

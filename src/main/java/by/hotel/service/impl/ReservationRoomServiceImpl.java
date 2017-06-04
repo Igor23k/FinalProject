@@ -5,13 +5,12 @@ import by.hotel.builder.ReservationBuilder;
 import by.hotel.builder.ReservationRoomBuilder;
 import by.hotel.builder.RoomBuilder;
 import by.hotel.dao.IReservationRoomDao;
-import by.hotel.dao.impl.ReservationRoomDaoImpl;
 import by.hotel.dao.exception.DAOException;
+import by.hotel.dao.impl.ReservationRoomDaoImpl;
 import by.hotel.service.AbstractService;
-import by.hotel.service.ICrudService;
+import by.hotel.service.ICrudServiceExtended;
 import by.hotel.service.exception.ServiceException;
 
-import java.sql.Connection;
 import java.util.List;
 import java.util.Map;
 
@@ -28,7 +27,7 @@ import java.util.Map;
  * @author Igor Kozlov
  * @version 1.0
  */
-public class ReservationRoomServiceImpl extends AbstractService implements ICrudService<ReservationRoom> {
+public class ReservationRoomServiceImpl extends AbstractService implements ICrudServiceExtended<ReservationRoom> {
     /**
      * Field - reservationRoomDao
      */
@@ -42,6 +41,20 @@ public class ReservationRoomServiceImpl extends AbstractService implements ICrud
     public List<ReservationRoom> getAllEntities() throws ServiceException {
         try {
             return reservationRoomDao.getReservationRooms();
+        }catch (DAOException e){
+            throw new ServiceException(e);
+        }
+    }
+
+    /**
+     * Get reservationRooms.
+     * @return the list of reservationRooms by user.
+     * @throws ServiceException  if get room reservations  is failed
+     */
+    @Override
+    public List<ReservationRoom> getAllEntitiesByKey(Integer key) throws ServiceException {
+        try {
+            return reservationRoomDao.getReservationRoomsByKey(key);
         }catch (DAOException e){
             throw new ServiceException(e);
         }
@@ -114,4 +127,8 @@ public class ReservationRoomServiceImpl extends AbstractService implements ICrud
         }
     }
 
+    @Override
+    public List<String> getAllHeaders() throws ServiceException {
+        return null;
+    }
 }

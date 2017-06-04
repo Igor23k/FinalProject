@@ -11,6 +11,7 @@
             console.warn("section with id=%s not found!",pageName);
             return;
         }
+
         var ph = pageHandlers[pageName];
         if( ph ) {
             var that = $page.length > 0 ? $page[0] : null;
@@ -21,11 +22,11 @@
                 r.call(that, param); // call that rendering function
             }
         }
-
         if(currentPageName) {
-
             $(document.body).removeClass(currentPageName);
-            $(".nav a[href='#"+currentPageName+"']")[0].classList.remove('current');
+            if(currentPageName!="personalInfo") {
+                $(".nav a[href='#" + currentPageName + "']")[0].classList.remove('current');
+            }
 
             if(currentPageName=='contentBooking') {
                 var booking = document.getElementById("idBookingAHeader");
@@ -37,22 +38,25 @@
             }
         }
         $(document.body).addClass(currentPageName = pageName);
+
         $.ajax({
             type: 'GET',
             url: '/servlet?&rights=4&localePage='+pageName+'&locale=' + locale,
             success: function(data) {
-                console.log("TUT")
-                console.log(data['local'])
                 setData(data['local']);
             }
         });
+
         if($currentPage = $page) {
             $currentPage[0].style.display = "block";
             $(document).title = currentPageName;
-            $(".nav a[href='#"+currentPageName+"']")[0].classList.add('current');
+            if(currentPageName!="personalInfo"){
+                $(".nav a[href='#"+currentPageName+"']")[0].classList.add('current');
+            }else{
+                setPersonalInfo();
+            }
+
         }
-
-
     }
 
 
@@ -79,8 +83,6 @@
     function onhashchange()
     {
         var hash = location.hash || ("#" + $("section[default]").attr('id'));
-
-
         var re = /#([-0-9A-Za-z]+)(\:(.+))?/;
         var match = re.exec(hash);
         hash = match[1];

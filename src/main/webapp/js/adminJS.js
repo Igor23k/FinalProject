@@ -72,8 +72,6 @@ function generateModals(obj) {
 }
 
 function updateData(obj) {
-    alert("TET!")
-    console.log(obj)
     var editBody = $('#myModalUpdate').find('#mainForm');
     ($(editBody[0].lastElementChild).find("button")[0]).addEventListener("click",sendUpdateData);
     ($('#myModalUpdate').find('.btn.btn-default')[0]).addEventListener("click", getUpdatedData);
@@ -181,6 +179,7 @@ function sendAddData() {
 
 var NameTable = "";
 var Data;
+var deteleData;
 var futureQueryForID = {};
 var temporaryData;
 var zIndex = 1050;
@@ -202,6 +201,7 @@ var mapStringTable = {
 };
 
 function deleteRow(obj) {
+    Data = deteleData;
     $.ajax({
         type: 'DELETE',
         url: '/servlet?action=REMOVE&rights=128&locale=ru&localePage=admin&tableName=' + NameTable + '&' +  formParams(obj.closest('tr').rowIndex),
@@ -216,6 +216,7 @@ function deleteRow(obj) {
 }
 
 function formParams(rowIndex) {
+
     var resultParams='';
     var columnNames = $("#tableHotel").find("tr").first().children();
     for(var i=0; i< columnNames.length; i++){
@@ -332,6 +333,7 @@ function setHtml(){
     headers = headers.replace(patternHead,headerString);
     body = body.replace(patternBody,bodyString);
     $('#tableHotel').html(headers + body);
+
 }
 
 function loadTemplate() {
@@ -364,8 +366,10 @@ function getAllTableElements(nameTable) {
             objects = new Array();
             Data = data;
             setHtml();
+            deteleData = Data;
         }
     });
+
 }
 
 $(document).ready(function() {
@@ -381,6 +385,8 @@ $(document).ready(function() {
         var nameTable = target.closest('td').childNodes[0].value;
         NameTable = nameTable;
         getAllTableElements(nameTable);
+
     });
+
 });
 

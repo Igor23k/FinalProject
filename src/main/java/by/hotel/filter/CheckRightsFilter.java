@@ -28,6 +28,7 @@ public class CheckRightsFilter implements Filter {
     static {
         rights.put("ADMIN_START", 127);
         rights.put("GET_ALL", 4);
+        rights.put("GET_ALL_BY_KEY", 4);
         rights.put("ADD", 16);
         rights.put("REMOVE", 32);
         rights.put("UPDATE", 64);

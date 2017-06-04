@@ -1,5 +1,6 @@
 ﻿
 $personalForm = null;
+var reservationObject = {};
 
 function setEventListener() {
     ($('#idAcceptUpdatePersonalInfo')[0]).addEventListener("click", updatePersonalInfo);
@@ -10,12 +11,14 @@ function setPersonalInfo() {
     var editBody = document.getElementById('mainFormPersonalInfo');
     if($personalForm==null)
         $personalForm = editBody;
-
+    console.log(currentUser)
     $(editBody).each(function(){
         $("div",this).each(function(){
             if((this.className=='col-sm-9')) {
-                if((this.firstElementChild).childNodes.length==0)
+                if((this.firstElementChild).childNodes.length==0) {
+                    console.log("tut")
                     $(this.firstElementChild).val(currentUser[$(this.firstElementChild).attr('name')]);
+                }
             }
         });
     });
@@ -60,7 +63,7 @@ function getUpdateDataUser() {
         });
     });
     result = result.concat('&','id','=', currentUser.id);
-    result = result.concat('&','role','=', currentUser.role.id);
+    result = result.concat('&','idRole','=', currentUser.role.id);
     result = result.concat('&','password','=', currentUser.password);
     return result;
 }
@@ -94,16 +97,70 @@ function updatePersonalInfo() {
     sendUpdatePersonalInfo();
 }
 
+function preparationGenerateReservations() {
+    getTemplateReservations();
+    getReservations();
+}
+
+$templateReservation = null;
+
+function getTemplateReservations() {
+    $.get("/templates/pages/signin/templateReservation.html", "html")
+        .done(function(html){$templateReservation = html;})
+        .fail(function(){ $templateReservation.html("failed to get:" + src); });
+}
+
+function getReservations() {
+    $.ajax({
+        type: 'GET',
+        url: '/servlet?tableName=reservation_room&action=GET_ALL_BY_KEY&rights=4&idUser=' + sessionStorage['id'] + '&localePage=contentServices&locale=' + locale,
+        success: function(data) {
+            generateReservations(data['data']);
+        }
+    });
+}
+
+function generateReservations(arrayReservations) {
+    var countReservations = arrayReservations.length;
+    var i;
+    for(i=0;i<countReservations;i++){
+        for(var fieldReservationObj in arrayReservations[i]) {
+            if (fieldReservationObj == 'roomType') {
+                parseRoomType(arrayReservations[i][fieldReservationObj]);
+            } else {
+                reservationObject[fieldReservationObj] = arrayReservations[i][fieldReservationObj];
+            }
+        }
+        generateReservationHtml(reservationObject);
+    }
+}
+
+function generateReservationHtml(reservationObj) {
+    console.log(reservationObj);
+    $('#entry').append($templateReservation);
+    var arrayComponentsListReservation = $(($('#entry').children().last().children())[1]).children();
+
+    $(($('#entry').children().last().children())[2]).attr('id','idRoom' + reservationObj['id']);
+    console.log(arrayComponentsListReservation);
+    arrayComponentsListReservation[0].innerHTML = "привет";
+    /*    console.log("kek")
+    console.log($templateReservation)
+    console.log(reservationObj)
+    console.log(arrayComponentsListRoom)*/
+    //document.getE.innerHTML ="ololololololoolllololo";
+}
+
 function setNewValueEntryDiv(textDiv) {
     var entry = document.getElementById("singinHeader");
     entry.innerHTML = textDiv;
+    entry.innerHTML.href = "";
 }
 
 function sendUserDataRegistration(login,email,pass,phone,name,surname,passport) {
     $.ajax({
         type: 'POST',
         url: '/servlet?action=REGISTRATION',
-        data:{"locale":locale,"rights":4,"login":login,"email":email,"password":pass,"mobilePhone":phone,"name":name,"surname":surname,"passportNumber":passport,"id":0,"role":1},
+        data:{"locale":locale,"rights":4,"login":login,"email":email,"password":pass,"mobilePhone":phone,"name":name,"surname":surname,"passportNumber":passport,"id":0,"idRole":1},
         success: function(data) {
             if(typeof data =='object') {
                 currentUser = data;
@@ -120,7 +177,7 @@ function sendUserDataLogin(email,pass){
          url: '/servlet?action=AUTHORIZATION',
          data:{"locale":locale,"localePage":"personalArea","email":email,"password":pass,"rights":4},
          success: function(data) {
-             if(typeof data =='object' && data!=null) {
+             if(typeof data['data'] =='object' && data['data']!=null) {
                  currentUser = data['data'];
                  if(sessionStorage.length==0) {
                      for (var fieldUser in currentUser) {
@@ -131,13 +188,16 @@ function sendUserDataLogin(email,pass){
                      }
 
                  }
-
                  document.getElementById('idAdminRef').style.display = 'block';
+                 document.getElementById('idPersonalAreaRef').style.display = 'block';
                  loadTemplate('/templates/pages/signin/personalInfo.html');
                  setNewValueEntryDiv(currentUser.name);
+             }else {
+                 alert("Данные заполнены неверно!")
              }
          }
      });
+
 }
 
 function validateUpForm (){
@@ -178,6 +238,7 @@ function LogOut() {
     setNewValueEntryDiv("Вход","#entry");
     loadTemplate('/templates/pages/signin/entry.html');
     document.getElementById('idAdminRef').style.display = 'none';
+    document.getElementById('idPersonalAreaRef').style.display = 'none';
 }
 
 function validPassport(passport) {

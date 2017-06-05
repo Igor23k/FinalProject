@@ -7,8 +7,8 @@ import by.hotel.resource.LocalizationManager;
 import by.hotel.tag.GetDateTag;
 import com.google.gson.Gson;
 import com.google.gson.JsonObject;
-import org.apache.logging.log4j.LogManager;
-import org.apache.logging.log4j.Logger;
+
+import org.apache.log4j.Logger;
 
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -22,20 +22,22 @@ import java.util.Map;
  * MainServlet.java
  * Class represents a requests handler.
  * Class extents from HttpServlet
- * @version 1.0
+ *
  * @author Igor Kozlov
+ * @version 1.0
  */
 @WebServlet(urlPatterns = {"/servlet"})
 public class MainServlet extends HttpServlet {
     /**
      * It is a logger which print some messages to log file.
      */
-    private static final Logger logger = LogManager.getLogger(MainServlet.class.getName());
+    private static final Logger logger = Logger.getLogger(MainServlet.class);
 
     /**
      * The method is called when processing requests
-     * @param  request  an request to be processed
-     * @param  response an response to be returned
+     *
+     * @param request  an request to be processed
+     * @param response an response to be returned
      */
     private void doRequest(HttpServletRequest request, HttpServletResponse response) {
         try {
@@ -58,7 +60,7 @@ public class MainServlet extends HttpServlet {
             } else {
                 locale = "ru";
             }
-            data = localizationManager.getValue(locale,localePage);
+            data = localizationManager.getValue(locale, localePage);
             dateTag.setLocale(locale);
             if (page != null) {
                 request.setAttribute("items", result);
@@ -66,17 +68,21 @@ public class MainServlet extends HttpServlet {
                 request.getRequestDispatcher(page).forward(request, response);
             } else {
                 JsonObject pageData = new JsonObject();
-                pageData.add("data",gsonData.toJsonTree(result));
+                pageData.add("data", gsonData.toJsonTree(result));
                 pageData.add("local", gsonData.toJsonTree(data));
                 response.setContentType("application/json");
                 response.setCharacterEncoding("UTF-8");
                 String s = String.valueOf(pageData);
-                 response.getWriter().write(s);
+                response.getWriter().write(s);
             }
         } catch (CommandException e) {
             logger.error(e);
             String message = e.getMessage();
-            convertToGson(message.substring(message.lastIndexOf(":") + 1));
+            try {
+                response.getWriter().write(convertToGson(message.substring(message.lastIndexOf(":") + 1)).toString());
+            } catch (IOException e1) {
+                convertToGson(message.substring(message.lastIndexOf(":") + 1));
+            }
         } catch (IOException e) {
             logger.error(e);
         } catch (ServletException e) {
@@ -86,8 +92,9 @@ public class MainServlet extends HttpServlet {
 
     /**
      * The method is processing GET requests
-     * @param  request  an request to be processed
-     * @param  response an response to be returned
+     *
+     * @param request  an request to be processed
+     * @param response an response to be returned
      */
     protected void doGet(HttpServletRequest request, HttpServletResponse response) {
         doRequest(request, response);
@@ -95,8 +102,9 @@ public class MainServlet extends HttpServlet {
 
     /**
      * The method is processing POST requests
-     * @param  request  an request to be processed
-     * @param  response an response to be returned
+     *
+     * @param request  an request to be processed
+     * @param response an response to be returned
      */
     protected void doPost(HttpServletRequest request, HttpServletResponse response) {
         doRequest(request, response);
@@ -104,8 +112,9 @@ public class MainServlet extends HttpServlet {
 
     /**
      * The method is processing DELETE requests
-     * @param  request  an request to be processed
-     * @param  response an response to be returned
+     *
+     * @param request  an request to be processed
+     * @param response an response to be returned
      */
     protected void doDelete(HttpServletRequest request, HttpServletResponse response) {
         doRequest(request, response);
@@ -113,8 +122,9 @@ public class MainServlet extends HttpServlet {
 
     /**
      * The method is converting object to Gson format
-     * @param  object that needed to convert
-     * @return  The Gson format object.
+     *
+     * @param object that needed to convert
+     * @return The Gson format object.
      */
     private Gson convertToGson(Object object) {
         Gson jsonConverter = new Gson();

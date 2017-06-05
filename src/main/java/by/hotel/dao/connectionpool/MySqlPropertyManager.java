@@ -1,8 +1,7 @@
 package by.hotel.dao.connectionpool;
 
-import by.hotel.dao.exception.DAOException;
-import org.apache.logging.log4j.LogManager;
-import org.apache.logging.log4j.Logger;
+import by.hotel.servlet.MainServlet;
+import org.apache.log4j.Logger;
 
 import java.io.*;
 import java.util.Properties;
@@ -18,7 +17,7 @@ public class MySqlPropertyManager {
 	/**
 	 * It is a logger which print some messages to log file.
 	 */
-	private static final Logger logger = LogManager.getLogger(MySqlPropertyManager.class.getName());
+	private static final Logger logger = Logger.getLogger(MySqlPropertyManager.class);
 
 	private final String PATH = "config.properties";
 	private final String PREFIX = this.getClass().getResource("/").getPath();

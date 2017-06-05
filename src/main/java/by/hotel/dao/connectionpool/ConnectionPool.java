@@ -1,9 +1,8 @@
 package by.hotel.dao.connectionpool;
 
 import by.hotel.dao.exception.ConnectionPoolException;
-import by.hotel.service.exception.IncorrectNameRoleException;
-import org.apache.logging.log4j.LogManager;
-import org.apache.logging.log4j.Logger;
+import by.hotel.servlet.MainServlet;
+import org.apache.log4j.Logger;
 
 import java.sql.*;
 import java.util.Map;
@@ -24,7 +23,7 @@ public final class ConnectionPool {
     /**
      * It is a logger which print some messages to log file.
      */
-    private static final Logger logger = LogManager.getLogger(ConnectionPool.class.getName());
+    private static final Logger logger = Logger.getLogger(ConnectionPool.class);
 
     /**
      * Field - connectionQueue to store connections .

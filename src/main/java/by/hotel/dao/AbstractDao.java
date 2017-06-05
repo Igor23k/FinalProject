@@ -3,8 +3,8 @@ package by.hotel.dao;
 import by.hotel.dao.connectionpool.ConnectionPool;
 import by.hotel.dao.exception.ConnectionPoolException;
 import by.hotel.dao.exception.DAOException;
-import org.apache.logging.log4j.LogManager;
-import org.apache.logging.log4j.Logger;
+import by.hotel.servlet.MainServlet;
+import org.apache.log4j.Logger;
 
 import java.sql.ResultSet;
 import java.sql.SQLException;
@@ -21,7 +21,7 @@ public abstract class AbstractDao {
     /**
      * It is a logger which print some messages to log file.
      */
-    private static final Logger logger = LogManager.getLogger(AbstractDao.class.getName());
+    private static final Logger logger = Logger.getLogger(AbstractDao.class);
 
     /**
      * It is a connectionPool that contains connections

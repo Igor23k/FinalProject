@@ -21,10 +21,9 @@ public class ValidatorRoom extends AbstractValidator {
      * @return boolean value.
      * @throws IncorrectRoomNameException if room name is incorrect
      * @throws IncorrectRoomPhoneNumberException if room phone is incorrect
-     * @throws IncorrectRoomPathException if room path is incorrect
      */
-    public boolean validate(Map<String, String[]> data) throws IncorrectRoomNameException, IncorrectRoomPhoneNumberException, IncorrectRoomPathException {
-        if (validateNameRoom(data.get("name")[0]) & validatePhone(data.get("phone")[0])  & validatePath(data.get("path")[0])) {
+    public boolean validate(Map<String, String[]> data) throws IncorrectRoomNameException, IncorrectRoomPhoneNumberException {
+        if (validateNameRoom(data.get("name")[0]) & validatePhone(data.get("phone")[0])) {
             return true;
         }
         return false;

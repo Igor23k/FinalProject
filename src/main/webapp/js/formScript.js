@@ -11,12 +11,10 @@ function setPersonalInfo() {
     var editBody = document.getElementById('mainFormPersonalInfo');
     if($personalForm==null)
         $personalForm = editBody;
-    console.log(currentUser)
     $(editBody).each(function(){
         $("div",this).each(function(){
             if((this.className=='col-sm-9')) {
                 if((this.firstElementChild).childNodes.length==0) {
-                    console.log("tut")
                     $(this.firstElementChild).val(currentUser[$(this.firstElementChild).attr('name')]);
                 }
             }
@@ -30,7 +28,10 @@ function loadTemplate(url) {
     request.onreadystatechange = function() {
         if (request.readyState == 4) {
             if (request.status == 200) {
-                $('#entry').html(request.responseText);
+                if ( document.getElementById('entry') == null)
+                    $('#personalInfo').html(request.responseText);
+                else
+                    $('#entry').html(request.responseText);
                 if(currentUser!=null) {
                     setEventListener();
                     setPersonalInfo();
@@ -101,7 +102,7 @@ function preparationGenerateReservations() {
     getTemplateReservations();
     getReservations();
 }
-
+$stateEntry = "entry"
 $templateReservation = null;
 
 function getTemplateReservations() {
@@ -115,6 +116,7 @@ function getReservations() {
         type: 'GET',
         url: '/servlet?tableName=reservation_room&action=GET_ALL_BY_KEY&rights=4&idUser=' + sessionStorage['id'] + '&localePage=contentServices&locale=' + locale,
         success: function(data) {
+            console.log(data);
             generateReservations(data['data']);
         }
     });
@@ -131,29 +133,43 @@ function generateReservations(arrayReservations) {
                 reservationObject[fieldReservationObj] = arrayReservations[i][fieldReservationObj];
             }
         }
+
+        console.log(countReservations)
+        console.log("ppppppppppppp")
         generateReservationHtml(reservationObject);
     }
 }
 
 function generateReservationHtml(reservationObj) {
-    console.log(reservationObj);
-    $('#entry').append($templateReservation);
-    var arrayComponentsListReservation = $(($('#entry').children().last().children())[1]).children();
-
-    $(($('#entry').children().last().children())[2]).attr('id','idRoom' + reservationObj['id']);
-    console.log(arrayComponentsListReservation);
-    arrayComponentsListReservation[0].innerHTML = "привет";
-    /*    console.log("kek")
-    console.log($templateReservation)
-    console.log(reservationObj)
-    console.log(arrayComponentsListRoom)*/
-    //document.getE.innerHTML ="ololololololoolllololo";
+    $('#personalInfo').append($templateReservation);
+    var arrayComponentsListReservation = $(($('#personalInfo').children().last().children())[0]).children();
+    console.log(reservationObj["room"]["roomType"]);
+    arrayComponentsListReservation[0].innerHTML = "Бронь";
+    arrayComponentsListReservation[1].lastElementChild.innerHTML = reservationObj["reservation"]["dateIn"];
+    arrayComponentsListReservation[2].lastElementChild.innerHTML = reservationObj["reservation"]["dateOut"];
+    arrayComponentsListReservation[3].lastElementChild.innerHTML = reservationObj["room"]["roomType"]["costPerDay"];
+    arrayComponentsListReservation[4].lastElementChild.innerHTML = reservationObj["room"]["floor"];
+    arrayComponentsListReservation[5].lastElementChild.innerHTML = reservationObj["room"]["roomType"]["roomsCount"];
+    arrayComponentsListReservation[6].lastElementChild.innerHTML = reservationObj["room"]["roomType"]["bedsCount"];
+    arrayComponentsListReservation[7].lastElementChild.innerHTML = reservationObj["room"]["roomType"]["additionalInfo"];
 }
-
+var section;
 function setNewValueEntryDiv(textDiv) {
     var entry = document.getElementById("singinHeader");
     entry.innerHTML = textDiv;
-    entry.innerHTML.href = "";
+    if ($stateEntry == "entry") {
+        entry.href = '#personalInfo';
+        section = document.getElementById("entry");
+        $stateEntry = "personalInfo";
+        section.setAttribute('id', "personalInfo");
+        section.setAttribute('src', "/templates/pages/signin/personalInfo.html");
+    }else{
+        entry.href = '#entry';
+        section = document.getElementById("personalInfo");
+        $stateEntry = "entry";
+        section.setAttribute('id', "entry");
+        section.setAttribute('src', "/templates/pages/signin/entry.html");
+    }
 }
 
 function sendUserDataRegistration(login,email,pass,phone,name,surname,passport) {

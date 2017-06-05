@@ -98,7 +98,6 @@
         <section id=contentServices class="container" src="/templates/pages/services/contentServices.html"></section>
         <section id=entry class="container" src="/templates/pages/signin/entry.html"></section>
         <section id=contentTestimonials class="container" src="/templates/pages/testimonials/contentTestimonials.html"></section>
-        <section id=personalInfo class="container" src="/templates/pages/signin/personalInfo.html"></section>
     </div>
     <div id="footer" style="width: 976px;margin: auto">
         <ul class="nav nav-pills" style="align:center;">

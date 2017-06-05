@@ -1,6 +1,5 @@
 package by.hotel.service.impl;
 
-import by.hotel.bean.Role;
 import by.hotel.bean.RoomType;
 import by.hotel.builder.RoomTypeBuilder;
 import by.hotel.dao.IRoomTypeDao;
@@ -11,7 +10,6 @@ import by.hotel.service.ICrudServiceExtended;
 import by.hotel.service.exception.*;
 import by.hotel.service.validator.ValidatorRoomType;
 
-import java.sql.Connection;
 import java.util.List;
 import java.util.Map;
 
@@ -121,7 +119,7 @@ public class RoomTypeServiceImpl extends AbstractService implements ICrudService
                         .size(Integer.parseInt(params.get("size")[0]))
                         .build();
             }
-        } catch (IncorrectRoomBedsException | IncorrectCostException
+        } catch (IncorrectRoomBedsException | IncorrectCostPerDayException
                 | IncorrectRoomsCountException | IncorrectRoomBathroomsException
                 | IncorrectRoomAdditionalInfoException | IncorrectRoomSizeException e) {
             throw new ServiceException(e);

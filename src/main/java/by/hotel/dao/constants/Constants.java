@@ -47,7 +47,7 @@ public class Constants {
     //          "FROM (`db_hotel`.`reservation` LEFT OUTER JOIN `db_hotel`.`user` ON `reservation`.`idUser` = `user`.`id`)";
     public static final String GET_ALL_RESERVATIONS_HEADERS = "SELECT `id`, `dateIn`, `dateOut` FROM `db_hotel`.`reservation`";
 
-    public static final String GET_ALL_RESERVATION_ROOMS = "SELECT `idRoom`,`idRoomType`,`floor`, `phone`, `roomsCount`, `bedsCount`,`costPerDay`, `additionalInfo`,`idReservation`,`idUser`, `user`.`name`, `surname`, `passportNumber`,`mobilePhone`, `dateIn`, `dateOut`, `accepted`, `idDiscount`,`discount`.`name` AS `discountName`" +
+    public static final String GET_ALL_RESERVATION_ROOMS = "SELECT `idRoom`,`idRoomType`,`floor`,`size`, `phone`, `roomsCount`, `bedsCount`,`costPerDay`, `additionalInfo`,`idReservation`,`idUser`, `user`.`name`, `surname`, `passportNumber`,`mobilePhone`, `dateIn`, `dateOut`, `accepted`, `idDiscount`,`discount`.`name` AS `discountName`" +
             "FROM (((((`db_hotel`.`reservation_room`" +
             "LEFT OUTER JOIN `db_hotel`.`reservation`" +
             "ON `reservation_room`.`idReservation` = `reservation`.`id`)" +

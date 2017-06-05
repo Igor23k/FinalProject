@@ -80,15 +80,20 @@
     // Function to get page's html, shall return jQuery's promise. Can be overriden.
     app.get = function(src,$page,pageName) { return $.get(src, "html"); };
 
+
     function onhashchange()
     {
-        var hash = location.hash || ("#" + $("section[default]").attr('id'));
-        var re = /#([-0-9A-Za-z]+)(\:(.+))?/;
-        var match = re.exec(hash);
-        hash = match[1];
-        var param = match[3];
-
-        app(hash,param); // navigate to the page
+        $countMatches++;
+        if($countMatches < 2) {
+            var hash = location.hash || ("#" + $("section[default]").attr('id'));
+            var re = /#([-0-9A-Za-z]+)(\:(.+))?/;
+            var match = re.exec(hash);
+            hash = match[1];
+            var param = match[3];
+            app(hash, param); // navigate to the page
+        }else{
+            $countMatches = 0;
+        }
     }
 
     $(window).on("hashchange", onhashchange );

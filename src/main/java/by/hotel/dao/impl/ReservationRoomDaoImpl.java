@@ -195,6 +195,12 @@ public class ReservationRoomDaoImpl extends AbstractDao implements IReservationR
                 .build();
         Room room = roomBuilder.id(resultSet.getInt("idRoom"))
                 .roomType(roomTypeBuilder.id(resultSet.getInt("idRoomType"))
+                        .costPerDay(resultSet.getInt("costPerDay"))
+                        .roomsCount(resultSet.getInt("roomsCount"))
+                        .bedsCount(resultSet.getInt("bedsCount"))
+                        .roomsCount(resultSet.getInt("roomsCount"))
+                        .additionalInfo(resultSet.getString("additionalInfo"))
+                        .size(resultSet.getInt("size"))
                         .build())
                 .floor(resultSet.getInt("floor"))
                 .phone(resultSet.getString("phone"))

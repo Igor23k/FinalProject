@@ -125,7 +125,7 @@ public class RoomServiceImpl extends AbstractService implements ICrudServiceExte
                         .path(params.get("path")[0])
                         .build();
             }
-        }catch (IncorrectRoomPhoneNumberException | IncorrectRoomNameException | IncorrectRoomPathException e) {
+        }catch (IncorrectRoomPhoneNumberException | IncorrectRoomNameException e) {
             throw new ServiceException(e);
         }
         return null;

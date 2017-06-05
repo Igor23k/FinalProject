@@ -49,6 +49,7 @@ function generatePermissionsUser() {
 function findRoom() {
     alert("Ловушка! Тут-то ничего нет! Тебе в услуги!")
 }
+var $countMatches = 0;
 function preparationMain() {
 
     $.ajax({

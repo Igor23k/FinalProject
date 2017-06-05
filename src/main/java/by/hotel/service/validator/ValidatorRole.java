@@ -49,9 +49,12 @@ public class ValidatorRole extends AbstractValidator{
      * @throws IncorrectRightRoleException if name role is incorrect
      */
     private boolean validateRight(String right)throws IncorrectRightRoleException {
-        if(Integer.parseInt(right) == 0 | Integer.parseInt(right) == 1){
-            return true;
+        if (ValidatorNumber.validate(right)) {
+            if(Integer.parseInt(right) == 0 | Integer.parseInt(right) == 1){
+                return true;
+            }
+            throw new IncorrectRightRoleException("Incorrect right role!");
         }
-        throw new IncorrectRightRoleException("Incorrect right role!");
+        throw new NumberFormatException("Wrong data");
     }
 }

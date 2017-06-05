@@ -12,15 +12,11 @@ import by.hotel.dao.impl.ReservationDaoImpl;
 import by.hotel.dao.impl.ReservationRoomDaoImpl;
 import by.hotel.service.AbstractService;
 import by.hotel.service.ICrudServiceExtended;
-import by.hotel.service.exception.IncorrectCostException;
+import by.hotel.service.exception.IncorrectAcceptedException;
 import by.hotel.service.exception.IncorrectDateException;
 import by.hotel.service.exception.ServiceException;
 import by.hotel.service.validator.ValidatorReservation;
 
-import java.sql.Connection;
-import java.sql.Date;
-import java.text.ParseException;
-import java.text.SimpleDateFormat;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -148,7 +144,7 @@ public class ReservationServiceImpl extends AbstractService implements ICrudServ
                         .discount(new DiscountBuilder().id(Integer.parseInt(params.get("idDiscount")[0])).build())
                         .build();
             }
-        } catch (IncorrectDateException | IncorrectCostException e) {
+        } catch (IncorrectDateException | IncorrectAcceptedException e) {
             throw new ServiceException(e);
         }
         return null;

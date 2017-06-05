@@ -1,6 +1,6 @@
 package by.hotel.service.validator;
 
-import by.hotel.service.exception.IncorrectCostException;
+import by.hotel.service.exception.IncorrectAcceptedException;
 import by.hotel.service.exception.IncorrectDateException;
 
 import java.text.DateFormat;
@@ -29,10 +29,10 @@ public class ValidatorReservation extends AbstractValidator {
      * @param data - the param that needed to validate.
      * @return boolean value.
      * @throws IncorrectDateException if date is incorrect
-     * @throws IncorrectCostException if cost is incorrect
+     * @throws IncorrectAcceptedException if cost is incorrect
      * @throws NumberFormatException if cost is incorrect
      */
-    public boolean validate(Map<String, String[]> data) throws IncorrectDateException, IncorrectCostException,NumberFormatException {
+    public boolean validate(Map<String, String[]> data) throws IncorrectDateException, IncorrectAcceptedException,NumberFormatException {
         if (validateDate(data.get("dateIn")[0]) & validateDate(data.get("dateOut")[0])
                 & validateUnsignedIntDigit(data.get("accepted")[0])) {
             return true;
@@ -52,15 +52,18 @@ public class ValidatorReservation extends AbstractValidator {
         }
     }
     /**
-     * Validate date.
+     * Validate accepted.
      * @return boolean value.
-     * @throws IncorrectCostException if cost is incorrect
-     * @throws NumberFormatException if cost is incorrect
+     * @throws IncorrectAcceptedException if accepted is negative
+     * @throws NumberFormatException if accepted is incorrect
      */
-    private boolean validateUnsignedIntDigit(String digit) throws IncorrectCostException,NumberFormatException {
-        if (Integer.parseInt(digit) >= 0) {
-            return true;
+    private boolean validateUnsignedIntDigit(String digit) throws IncorrectAcceptedException,NumberFormatException {
+        if (ValidatorNumber.validate(digit)) {
+            if (Integer.parseInt(digit) >= 0) {
+                return true;
+            }
+            throw new IncorrectAcceptedException("Negative accepted!");
         }
-        throw new IncorrectCostException("Negative cost!");
+        throw new NumberFormatException("Wrong data");
     }
 }

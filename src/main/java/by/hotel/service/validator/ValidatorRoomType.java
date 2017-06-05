@@ -26,10 +26,10 @@ public class ValidatorRoomType extends AbstractValidator{
      * @throws IncorrectRoomsCountException if rooms count is incorrect
      * @throws IncorrectRoomBedsException if room beds is incorrect
      * @throws IncorrectRoomSizeException if room size is incorrect
-     * @throws IncorrectCostException if room cost is incorrect
+     * @throws IncorrectCostPerDayException if room cost is incorrect
      * @throws IncorrectRoomAdditionalInfoException if room additional info is incorrect
      */
-    public boolean validate(Map<String, String[]> data) throws IncorrectRoomBathroomsException, IncorrectRoomsCountException, IncorrectRoomBedsException, IncorrectRoomSizeException, IncorrectCostException, IncorrectRoomAdditionalInfoException {
+    public boolean validate(Map<String, String[]> data) throws IncorrectCostPerDayException, IncorrectRoomBathroomsException, IncorrectRoomsCountException, IncorrectRoomBedsException, IncorrectRoomSizeException, IncorrectRoomAdditionalInfoException {
         if (validateRoomsCountDigit(data.get("roomsCount")[0])
                 & validateBedsCountDigit(data.get("bedsCount")[0])
                 & validateBathroomsCountDigit(data.get("bathroomsCount")[0])
@@ -47,10 +47,13 @@ public class ValidatorRoomType extends AbstractValidator{
      * @throws IncorrectRoomsCountException if rooms count is incorrect
      */
     private boolean validateRoomsCountDigit(String digit) throws IncorrectRoomsCountException {
-        if(Integer.parseInt(digit) >= 0 & Integer.parseInt(digit) <= 5){
-            return true;
+        if (ValidatorNumber.validate(digit)) {
+            if(Integer.parseInt(digit) >= 0 & Integer.parseInt(digit) <= 5){
+                return true;
+            }
+            throw new IncorrectRoomsCountException("Incorrect rooms count!");
         }
-        throw new IncorrectRoomsCountException("Incorrect rooms count!");
+        throw new NumberFormatException("Wrong data");
     }
 
     /**
@@ -92,13 +95,13 @@ public class ValidatorRoomType extends AbstractValidator{
     /**
      * Validate parameters.
      * @return boolean value.
-     * @throws IncorrectCostException if room cost is incorrect
+     * @throws IncorrectCostPerDayException if room cost is incorrect
      */
-    private boolean validateCostPerDayDigit(String digit) throws IncorrectCostException {
+    private boolean validateCostPerDayDigit(String digit) throws IncorrectCostPerDayException {
         if(Float.parseFloat(digit) >= 0 & Float.parseFloat(digit) <= 100000){
             return true;
         }
-        throw new IncorrectCostException("Incorrect room cost!");
+        throw new IncorrectCostPerDayException("Incorrect room cost!");
     }
 
     /**

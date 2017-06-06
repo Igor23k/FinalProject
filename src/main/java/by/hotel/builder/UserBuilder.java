@@ -47,6 +47,10 @@ public class UserBuilder {
      * Property - role
      */
     private Role role;
+    /**
+     * Property - banned
+     */
+    private Integer banned;
 
     /**  Function for set value {@link UserBuilder#id}
      *@param id - the id to be set.
@@ -127,6 +131,23 @@ public class UserBuilder {
     public UserBuilder role(Role role){
         this.role = role;
         return this;
+    }
+
+    /**  Function for set value {@link UserBuilder#banned}
+     *@param banned - the role to be set.
+     *@return object of class UserBuilder
+     */
+    public UserBuilder banned(Integer banned){
+        this.banned = banned;
+        return this;
+    }
+
+    /**
+     * Function for get value {@link UserBuilder#banned}
+     * @return value of banned
+     */
+    public Integer getBanned() {
+        return banned;
     }
 
     /**

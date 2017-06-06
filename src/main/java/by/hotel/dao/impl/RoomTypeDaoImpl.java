@@ -15,7 +15,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-import static by.hotel.dao.constants.Constants.*;
+import static by.hotel.dao.constant.Constants.*;
 
 /**
  * RoomTypeDaoImpl.java

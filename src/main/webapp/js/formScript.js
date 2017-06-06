@@ -64,6 +64,7 @@ function getUpdateDataUser() {
         });
     });
     result = result.concat('&','id','=', currentUser.id);
+    result = result.concat('&','banned','=', currentUser.banned);
     result = result.concat('&','idRole','=', currentUser.role.id);
     result = result.concat('&','password','=', currentUser.password);
     return result;
@@ -72,8 +73,7 @@ function getUpdateDataUser() {
 function sendUpdatePersonalInfo() {
     $.ajax({
         type: 'POST',
-        url: '/servlet?action=UPDATE' + getUpdateDataUser() + '&rights=128&tableName=USER',
-
+        url: '/servlet?action=UPDATE' + getUpdateDataUser() + '&rights=' + sessionStorage["rights"] +'&tableName=USER',
         success: function(data) {
 
         }
@@ -114,9 +114,8 @@ function getTemplateReservations() {
 function getReservations() {
     $.ajax({
         type: 'GET',
-        url: '/servlet?tableName=reservation_room&action=GET_ALL_BY_KEY&rights=4&idUser=' + sessionStorage['id'] + '&localePage=contentServices&locale=' + locale,
+        url: '/servlet?tableName=reservation_room&action=GET_ALL_BY_KEY&rights=' + sessionStorage["rights"] +'&&idUser=' + sessionStorage['id'] + '&localePage=contentServices&locale=' + locale,
         success: function(data) {
-            console.log(data);
             generateReservations(data['data']);
         }
     });
@@ -134,24 +133,23 @@ function generateReservations(arrayReservations) {
             }
         }
 
-        console.log(countReservations)
-        console.log("ppppppppppppp")
         generateReservationHtml(reservationObject);
     }
 }
 
 function generateReservationHtml(reservationObj) {
     $('#personalInfo').append($templateReservation);
+    console.log(reservationObj)
     var arrayComponentsListReservation = $(($('#personalInfo').children().last().children())[0]).children();
-    console.log(reservationObj["room"]["roomType"]);
     arrayComponentsListReservation[0].innerHTML = "Бронь";
     arrayComponentsListReservation[1].lastElementChild.innerHTML = reservationObj["reservation"]["dateIn"];
     arrayComponentsListReservation[2].lastElementChild.innerHTML = reservationObj["reservation"]["dateOut"];
     arrayComponentsListReservation[3].lastElementChild.innerHTML = reservationObj["room"]["roomType"]["costPerDay"];
-    arrayComponentsListReservation[4].lastElementChild.innerHTML = reservationObj["room"]["floor"];
-    arrayComponentsListReservation[5].lastElementChild.innerHTML = reservationObj["room"]["roomType"]["roomsCount"];
-    arrayComponentsListReservation[6].lastElementChild.innerHTML = reservationObj["room"]["roomType"]["bedsCount"];
-    arrayComponentsListReservation[7].lastElementChild.innerHTML = reservationObj["room"]["roomType"]["additionalInfo"];
+    arrayComponentsListReservation[4].lastElementChild.innerHTML = reservationObj["reservation"]["discount"]["countPercentages"];
+    arrayComponentsListReservation[5].lastElementChild.innerHTML = reservationObj["room"]["floor"];
+    arrayComponentsListReservation[6].lastElementChild.innerHTML = reservationObj["room"]["roomType"]["roomsCount"];
+    arrayComponentsListReservation[7].lastElementChild.innerHTML = reservationObj["room"]["roomType"]["bedsCount"];
+    arrayComponentsListReservation[8].lastElementChild.innerHTML = reservationObj["room"]["roomType"]["additionalInfo"];
 }
 var section;
 function setNewValueEntryDiv(textDiv) {
@@ -176,12 +174,10 @@ function sendUserDataRegistration(login,email,pass,phone,name,surname,passport) 
     $.ajax({
         type: 'POST',
         url: '/servlet?action=REGISTRATION',
-        data:{"locale":locale,"rights":4,"login":login,"email":email,"password":pass,"mobilePhone":phone,"name":name,"surname":surname,"passportNumber":passport,"id":0,"idRole":1},
+        data:{"locale":locale,"rights":4,"banned":0,"localePage":"personalInfo","login":login,"email":email,"password":pass,"mobilePhone":phone,"name":name,"surname":surname,"passportNumber":passport,"id":0,"idRole":1},
         success: function(data) {
             if(typeof data =='object') {
-                currentUser = data;
-                loadTemplate('/templates/pages/signin/personalInfo.html');
-                setNewValueEntryDiv(currentUser.name);
+                alert("Вы успешно зарегистрировались!");
             }
         }
     });
@@ -191,23 +187,25 @@ function sendUserDataLogin(email,pass){
      $.ajax({
          type: 'POST',
          url: '/servlet?action=AUTHORIZATION',
-         data:{"locale":locale,"localePage":"personalArea","email":email,"password":pass,"rights":4},
+         data:{"locale":locale,"localePage":"personalInfo","email":email,"password":pass,"rights":4},
          success: function(data) {
              if(typeof data['data'] =='object' && data['data']!=null) {
                  currentUser = data['data'];
                  if(sessionStorage.length==0) {
                      for (var fieldUser in currentUser) {
                          if (typeof currentUser[fieldUser] == 'object')
-                             sessionStorage['role'] = JSON.stringify(currentUser['role']);
+                             sessionStorage['rights'] = generatePermissionsUser(currentUser['role']);
                          else
                              sessionStorage[fieldUser] = currentUser[fieldUser];
                      }
-
+                     if (sessionStorage['rights'] >= 127)
+                         document.getElementById('idAdminRef').style.display = 'block';
+                     loadTemplate('/templates/pages/signin/personalInfo.html');
+                     setNewValueEntryDiv(currentUser.name);
+                 }else
+                 {
+                     alert("Чет тут не но...")
                  }
-                 document.getElementById('idAdminRef').style.display = 'block';
-                 document.getElementById('idPersonalAreaRef').style.display = 'block';
-                 loadTemplate('/templates/pages/signin/personalInfo.html');
-                 setNewValueEntryDiv(currentUser.name);
              }else {
                  alert("Данные заполнены неверно!")
              }
@@ -254,7 +252,6 @@ function LogOut() {
     setNewValueEntryDiv("Вход","#entry");
     loadTemplate('/templates/pages/signin/entry.html');
     document.getElementById('idAdminRef').style.display = 'none';
-    document.getElementById('idPersonalAreaRef').style.display = 'none';
 }
 
 function validPassport(passport) {

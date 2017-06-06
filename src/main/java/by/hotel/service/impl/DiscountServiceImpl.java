@@ -116,6 +116,7 @@ public class DiscountServiceImpl extends AbstractService implements ICrudService
             if(validatorDiscount.validate(params)) {
                 return new DiscountBuilder().id(Integer.parseInt(params.get("id")[0]))
                         .name(params.get("name")[0])
+                        .countPercentages(Integer.valueOf(params.get("countPercentages")[0]))
                         .build();
             }
         } catch (IncorrectDiscountNameException e) {

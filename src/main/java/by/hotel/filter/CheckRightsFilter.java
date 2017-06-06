@@ -65,8 +65,10 @@ public class CheckRightsFilter implements Filter {
         if(request.getParameter("action")!= null) {
             requiredRight = rights.get(request.getParameter("action"));
         }
-       // userRights = Integer.parseInt(request.getParameter("rights"));
-        userRights = 127;
+        userRights = Integer.parseInt(request.getParameter("rights"));
+        //userRights = 127;
+        String s = request.getParameter("action");
+        Integer a = requiredRight & userRights;
         if ((requiredRight & userRights) == requiredRight) {
             chain.doFilter(request, response);
         } else {

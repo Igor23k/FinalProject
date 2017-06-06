@@ -1,9 +1,3 @@
-include("js/booking/booking.js");
-function include(url) {
-    var script = document.createElement('script');
-    script.src = url;
-    document.getElementsByTagName('head')[0].appendChild(script);
-}
 $templateRoom = null;
 var roomObject = {};
 

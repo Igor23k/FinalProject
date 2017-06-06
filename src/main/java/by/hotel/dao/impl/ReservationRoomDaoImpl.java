@@ -15,7 +15,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-import static by.hotel.dao.constants.Constants.*;
+import static by.hotel.dao.constant.Constants.*;
 
 /**
  * ReservationRoomDaoImpl.java
@@ -191,6 +191,7 @@ public class ReservationRoomDaoImpl extends AbstractDao implements IReservationR
                 .accepted(resultSet.getInt("accepted"))
                 .discount(discountBuilder.id(resultSet.getInt("idDiscount"))
                         .name(resultSet.getString("discountName"))
+                        .countPercentages(resultSet.getInt("countPercentages"))
                         .build())
                 .build();
         Room room = roomBuilder.id(resultSet.getInt("idRoom"))

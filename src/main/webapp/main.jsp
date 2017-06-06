@@ -10,7 +10,7 @@
     <title>Main</title>
     <script type="text/javascript" src="js/jquery-3.2.0.min.js"></script>
     <script src="js/bootstrap.js" type="text/javascript"></script>
-    <script type="text/javascript" src="js/SPA_JS.js"></script>
+    <script type="text/javascript" src="js/spa.js"></script>
     <script type="text/javascript" src="js/main/main.js"></script>
     <script src="js/formScript.js" type="text/javascript"></script>
     <script type="text/javascript" src=js/formScript.js></script>
@@ -21,6 +21,10 @@
     <link href="css/style.css" rel="stylesheet" type="text/css" />
     <link href="css/layout.css" rel="stylesheet" type="text/css" />
     <script src="js/maxheight.js" type="text/javascript"></script>
+    <script src="js/services/services.js" type="text/javascript"></script>
+    <script src="js/booking/booking.js" type="text/javascript"></script>
+    <script src="js/testimonials/testimonials.js" type="text/javascript"></script>
+    <script src="js/spa.js" type="text/javascript"></script>
 
     <!--[if lt IE 7]>
     <link href="ie_style.css" rel="stylesheet" type="text/css" />
@@ -63,10 +67,7 @@
                         +375(29)179-07-46
                         <br>
                         <div id="idAdminRef" style="display: none">
-                            <a id="admin" href="/servlet?page=admin.jsp&action=ADMIN_START&locale=ru&localePage=admin">${data.admin}</a>
-                        </div>
-                        <div id="idPersonalAreaRef" style="display: none">
-                            <a id="personalArea" href="#personalInfo">${data.personalArea}</a>
+                            <a id="admin" href = "/servlet?page=admin.jsp&action=ADMIN_START&locale=ru&localePage=admin&rights=127">${data.admin}</a>
                         </div>
                     </div>
 

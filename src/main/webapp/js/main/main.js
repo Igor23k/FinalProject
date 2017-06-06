@@ -2,15 +2,6 @@
 var currentUser = null;
 var locale = "ru";
 var currentPageName = "contentMain";
-include("js/SPA_JS.js");
-include("js/services/services.js");
-include("js/testimonials/testimonials.js");
-include("js/booking/booking.js");
-function include(url) {
-    var script = document.createElement('script');
-    script.src = url;
-    document.getElementsByTagName('head')[0].appendChild(script);
-}
 
 function setRoleAttributes(roleObj) {
     for(var fieldRole in roleObj)
@@ -42,9 +33,12 @@ function generatePermissionsUser() {
     var stringPermissions ='';
 
     for(var permission in objRole)
-        if(permission!='id') {
+        if(permission!='id' && permission !='nameRole') {
             stringPermissions += objRole[permission];
         }
+    console.log(stringPermissions)
+    console.log(parseInt( stringPermissions, 2 ))
+    return (parseInt( stringPermissions, 2 ));
 }
 function findRoom() {
     alert("Ловушка! Тут-то ничего нет! Тебе в услуги!")
@@ -80,11 +74,6 @@ function changeLocale(loc) {
         type: 'GET',
         url: '/servlet?rights=4&localePage=' + currentPageName + '&locale=' + loc,
         success: function(data) {
-            /*console.log(JSON.stringify(data));
-            console.log(data['data']);
-            console.log(data['local']);
-            console.log(data['local']['address']);
-            console.log("uuuuuuuuuuuu");*/
             locale = loc;
             setData(data['local']);
         }

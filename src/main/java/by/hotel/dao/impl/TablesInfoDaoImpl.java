@@ -13,7 +13,7 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 
-import static by.hotel.dao.constants.Constants.GET_ALL_NAMES_TABLES;
+import static by.hotel.dao.constant.Constants.GET_ALL_NAMES_TABLES;
 
 /**
  * TablesInfoDaoImpl.java

@@ -7,7 +7,7 @@ import by.hotel.dao.AbstractDao;
 import by.hotel.dao.IAuthDao;
 import by.hotel.dao.IUserDao;
 import by.hotel.dao.connectionpool.ConnectionPool;
-import by.hotel.dao.constants.Constants;
+import by.hotel.dao.constant.Constants;
 import by.hotel.dao.exception.ConnectionPoolException;
 import by.hotel.dao.exception.DAOException;
 
@@ -18,7 +18,7 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 
-import static by.hotel.dao.constants.Constants.*;
+import static by.hotel.dao.constant.Constants.*;
 
 /**
  * UserDaoImpl.java
@@ -151,7 +151,7 @@ public class UserDaoImpl extends AbstractDao implements IUserDao,IAuthDao {
             connection = connectionPool.takeConnection();
             statement = connection.prepareStatement(UPDATE_USER);
             statement = fillStatement(statement, user);
-            statement.setInt(9, user.getId());
+            statement.setInt(10, user.getId());
             statement.execute();
         } catch (SQLException | ConnectionPoolException e) {
             throw new DAOException(e);
@@ -272,8 +272,9 @@ public class UserDaoImpl extends AbstractDao implements IUserDao,IAuthDao {
         statement.setString(6, user.getLogin());
         statement.setInt(7, user.getRole().getId());
         statement.setString(8, user.getEmail());
+        statement.setInt(9, user.getBanned());
         if (user.getId() != 0) {
-            statement.setInt(9, user.getId());
+            statement.setInt(10, user.getId());
         }
         return statement;
     }
@@ -295,6 +296,7 @@ public class UserDaoImpl extends AbstractDao implements IUserDao,IAuthDao {
                 .mobilePhone(resultSet.getString("mobilePhone"))
                 .password(resultSet.getString("password"))
                 .login(resultSet.getString("login"))
+                .banned(resultSet.getInt("banned"))
                 .role(roleBuilder.id(resultSet.getInt("idRole"))
                         .nameRole(resultSet.getString("nameRole"))
                         .update(resultSet.getByte("update"))

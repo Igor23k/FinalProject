@@ -47,6 +47,11 @@ public class User {
     private Role role;
 
     /**
+     * Property - banned
+     */
+    private Integer banned;
+
+    /**
      * Create new empty object
      */
     public User(){super();}
@@ -64,6 +69,7 @@ public class User {
         this.password = userBuilder.getPassword();
         this.role = userBuilder.getRole();
         this.email = userBuilder.getEmail();
+        this.banned = userBuilder.getBanned();
     }
 
     /**
@@ -80,6 +86,21 @@ public class User {
      */
     public void setId(int id) {
         this.id = id;
+    }
+    /**
+     * Function for get value {@link User#banned}
+     * @return value of id
+     */
+    public Integer getBanned() {
+        return banned;
+    }
+
+    /**
+     * Function for set value of banned {@link User#banned}
+     * @param banned - the banned to be set.
+     */
+    public void setBanned(Integer banned) {
+        this.banned = banned;
     }
 
     /**

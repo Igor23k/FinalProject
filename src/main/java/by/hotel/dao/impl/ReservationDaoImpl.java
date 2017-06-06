@@ -7,7 +7,7 @@ import by.hotel.builder.UserBuilder;
 import by.hotel.dao.AbstractDao;
 import by.hotel.dao.IReservationDao;
 import by.hotel.dao.connectionpool.ConnectionPool;
-import by.hotel.dao.constants.Constants;
+import by.hotel.dao.constant.Constants;
 import by.hotel.dao.exception.ConnectionPoolException;
 import by.hotel.dao.exception.DAOException;
 import by.hotel.util.ErrorStringBuilder;
@@ -18,7 +18,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-import static by.hotel.dao.constants.Constants.*;
+import static by.hotel.dao.constant.Constants.*;
 
 /**
  * ReservationDaoImpl.java
@@ -231,6 +231,7 @@ public class ReservationDaoImpl extends AbstractDao implements IReservationDao {
                 .accepted(resultSet.getInt("accepted"))
                 .discount(discountBuilder.id(resultSet.getInt("idDiscount"))
                         .name(resultSet.getString("discountName"))
+                        .countPercentages(resultSet.getInt("countPercentages"))
                         .build())
                 .build();
     }

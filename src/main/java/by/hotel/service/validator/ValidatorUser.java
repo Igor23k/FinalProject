@@ -112,7 +112,7 @@ public class ValidatorUser extends AbstractValidator {
      * @throws IncorrectLoginException if login is incorrect
      */
     private boolean validateLogin(String login) throws IncorrectLoginException {
-        if (login.length() > 5 & login.length() < 50) {
+        if (login.length() > 2 & login.length() < 50) {
             return true;
         }
         throw new IncorrectLoginException("Incorrect login!");

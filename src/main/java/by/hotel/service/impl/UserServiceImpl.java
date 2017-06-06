@@ -142,6 +142,7 @@ public class UserServiceImpl extends AbstractService implements ICrudServiceExte
                         .login(params.get("login")[0])
                         .email(params.get("email")[0])
                         .password(password)
+                        .banned(Integer.valueOf(params.get("banned")[0]))
                         .passportNumber(params.get("passportNumber")[0])
                         .mobilePhone(params.get("mobilePhone")[0])
                         .role(new RoleBuilder().id(Integer.parseInt(params.get("idRole")[0])).build())

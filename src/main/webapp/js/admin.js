@@ -152,7 +152,7 @@ function sendUpdateData() {
 
     $.ajax({
         type: 'POST',
-        url: '/servlet?action=UPDATE&rights=127&locale=ru&localePage=admin&tableName='+NameTable + getData(editBodyUpdate),
+        url: '/servlet?action=UPDATE&rights=' + sessionStorage["rights"] +'&locale=ru&localePage=admin&tableName='+NameTable + getData(editBodyUpdate),
         success: function (result) {
             if(result['data'] != null && result['data'].length !=0){
                 alert(result);
@@ -165,7 +165,7 @@ function sendAddData() {
 
     $.ajax({
         type: 'POST',
-        url: '/servlet?action=ADD&rights=127&locale=ru&localePage=admin&tableName='+NameTable + getData(editBodyAdd),
+        url: '/servlet?action=ADD&rights=' + sessionStorage["rights"] +'&locale=ru&localePage=admin&tableName='+NameTable + getData(editBodyAdd),
         success: function (result) {
             if(typeof result['data'] == 'string'){
                 alert(result['data'] );
@@ -204,7 +204,7 @@ function deleteRow(obj) {
     Data = deteleData;
     $.ajax({
         type: 'DELETE',
-        url: '/servlet?action=REMOVE&rights=128&locale=ru&localePage=admin&tableName=' + NameTable + '&' +  formParams(obj.closest('tr').rowIndex),
+        url: '/servlet?action=REMOVE&rights=' + sessionStorage["rights"] +'&locale=ru&localePage=admin&tableName=' + NameTable + '&' +  formParams(obj.closest('tr').rowIndex),
         success:function(result){
             if(result['data']==null || result['data'].length == 0){
                 document.getElementById('tableHotel').deleteRow(obj.closest('tr').rowIndex);
@@ -264,7 +264,7 @@ function generateSelectChilds() {
     if(tables != '') {
         $.ajax({
             type: 'GET',
-            url: '/servlet?action=GET_ALL_HEADERS&rights=127&locale=ru&localePage=admin&' + tables,
+            url: '/servlet?action=GET_ALL_HEADERS&rights=' + sessionStorage["rights"] +'&locale=ru&localePage=admin&' + tables,
             success: function (data) {
                 Data = data['data'];
                 for (var value in futureQueryForID) {
@@ -358,7 +358,7 @@ function loadTemplate() {
 function getAllTableElements(nameTable) {
     $.ajax({
         type: 'GET',
-        url: '/servlet?action=GET_ALL&rights=128&locale=ru&localePage=admin&tableName='+nameTable,
+        url: '/servlet?action=GET_ALL&rights=' + sessionStorage["rights"] +'&locale=ru&localePage=admin&tableName='+nameTable,
         success: function(data) {
             futureQueryForID = {};
             loadTemplate();

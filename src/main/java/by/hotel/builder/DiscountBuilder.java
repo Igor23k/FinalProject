@@ -20,6 +20,11 @@ public class DiscountBuilder {
      */
     private String name;
 
+    /**
+     * Property - countPercentages
+     */
+    private int countPercentages;
+
     /**  Function for set value {@link DiscountBuilder#id}
      *@param id - the id to be set.
      *@return object of class DiscountBuilder
@@ -38,6 +43,15 @@ public class DiscountBuilder {
         return this;
     }
 
+    /**  Function for set value {@link DiscountBuilder#countPercentages}
+     *@param countPercentages - the name to be set.
+     *@return object of class DiscountBuilder
+     */
+    public DiscountBuilder countPercentages(Integer countPercentages){
+        this.countPercentages = countPercentages;
+        return this;
+    }
+
     /**
      * Function for get value {@link DiscountBuilder#id}
      * @return value of id
@@ -53,6 +67,15 @@ public class DiscountBuilder {
     public String getName() {
         return name;
     }
+
+    /**
+     * Function for get value {@link DiscountBuilder#countPercentages}
+     * @return value of countPercentages
+     */
+    public int getCountPercentages() {
+        return countPercentages;
+    }
+
 
     /**  Function for build discount
      *@return object of class Discount

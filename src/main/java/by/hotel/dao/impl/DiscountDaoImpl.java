@@ -15,7 +15,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-import static by.hotel.dao.constants.Constants.*;
+import static by.hotel.dao.constant.Constants.*;
 
 /**
  * DiscountDaoImpl.java
@@ -46,14 +46,15 @@ public class DiscountDaoImpl extends AbstractDao implements IDiscountDao {
         ResultSet resultSet = null;
         List<String> headers = new ArrayList<>();
         StringBuilder stringBuilder = new StringBuilder();
-        Connection connection = null;
+        Connection connection;
         try {
             connection = connectionPool.takeConnection();
             statement = connection.prepareStatement(GET_ALL_DISCOUNTS_HEADERS);
             resultSet = statement.executeQuery();
             while (resultSet.next()) {
                 stringBuilder.append(resultSet.getInt("id") + " ");
-                stringBuilder.append(resultSet.getString("name"));
+                stringBuilder.append(resultSet.getString("name") + " ");
+                stringBuilder.append(resultSet.getString("countPercentages"));
                 headers.add(stringBuilder.toString());
                 stringBuilder.setLength(0);
             }
@@ -75,7 +76,7 @@ public class DiscountDaoImpl extends AbstractDao implements IDiscountDao {
         ResultSet resultSet = null;
         List<Discount> discounts = new ArrayList<>();
         DiscountBuilder discountBuilder = new DiscountBuilder();
-        Connection connection = null;
+        Connection connection;
         try {
             connection = connectionPool.takeConnection();
             statement = connection.prepareStatement(GET_ALL_DISCOUNTS);
@@ -147,7 +148,7 @@ public class DiscountDaoImpl extends AbstractDao implements IDiscountDao {
             connection = connectionPool.takeConnection();
             statement = connection.prepareStatement(UPDATE_DISCOUNT);
             statement = fillStatement(statement, discount);
-            statement.setInt(2, discount.getId());
+            statement.setInt(3, discount.getId());
             statement.execute();
         } catch (SQLException | NullPointerException | ConnectionPoolException e) {
             throw new DAOException(e);
@@ -170,7 +171,6 @@ public class DiscountDaoImpl extends AbstractDao implements IDiscountDao {
         try {
             connection = connectionPool.takeConnection();
             statement = connection.prepareStatement(GET_LAST_INSERTED_DISCOUNT);
-           // statement.setString(1,"discount");
             resultSet = statement.executeQuery();
             if (resultSet.next()) {
                 discount = fillDiscount(resultSet, discountBuilder);
@@ -193,6 +193,7 @@ public class DiscountDaoImpl extends AbstractDao implements IDiscountDao {
      */
     private PreparedStatement fillStatement(PreparedStatement statement, Discount discount) throws SQLException {
         statement.setString(1, discount.getName());
+        statement.setString(2, String.valueOf(discount.getCountPercentages()));
         return statement;
     }
 
@@ -206,6 +207,7 @@ public class DiscountDaoImpl extends AbstractDao implements IDiscountDao {
     private Discount fillDiscount(ResultSet resultSet, DiscountBuilder discountBuilder) throws SQLException {
         return discountBuilder.id(resultSet.getInt("id"))
                 .name(resultSet.getString("name"))
+                .countPercentages(Integer.valueOf(resultSet.getString("countPercentages")))
                 .build();
     }
 

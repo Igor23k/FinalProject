@@ -15,6 +15,11 @@ public class Discount {
     private int id;
 
     /**
+     * Property - countPercentages
+     */
+    private int countPercentages;
+
+    /**
      * Property - discount's name
      */
     private String name;
@@ -26,11 +31,12 @@ public class Discount {
     }
 
     /** Create new object
-     @param discountBuilder - builder discount
+     * @param discountBuilder - builder discount
      */
     public Discount(DiscountBuilder discountBuilder){
         this.id = discountBuilder.getId();
         this.name = discountBuilder.getName();
+        this.countPercentages = discountBuilder.getCountPercentages();
     }
 
     /**
@@ -47,6 +53,22 @@ public class Discount {
      */
     public void setId(int id) {
         this.id = id;
+    }
+
+    /**
+     * Function for get value {@link Discount#countPercentages}
+     * @return value of countPercentages
+     */
+    public int getCountPercentages() {
+        return countPercentages;
+    }
+
+    /**
+     * @param countPercentages - the id to be set.
+     * Function for set value of countPercentages {@link Discount#countPercentages}
+     */
+    public void setCountPercentages(int countPercentages) {
+        this.countPercentages = countPercentages;
     }
 
     /**

@@ -7,6 +7,7 @@ import by.hotel.service.exception.ServiceException;
 import by.hotel.service.impl.TablesInfoServiceImpl;
 
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 import java.util.List;
 
 /**
@@ -19,11 +20,11 @@ import java.util.List;
 public class GetTableNames implements ICommand {
     /**
      * Function for getting table names
-     * @param request the operand to use for getting different values.
+     * @param request the operand to use for getting values.
      * @return table names
      * @throws CommandException if get table names is failed
      */
-    public Object execute(HttpServletRequest request) throws CommandException {
+    public Object execute(HttpServletRequest request, HttpServletResponse response) throws CommandException {
         List<String> resultList;
         try {
             ITablesInfoService service = new TablesInfoServiceImpl();

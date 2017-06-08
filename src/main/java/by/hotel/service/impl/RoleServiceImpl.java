@@ -4,6 +4,8 @@ import by.hotel.bean.ReservationRoom;
 import by.hotel.bean.Role;
 import by.hotel.builder.RoleBuilder;
 import by.hotel.dao.IRoleDao;
+import by.hotel.dao.connectionpool.ConnectionPool;
+import by.hotel.dao.exception.ConnectionPoolException;
 import by.hotel.dao.impl.RoleDaoImpl;
 import by.hotel.dao.exception.DAOException;
 import by.hotel.service.AbstractService;
@@ -12,6 +14,7 @@ import by.hotel.service.exception.*;
 import by.hotel.service.validator.ValidatorRole;
 
 import java.sql.Connection;
+import java.sql.PreparedStatement;
 import java.util.List;
 import java.util.Map;
 
@@ -29,6 +32,8 @@ import java.util.Map;
  * @version 1.0
  */
 public class RoleServiceImpl extends AbstractService implements ICrudServiceExtended<Role> {
+    private static ConnectionPool connectionPool = ConnectionPool.getInstance();
+    Connection connection;
     /**
      * Field - roleDao
      */
@@ -41,9 +46,12 @@ public class RoleServiceImpl extends AbstractService implements ICrudServiceExte
      */
     public List<String> getAllHeaders() throws ServiceException {
         try{
-            return roleDao.getRoleHeaders();
-        }catch (DAOException e){
+            connection = connectionPool.takeConnection();
+            return roleDao.getRoleHeaders(connection);
+        }catch (DAOException | ConnectionPoolException e){
             throw new ServiceException(e);
+        }finally {
+            connectionPool.closeConnection(connection);
         }
     }
 
@@ -54,9 +62,12 @@ public class RoleServiceImpl extends AbstractService implements ICrudServiceExte
      */
     public List<Role> getAllEntities() throws ServiceException {
         try {
-            return roleDao.getRoles();
-        } catch (DAOException e) {
+            connection = connectionPool.takeConnection();
+            return roleDao.getRoles(connection);
+        } catch (DAOException | ConnectionPoolException e) {
             throw new ServiceException(e);
+        }finally {
+            connectionPool.closeConnection(connection);
         }
     }
 
@@ -68,10 +79,13 @@ public class RoleServiceImpl extends AbstractService implements ICrudServiceExte
     public List<Role> addEntity(Role role) throws ServiceException {
         List<Role> roles;
         try {
-            roleDao.addRole(role);
-            roles = roleDao.getRoles();
-        } catch (DAOException e) {
+            connection = connectionPool.takeConnection();
+            roleDao.addRole(role,connection);
+            roles = roleDao.getRoles(connection);
+        } catch (DAOException | ConnectionPoolException e) {
             throw new ServiceException(e);
+        }finally {
+            connectionPool.closeConnection(connection);
         }
         return roles;
     }
@@ -83,9 +97,12 @@ public class RoleServiceImpl extends AbstractService implements ICrudServiceExte
      */
     public void removeEntity(Role role) throws ServiceException {
         try {
-            roleDao.removeRole(role);
-        } catch (DAOException e) {
+            connection = connectionPool.takeConnection();
+            roleDao.removeRole(role, connection);
+        } catch (DAOException | ConnectionPoolException e) {
             throw new ServiceException(e);
+        }finally {
+            connectionPool.closeConnection(connection);
         }
     }
 
@@ -96,9 +113,12 @@ public class RoleServiceImpl extends AbstractService implements ICrudServiceExte
      */
     public void updateEntity(Role role) throws ServiceException {
         try {
-            roleDao.updateRole(role);
-        } catch (DAOException e) {
+            connection = connectionPool.takeConnection();
+            roleDao.updateRole(role, connection);
+        } catch (DAOException | ConnectionPoolException e) {
             throw new ServiceException(e);
+        }finally {
+            connectionPool.closeConnection(connection);
         }
     }
 
@@ -135,12 +155,21 @@ public class RoleServiceImpl extends AbstractService implements ICrudServiceExte
      */
     public Role getLastInsertedEntity() throws ServiceException {
         try {
-            return roleDao.getLastInsertedRole();
-        }catch (DAOException e){
+            connection = connectionPool.takeConnection();
+            return roleDao.getLastInsertedRole(connection);
+        }catch (DAOException | ConnectionPoolException e){
             throw new ServiceException(e);
+        }finally {
+            connectionPool.closeConnection(connection);
         }
     }
 
+    /**
+     * Get all entities by key.
+     * @param key the operand to get entities.
+     * @return a list of roles.
+     * @throws ServiceException if get roles is failed
+     */
     @Override
     public List<Role> getAllEntitiesByKey(Integer key) throws ServiceException {
         throw new UnsupportedOperationException();

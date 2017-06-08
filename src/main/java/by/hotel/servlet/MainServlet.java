@@ -1,5 +1,6 @@
 package by.hotel.servlet;
 
+import by.hotel.bean.DocumentObject;
 import by.hotel.command.ICommand;
 import by.hotel.command.exception.CommandException;
 import by.hotel.factory.impl.CommandFactoryMapper;
@@ -47,13 +48,17 @@ public class MainServlet extends HttpServlet {
             Gson gsonData = new Gson();
             GetDateTag dateTag = new GetDateTag();
             String page = request.getParameter("page");
+            String action = request.getParameter("action");
             String localePage = request.getParameter("localePage");
             Map<String, String[]> list = request.getParameterMap();
             CommandFactoryMapper commandFactoryMapper = CommandFactoryMapper.getInstance();
-            if (request.getParameter("action") != null) {
-                ICommand command = commandFactoryMapper.getCommand(request.getParameter("action"));
-                result = command.execute(request);
+            if (action != null) {
+                ICommand command = commandFactoryMapper.getCommand(action);
+                result = command.execute(request,response);
+            }else{
+                action="";
             }
+
             LocalizationManager localizationManager = new LocalizationManager();
             if (request.getParameter("locale") != null) {
                 locale = request.getParameter("locale");
@@ -66,7 +71,7 @@ public class MainServlet extends HttpServlet {
                 request.setAttribute("items", result);
                 request.setAttribute("data", data);
                 request.getRequestDispatcher(page).forward(request, response);
-            } else {
+            } else if (!(action.equals("CREATE_DOC"))){
                 JsonObject pageData = new JsonObject();
                 pageData.add("data", gsonData.toJsonTree(result));
                 pageData.add("local", gsonData.toJsonTree(data));

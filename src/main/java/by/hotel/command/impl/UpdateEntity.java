@@ -7,6 +7,7 @@ import by.hotel.service.CrudServiceMapper;
 import by.hotel.service.exception.ServiceException;
 
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 
 /**
  * UpdateEntity.java
@@ -18,11 +19,11 @@ import javax.servlet.http.HttpServletRequest;
 public class UpdateEntity implements ICommand {
     /**
      * Function for update entity
-     * @param request the operand to use for getting different values.
+     * @param request the operand to use for getting values.
      * @return updated entity
      * @throws CommandException if update entity is failed
      */
-    public Object execute(HttpServletRequest request) throws CommandException {
+    public Object execute(HttpServletRequest request, HttpServletResponse response) throws CommandException {
         try {
             ICrudService service =  CrudServiceMapper.getService(request.getParameterMap().get("tableName")[0]);
             service.updateEntity(service.buildEntity(request.getParameterMap()));

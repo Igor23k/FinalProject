@@ -5,6 +5,8 @@ import by.hotel.bean.RoomType;
 import by.hotel.builder.RoomBuilder;
 import by.hotel.builder.RoomTypeBuilder;
 import by.hotel.dao.IRoomDao;
+import by.hotel.dao.connectionpool.ConnectionPool;
+import by.hotel.dao.exception.ConnectionPoolException;
 import by.hotel.dao.impl.RoomDaoImpl;
 import by.hotel.dao.exception.DAOException;
 import by.hotel.service.AbstractService;
@@ -16,6 +18,7 @@ import by.hotel.service.exception.ServiceException;
 import by.hotel.service.validator.ValidatorRoom;
 
 import java.sql.Connection;
+import java.sql.PreparedStatement;
 import java.util.List;
 import java.util.Map;
 
@@ -33,6 +36,8 @@ import java.util.Map;
  * @version 1.0
  */
 public class RoomServiceImpl extends AbstractService implements ICrudServiceExtended<Room> {
+    private static ConnectionPool connectionPool = ConnectionPool.getInstance();
+    Connection connection;
     /**
      * Field - roomDao
      */
@@ -45,10 +50,33 @@ public class RoomServiceImpl extends AbstractService implements ICrudServiceExte
      */
     public List<String> getAllHeaders() throws ServiceException {
         try {
-            return roomDao.getRoomHeaders();
-        } catch (DAOException e) {
+            connection = connectionPool.takeConnection();
+            return roomDao.getRoomHeaders(connection);
+        } catch (DAOException | ConnectionPoolException e) {
             throw new ServiceException(e);
+        }finally {
+            connectionPool.closeConnection(connection);
         }
+    }
+
+    /**
+     * Get entity.
+     * @param id the operand to get entity.
+     * @return  room.
+     * @throws ServiceException if get  room is failed
+     */
+    public Room getEntity(int id) throws ServiceException {
+        Connection connection = null;
+        Room room;
+        try {
+            connection = connectionPool.takeConnection();
+            room = roomDao.getRoom(connection, id);
+        } catch (DAOException | ConnectionPoolException e) {
+            throw new ServiceException(e);
+        } finally {
+            connectionPool.closeConnection(connection);
+        }
+        return room;
     }
 
     /**
@@ -58,9 +86,12 @@ public class RoomServiceImpl extends AbstractService implements ICrudServiceExte
      */
     public List<Room> getAllEntities() throws ServiceException {
         try {
-            return roomDao.getRooms();
-        } catch (DAOException e) {
+            connection = connectionPool.takeConnection();
+            return roomDao.getRooms(connection);
+        } catch (DAOException | ConnectionPoolException e) {
             throw new ServiceException(e);
+        }finally {
+            connectionPool.closeConnection(connection);
         }
     }
 
@@ -72,10 +103,13 @@ public class RoomServiceImpl extends AbstractService implements ICrudServiceExte
     public List<Room> addEntity(Room room) throws ServiceException {
         List<Room> rooms;
         try {
-            roomDao.addRoom(room);
-            rooms = roomDao.getRooms();
-        } catch (DAOException e) {
+            connection = connectionPool.takeConnection();
+            roomDao.addRoom(room, connection);
+            rooms = roomDao.getRooms(connection);
+        } catch (DAOException | ConnectionPoolException e) {
             throw new ServiceException(e);
+        }finally {
+            connectionPool.closeConnection(connection);
         }
         return rooms;
     }
@@ -87,9 +121,12 @@ public class RoomServiceImpl extends AbstractService implements ICrudServiceExte
      */
     public void removeEntity(Room room) throws ServiceException {
         try {
-            roomDao.removeRoom(room);
-        } catch (DAOException e) {
+            connection = connectionPool.takeConnection();
+            roomDao.removeRoom(room, connection);
+        } catch (DAOException | ConnectionPoolException e) {
             throw new ServiceException(e);
+        }finally {
+            connectionPool.closeConnection(connection);
         }
     }
 
@@ -100,9 +137,12 @@ public class RoomServiceImpl extends AbstractService implements ICrudServiceExte
      */
     public void updateEntity(Room room) throws ServiceException {
         try {
-            roomDao.updateRoom(room);
-        } catch (DAOException e) {
+            connection = connectionPool.takeConnection();
+            roomDao.updateRoom(room, connection);
+        } catch (DAOException | ConnectionPoolException e) {
             throw new ServiceException(e);
+        }finally {
+            connectionPool.closeConnection(connection);
         }
     }
 
@@ -137,12 +177,21 @@ public class RoomServiceImpl extends AbstractService implements ICrudServiceExte
      */
     public Room getLastInsertedEntity() throws ServiceException {
         try {
-            return roomDao.getLastInsertedRoom();
-        } catch (DAOException e) {
+            connection = connectionPool.takeConnection();
+            return roomDao.getLastInsertedRoom(connection);
+        } catch (DAOException  | ConnectionPoolException e) {
             throw new ServiceException(e);
+        }finally {
+            connectionPool.closeConnection(connection);
         }
     }
 
+    /**
+     * Get all entities by key.
+     * @param key the operand to get entities.
+     * @return a list of rooms.
+     * @throws ServiceException if get rooms is failed
+     */
     @Override
     public List<Room> getAllEntitiesByKey(Integer key) throws ServiceException {
         throw new UnsupportedOperationException();

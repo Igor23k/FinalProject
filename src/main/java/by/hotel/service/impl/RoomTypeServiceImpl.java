@@ -3,6 +3,8 @@ package by.hotel.service.impl;
 import by.hotel.bean.RoomType;
 import by.hotel.builder.RoomTypeBuilder;
 import by.hotel.dao.IRoomTypeDao;
+import by.hotel.dao.connectionpool.ConnectionPool;
+import by.hotel.dao.exception.ConnectionPoolException;
 import by.hotel.dao.impl.RoomTypeDaoImpl;
 import by.hotel.dao.exception.DAOException;
 import by.hotel.service.AbstractService;
@@ -10,6 +12,8 @@ import by.hotel.service.ICrudServiceExtended;
 import by.hotel.service.exception.*;
 import by.hotel.service.validator.ValidatorRoomType;
 
+import java.sql.Connection;
+import java.sql.PreparedStatement;
 import java.util.List;
 import java.util.Map;
 
@@ -27,6 +31,8 @@ import java.util.Map;
  * @version 1.0
  */
 public class RoomTypeServiceImpl extends AbstractService implements ICrudServiceExtended<RoomType> {
+    private static ConnectionPool connectionPool = ConnectionPool.getInstance();
+    Connection connection;
     /**
      * Field - roomTypeDao
      */
@@ -39,9 +45,12 @@ public class RoomTypeServiceImpl extends AbstractService implements ICrudService
      */
     public List<String> getAllHeaders() throws ServiceException {
         try {
-            return roomTypeDao.getRoomTypeHeaders();
-        } catch (DAOException e) {
+            connection = connectionPool.takeConnection();
+            return roomTypeDao.getRoomTypeHeaders(connection);
+        } catch (DAOException | ConnectionPoolException e) {
             throw new ServiceException(e);
+        }finally {
+            connectionPool.closeConnection(connection);
         }
     }
 
@@ -52,9 +61,12 @@ public class RoomTypeServiceImpl extends AbstractService implements ICrudService
      */
     public List<RoomType> getAllEntities() throws ServiceException {
         try {
-            return roomTypeDao.getRoomTypes();
-        } catch (DAOException e) {
+            connection = connectionPool.takeConnection();
+            return roomTypeDao.getRoomTypes(connection);
+        } catch (DAOException | ConnectionPoolException e) {
             throw new ServiceException(e);
+        }finally {
+            connectionPool.closeConnection(connection);
         }
     }
 
@@ -66,9 +78,10 @@ public class RoomTypeServiceImpl extends AbstractService implements ICrudService
     public List<RoomType> addEntity(RoomType roomType) throws ServiceException {
         List<RoomType> roomTypes;
         try {
-            roomTypeDao.addRoomType(roomType);
-            roomTypes = roomTypeDao.getRoomTypes();
-        } catch (DAOException e) {
+            connection = connectionPool.takeConnection();
+            roomTypeDao.addRoomType(roomType, connection);
+            roomTypes = roomTypeDao.getRoomTypes(connection);
+        } catch (DAOException | ConnectionPoolException e) {
             throw new ServiceException(e);
         }
         return roomTypes;
@@ -81,9 +94,12 @@ public class RoomTypeServiceImpl extends AbstractService implements ICrudService
      */
     public void removeEntity(RoomType roomType) throws ServiceException {
         try {
-            roomTypeDao.removeRoomType(roomType);
-        } catch (DAOException e) {
+            connection = connectionPool.takeConnection();
+            roomTypeDao.removeRoomType(roomType, connection);
+        } catch (DAOException | ConnectionPoolException e) {
             throw new ServiceException(e);
+        }finally {
+            connectionPool.closeConnection(connection);
         }
     }
 
@@ -94,9 +110,12 @@ public class RoomTypeServiceImpl extends AbstractService implements ICrudService
      */
     public void updateEntity(RoomType roomType) throws ServiceException {
         try {
-            roomTypeDao.updateRoomType(roomType);
-        } catch (DAOException e) {
+            connection = connectionPool.takeConnection();
+            roomTypeDao.updateRoomType(roomType, connection);
+        } catch (DAOException  | ConnectionPoolException e) {
             throw new ServiceException(e);
+        }finally {
+            connectionPool.closeConnection(connection);
         }
     }
 
@@ -133,12 +152,35 @@ public class RoomTypeServiceImpl extends AbstractService implements ICrudService
      */
     public RoomType getLastInsertedEntity() throws ServiceException {
         try {
-            return roomTypeDao.getLastInsertedRoomType();
-        } catch (DAOException e) {
+            connection = connectionPool.takeConnection();
+            return roomTypeDao.getLastInsertedRoomType(connection);
+        } catch (DAOException | ConnectionPoolException e) {
             throw new ServiceException(e);
+        }finally {
+            connectionPool.closeConnection(connection);
         }
     }
 
+    public RoomType getEntity(int id) throws ServiceException {
+        Connection connection = null;
+        RoomType roomType;
+        try {
+            connection = connectionPool.takeConnection();
+            roomType = roomTypeDao.getRoomType(connection, id);
+        } catch (DAOException | ConnectionPoolException e) {
+            throw new ServiceException(e);
+        } finally {
+            connectionPool.closeConnection(connection);
+        }
+        return roomType;
+    }
+
+    /**
+     * Get all entities by key.
+     * @param key the operand to get entities.
+     * @return a list of room types.
+     * @throws ServiceException if get room types is failed
+     */
     @Override
     public List<RoomType> getAllEntitiesByKey(Integer key) throws ServiceException {
         throw new UnsupportedOperationException();

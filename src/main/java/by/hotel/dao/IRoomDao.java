@@ -15,39 +15,54 @@ import java.util.List;
 public interface IRoomDao {
     /**
      * Get room headers.
+     * @param connection the operand to have a connection with DB.
      * @return the list of room headers.
      * @throws DAOException if get room headers is failed
      */
-    List<String> getRoomHeaders() throws DAOException;
+    List<String> getRoomHeaders(Connection connection) throws DAOException;
     /**
      * Get room.
+     * @param connection the operand to have a connection with DB.
      * @return the list of rooms.
      * @throws DAOException if room rooms is failed
      */
-    List<Room> getRooms() throws DAOException;
+    List<Room> getRooms(Connection connection) throws DAOException;
     /**
      * Add room.
+     * @param connection the operand to have a connection with DB.
      * @param room the operand to have as a room.
      * @throws DAOException if add room is failed
      */
-    void addRoom(Room room) throws DAOException;
+    void addRoom(Room room, Connection connection) throws DAOException;
     /**
      * Remove room.
+     * @param connection the operand to have a connection with DB.
      * @param room the operand to have as a room.
      * @throws DAOException if remove room is failed
      */
-    void removeRoom(Room room) throws DAOException;
+    void removeRoom(Room room, Connection connection) throws DAOException;
     /**
      * Update room.
+     * @param connection the operand to have a connection with DB.
      * @param room the operand to have as a room.
      * @throws DAOException if update room is failed
      */
-    void updateRoom(Room room) throws DAOException;
+    void updateRoom(Room room, Connection connection) throws DAOException;
     /**
      * Get last inserted room.
+     * @param connection the operand to have a connection with DB.
      * @return a last inserted room.
      * @throws DAOException  if get last inserted room is failed
      */
-    Room getLastInsertedRoom() throws DAOException;
+    Room getLastInsertedRoom(Connection connection) throws DAOException;
+
+    /**
+     * Get room.
+     * @param connection the operand to have a connection with DB.
+     * @param idRoom the operand to be as id of room.
+     * @return a room.
+     * @throws DAOException  if get room is failed
+     */
+    Room getRoom(Connection connection, int idRoom) throws DAOException;
 
 }

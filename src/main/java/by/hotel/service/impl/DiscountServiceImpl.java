@@ -4,6 +4,8 @@ import by.hotel.bean.Discount;
 import by.hotel.bean.ReservationRoom;
 import by.hotel.builder.DiscountBuilder;
 import by.hotel.dao.IDiscountDao;
+import by.hotel.dao.connectionpool.ConnectionPool;
+import by.hotel.dao.exception.ConnectionPoolException;
 import by.hotel.dao.impl.DiscountDaoImpl;
 import by.hotel.dao.exception.DAOException;
 import by.hotel.service.AbstractService;
@@ -13,6 +15,7 @@ import by.hotel.service.exception.ServiceException;
 import by.hotel.service.validator.ValidatorDiscount;
 
 import java.sql.Connection;
+import java.sql.PreparedStatement;
 import java.util.List;
 import java.util.Map;
 
@@ -31,6 +34,8 @@ import java.util.Map;
  */
 public class DiscountServiceImpl extends AbstractService implements ICrudServiceExtended<Discount> {
 
+    private static ConnectionPool connectionPool = ConnectionPool.getInstance();
+    Connection connection;
     /**
      * Field - discountDao
      */
@@ -43,9 +48,12 @@ public class DiscountServiceImpl extends AbstractService implements ICrudService
      */
     public List<String> getAllHeaders() throws ServiceException {
         try {
-            return discountDao.getDiscountHeaders();
-        }catch (DAOException e){
+            connection = connectionPool.takeConnection();
+            return discountDao.getDiscountHeaders(connection);
+        }catch (DAOException | ConnectionPoolException e){
             throw new ServiceException(e);
+        }finally {
+            connectionPool.closeConnection(connection);
         }
     }
 
@@ -56,9 +64,12 @@ public class DiscountServiceImpl extends AbstractService implements ICrudService
      */
     public List<Discount> getAllEntities() throws ServiceException {
         try {
-            return discountDao.getDiscounts();
-        }catch (DAOException e){
+            connection = connectionPool.takeConnection();
+            return discountDao.getDiscounts(connection);
+        }catch (DAOException | ConnectionPoolException e){
             throw new ServiceException(e);
+        }finally {
+            connectionPool.closeConnection(connection);
         }
     }
 
@@ -70,10 +81,13 @@ public class DiscountServiceImpl extends AbstractService implements ICrudService
     public List<Discount> addEntity(Discount discount) throws ServiceException {
         List<Discount> discounts;
         try {
-            discountDao.addDiscount(discount);
-            discounts = discountDao.getDiscounts();
-        }catch (DAOException e){
+            connection = connectionPool.takeConnection();
+            discountDao.addDiscount(discount,connection);
+            discounts = discountDao.getDiscounts(connection);
+        }catch (DAOException | ConnectionPoolException e){
             throw new ServiceException(e);
+        }finally {
+            connectionPool.closeConnection(connection);
         }
         return discounts;
     }
@@ -85,9 +99,12 @@ public class DiscountServiceImpl extends AbstractService implements ICrudService
      */
     public void removeEntity(Discount discount) throws ServiceException {
         try {
-            discountDao.removeDiscount(discount);
-        }catch (DAOException e){
+            connection = connectionPool.takeConnection();
+            discountDao.removeDiscount(discount,connection);
+        }catch (DAOException | ConnectionPoolException e){
             throw new ServiceException(e);
+        }finally {
+            connectionPool.closeConnection(connection);
         }
     }
 
@@ -98,9 +115,12 @@ public class DiscountServiceImpl extends AbstractService implements ICrudService
      */
     public void updateEntity(Discount discount) throws ServiceException {
         try {
-            discountDao.updateDiscount(discount);
-        }catch (DAOException e){
+            connection = connectionPool.takeConnection();
+            discountDao.updateDiscount(discount,connection);
+        }catch (DAOException | ConnectionPoolException e){
             throw new ServiceException(e);
+        }finally {
+            connectionPool.closeConnection(connection);
         }
     }
 
@@ -121,6 +141,8 @@ public class DiscountServiceImpl extends AbstractService implements ICrudService
             }
         } catch (IncorrectDiscountNameException e) {
             throw new ServiceException(e);
+        } finally {
+            connectionPool.closeConnection(connection);
         }
         return null;
     }
@@ -131,12 +153,21 @@ public class DiscountServiceImpl extends AbstractService implements ICrudService
      */
     public Discount getLastInsertedEntity() throws ServiceException {
         try {
-            return discountDao.getLastInsertedDiscount();
-        }catch (DAOException e){
+            connection = connectionPool.takeConnection();
+            return discountDao.getLastInsertedDiscount(connection);
+        }catch (DAOException | ConnectionPoolException e){
             throw new ServiceException(e);
+        }finally {
+            connectionPool.closeConnection(connection);
         }
     }
 
+    /**
+     * Get all entities by key.
+     * @param key the operand to get entities.
+     * @return a list of discounts.
+     * @throws ServiceException if get discounts is failed
+     */
     @Override
     public List<Discount> getAllEntitiesByKey(Integer key) throws ServiceException {
         throw new UnsupportedOperationException();

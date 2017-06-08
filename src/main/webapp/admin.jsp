@@ -48,5 +48,19 @@
         <div id="myModalUpdate" class="modal fade"></div>
         <div id="myModalAdd" class="modal fade"></div>
         <div id="modalWindow"></div>
+        <a href="/servlet?action=CREATE_DOC&docname=reservation_voucher&id=11&localePage=contentMain&rights=4">Электронный ваучер на проживание</a></br>
+        <a href="/servlet?action=CREATE_DOC&docname=reservation_confirm&id=12&locale=ru&localePage=contentMain&rights=4">Подтверждение брони</a></br>
+        <a  href="/servlet?action=CREATE_DOC&docname=room_document&id=2&locale=ru&localePage=contentMain&rights=4">Информация о номере</a></br>
+        <a href="/servlet?action=CREATE_DOC&docname=user_document&id=2&locale=ru&localePage=contentMain&rights=4">Информация о пользователе</a></br>
+        <a href="/servlet?action=CREATE_DOC&docname=room_type_document&id=2&locale=ru&localePage=contentMain&rights=4">Информация о типе номера</a></br>
+        <a href="/servlet?action=CREATE_DOC&docname=room_report&type=by_month&year=2017&id=2&locale=ru&localePage=contentMain&rights=4">Отчет по комнатам по месяцам</a></br>
+        <a href="/servlet?action=CREATE_DOC&docname=room_report&type=by_quarter&year=2017&id=2&locale=ru&localePage=contentMain&rights=4">Отчет по комнатам по кварталам</a></br>
+        <a href="/servlet?action=CREATE_DOC&docname=financial_report&type=by_month&year=2017&id=2&locale=ru&localePage=contentMain&rights=4">Годовой отчет по месяцам</a></br>
+        <a href="/servlet?action=CREATE_DOC&docname=financial_report&type=by_quarter&year=2017&id=2&locale=ru&localePage=contentMain&rights=4">Годовой отчет по кварталам</a></br>
+        <a href="/servlet?action=CREATE_DOC&docname=reservation_report&id=13&locale=ru&localePage=contentMain&rights=4">Брони пользователя</a></br>
+        <a href="/servlet?action=CREATE_DOC&docname=entity_csv_report&entity=room&locale=ru&localePage=contentMain&rights=4">Отчет по комнатам</a></br>
+        <a href="/servlet?action=CREATE_DOC&docname=entity_csv_report&entity=room_type&locale=ru&localePage=contentMain&rights=4">Отчет по типам комнат</a></br>
+        <a href="/servlet?action=CREATE_DOC&docname=entity_csv_report&entity=user&locale=ru&localePage=contentMain&rights=4">Отчет по пользователям</a></br>
+        <a href="/servlet?action=CREATE_DOC&docname=entity_csv_report&entity=role&locale=ru&localePage=contentMain&rights=4">Отчет по ролям</a></br>
     </body>
 </html>

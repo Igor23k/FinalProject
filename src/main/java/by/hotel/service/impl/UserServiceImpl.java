@@ -5,6 +5,8 @@ import by.hotel.bean.User;
 import by.hotel.builder.RoleBuilder;
 import by.hotel.builder.UserBuilder;
 import by.hotel.dao.IUserDao;
+import by.hotel.dao.connectionpool.ConnectionPool;
+import by.hotel.dao.exception.ConnectionPoolException;
 import by.hotel.dao.exception.DAOException;
 import by.hotel.dao.impl.UserDaoImpl;
 import by.hotel.security.MD5;
@@ -14,6 +16,7 @@ import by.hotel.service.exception.*;
 import by.hotel.service.validator.ValidatorUser;
 
 import java.sql.Connection;
+import java.sql.PreparedStatement;
 import java.util.List;
 import java.util.Map;
 
@@ -31,6 +34,8 @@ import java.util.Map;
  * @version 1.0
  */
 public class UserServiceImpl extends AbstractService implements ICrudServiceExtended<User> {
+    private static ConnectionPool connectionPool = ConnectionPool.getInstance();
+    Connection connection;
     /**
      * Field - userDao
      */
@@ -43,9 +48,12 @@ public class UserServiceImpl extends AbstractService implements ICrudServiceExte
      */
     public List<String> getAllHeaders() throws ServiceException {
         try {
-            return userDao.getUserHeaders();
-        } catch (DAOException e) {
+            connection = connectionPool.takeConnection();
+            return userDao.getUserHeaders(connection);
+        } catch (DAOException | ConnectionPoolException e) {
             throw new ServiceException(e);
+        }finally {
+            connectionPool.closeConnection(connection);
         }
     }
 
@@ -56,9 +64,12 @@ public class UserServiceImpl extends AbstractService implements ICrudServiceExte
      */
     public List<User> getAllEntities() throws ServiceException {
         try {
-            return userDao.getUsers();
-        } catch (DAOException e) {
+            connection = connectionPool.takeConnection();
+            return userDao.getUsers(connection);
+        } catch (DAOException | ConnectionPoolException e) {
             throw new ServiceException(e);
+        }finally {
+            connectionPool.closeConnection(connection);
         }
     }
 
@@ -71,9 +82,12 @@ public class UserServiceImpl extends AbstractService implements ICrudServiceExte
     public User getEntity(Integer id) throws ServiceException {
         User user;
         try {
-            user = userDao.getUser(id);
-        } catch (DAOException e) {
+            connection = connectionPool.takeConnection();
+            user = userDao.getUser(id, connection);
+        } catch (DAOException | ConnectionPoolException e) {
             throw new ServiceException(e);
+        }finally {
+            connectionPool.closeConnection(connection);
         }
         return user;
     }
@@ -86,10 +100,13 @@ public class UserServiceImpl extends AbstractService implements ICrudServiceExte
     public List<User> addEntity(User user) throws ServiceException {
         List<User> users;
         try {
-            userDao.addUser(user);
-            users = userDao.getUsers();
-        } catch (DAOException e) {
+            connection = connectionPool.takeConnection();
+            userDao.addUser(user, connection);
+            users = userDao.getUsers(connection);
+        } catch (DAOException | ConnectionPoolException e) {
             throw new ServiceException(e);
+        }finally {
+            connectionPool.closeConnection(connection);
         }
         return users;
     }
@@ -101,9 +118,12 @@ public class UserServiceImpl extends AbstractService implements ICrudServiceExte
      */
     public void removeEntity(User user) throws ServiceException {
         try {
-            userDao.removeUser(user);
-        } catch (DAOException e) {
+            connection = connectionPool.takeConnection();
+            userDao.removeUser(user, connection);
+        } catch (DAOException | ConnectionPoolException e) {
             throw new ServiceException(e);
+        }finally {
+            connectionPool.closeConnection(connection);
         }
     }
 
@@ -114,9 +134,12 @@ public class UserServiceImpl extends AbstractService implements ICrudServiceExte
      */
     public void updateEntity(User user) throws ServiceException {
         try {
-            userDao.updateUser(user);
-        } catch (DAOException e) {
+            connection = connectionPool.takeConnection();
+            userDao.updateUser(user, connection);
+        } catch (DAOException | ConnectionPoolException e) {
             throw new ServiceException(e);
+        }finally {
+            connectionPool.closeConnection(connection);
         }
     }
 
@@ -163,12 +186,21 @@ public class UserServiceImpl extends AbstractService implements ICrudServiceExte
      */
     public User getLastInsertedEntity() throws ServiceException {
         try {
-            return userDao.getLastInsertedUser();
-        } catch (DAOException e) {
+            connection = connectionPool.takeConnection();
+            return userDao.getLastInsertedUser(connection);
+        } catch (DAOException | ConnectionPoolException e) {
             throw new ServiceException(e);
+        }finally {
+            connectionPool.closeConnection(connection);
         }
     }
 
+    /**
+     * Get all entities by key.
+     * @param key the operand to get entities.
+     * @return a list of user types.
+     * @throws ServiceException if get users is failed
+     */
     @Override
     public List<User> getAllEntitiesByKey(Integer key) throws ServiceException {
         throw new UnsupportedOperationException();

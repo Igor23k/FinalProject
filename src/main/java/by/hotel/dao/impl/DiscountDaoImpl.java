@@ -33,22 +33,18 @@ import static by.hotel.dao.constant.Constants.*;
  * @version 1.0
  */
 public class DiscountDaoImpl extends AbstractDao implements IDiscountDao {
-
-    private static ConnectionPool connectionPool = ConnectionPool.getInstance();
-
+    PreparedStatement statement;
     /**
      * Get discount headers.
+     * @param connection the operand to have a connection with DB.
      * @return the list of discount headers.
      * @throws DAOException if get headers is failed
      */
-    public List<String> getDiscountHeaders() throws DAOException {
-        PreparedStatement statement = null;
+    public List<String> getDiscountHeaders(Connection connection) throws DAOException {
         ResultSet resultSet = null;
         List<String> headers = new ArrayList<>();
         StringBuilder stringBuilder = new StringBuilder();
-        Connection connection;
         try {
-            connection = connectionPool.takeConnection();
             statement = connection.prepareStatement(GET_ALL_DISCOUNTS_HEADERS);
             resultSet = statement.executeQuery();
             while (resultSet.next()) {
@@ -58,128 +54,106 @@ public class DiscountDaoImpl extends AbstractDao implements IDiscountDao {
                 headers.add(stringBuilder.toString());
                 stringBuilder.setLength(0);
             }
-        } catch (SQLException | ConnectionPoolException e) {
+        } catch (SQLException e) {
             throw new DAOException(e);
         }finally {
-            closeStatement(statement, resultSet);
+            closeStatement(resultSet);
         }
         return headers;
     }
 
     /**
      * Get discounts.
+     * @param connection the operand to have a connection with DB.
      * @return the list of discounts.
      * @throws DAOException if get discounts is failed
      */
-    public List<Discount> getDiscounts() throws DAOException {
-        PreparedStatement statement = null;
+    public List<Discount> getDiscounts(Connection connection) throws DAOException {
         ResultSet resultSet = null;
         List<Discount> discounts = new ArrayList<>();
         DiscountBuilder discountBuilder = new DiscountBuilder();
-        Connection connection;
         try {
-            connection = connectionPool.takeConnection();
             statement = connection.prepareStatement(GET_ALL_DISCOUNTS);
             resultSet = statement.executeQuery();
             while (resultSet.next()) {
                 discounts.add(fillDiscount(resultSet, discountBuilder));
             }
-        } catch (SQLException | ConnectionPoolException e) {
+        } catch (SQLException e) {
             throw new DAOException(e);
         } finally {
-            closeStatement(statement, resultSet);
+            closeStatement(resultSet);
         }
         return discounts;
     }
 
     /**
      * Add discount.
+     * @param connection the operand to have a connection with DB.
      * @param discount the operand to have as a discount.
      * @throws DAOException if add discount is failed
      */
-    public void addDiscount(Discount discount) throws DAOException {
-        PreparedStatement statement = null;
-        Connection connection = null;
+    public void addDiscount(Discount discount, Connection connection) throws DAOException {
         try {
-            connection = connectionPool.takeConnection();
             statement = connection.prepareStatement(ADD_DISCOUNT);
             statement = fillStatement(statement, discount);
             statement.execute();
-        } catch (SQLException | NullPointerException | ConnectionPoolException e) {
+        } catch (SQLException | NullPointerException e) {
             throw new DAOException(e);
-        } finally {
-            connectionPool.closeConnection(connection, statement);
-            closeStatement(statement, null);
         }
     }
 
     /**
      * Remove discount.
+     * @param connection the operand to have a connection with DB.
      * @param discount the operand to have as a discount.
      * @throws DAOException if remove discount is failed
      */
-    public void removeDiscount(Discount discount) throws DAOException {
-        PreparedStatement statement = null;
-        Connection connection = null;
+    public void removeDiscount(Discount discount, Connection connection) throws DAOException {
         try {
-            connection = connectionPool.takeConnection();
             statement = connection.prepareStatement(REMOVE_DISCOUNT);
             statement.setInt(1, discount.getId());
             statement.execute();
         } catch (SQLIntegrityConstraintViolationException e) {
             throw new DAOException(buildMessage(discount, e.getMessage()), e);
-        } catch (SQLException | NullPointerException | ConnectionPoolException e) {
+        } catch (SQLException | NullPointerException  e) {
             throw new DAOException(e);
-        } finally {
-            connectionPool.closeConnection(connection, statement);
-            closeStatement(statement, null);
         }
     }
 
     /**
      * Update discount.
+     * @param connection the operand to have a connection with DB.
      * @param discount the operand to have as a discount.
      * @throws DAOException if update discount is failed
      */
-    public void updateDiscount(Discount discount) throws DAOException {
-        PreparedStatement statement = null;
-        Connection connection = null;
+    public void updateDiscount(Discount discount, Connection connection) throws DAOException {
         try {
-            connection = connectionPool.takeConnection();
             statement = connection.prepareStatement(UPDATE_DISCOUNT);
             statement = fillStatement(statement, discount);
             statement.setInt(3, discount.getId());
             statement.execute();
-        } catch (SQLException | NullPointerException | ConnectionPoolException e) {
+        } catch (SQLException | NullPointerException e) {
             throw new DAOException(e);
-        } finally {
-            connectionPool.closeConnection(connection, statement);
-            closeStatement(statement, null);
         }
     }
 
     /**
      * Get last inserted discount.
+     * @param connection the operand to have a connection with DB.
      * @throws DAOException if get last inserted discount is failed
      */
-    public Discount getLastInsertedDiscount() throws DAOException {
-        PreparedStatement statement = null;
+    public Discount getLastInsertedDiscount(Connection connection) throws DAOException {
         Discount discount = null;
         ResultSet resultSet;
         DiscountBuilder discountBuilder = new DiscountBuilder();
-        Connection connection = null;
         try {
-            connection = connectionPool.takeConnection();
             statement = connection.prepareStatement(GET_LAST_INSERTED_DISCOUNT);
             resultSet = statement.executeQuery();
             if (resultSet.next()) {
                 discount = fillDiscount(resultSet, discountBuilder);
             }
-        } catch (SQLException | ConnectionPoolException e) {
+        } catch (SQLException  e) {
             throw new DAOException(e);
-        } finally {
-            connectionPool.closeConnection(connection, statement);
-            closeStatement(statement, null);
         }
         return discount;
     }
@@ -216,7 +190,6 @@ public class DiscountDaoImpl extends AbstractDao implements IDiscountDao {
      * @param discount the operand to have as a discount.
      * @param errorMessage the operand that contain special error.
      * @return an error string.
-     * @throws SQLException
      */
     private String buildMessage(Discount discount, String errorMessage) {
         Map<String, String> idNames = new HashMap<>();

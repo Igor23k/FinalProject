@@ -38,21 +38,13 @@ public abstract class AbstractDao {
 
     /**
      * The method closes a statement.
-     * @param statement - the param that needed to close.
      * @param resultSet - the param that needed to close.
      * @throws DAOException if close the statement or resultSet is failed.
      */
-    public void closeStatement(Statement statement, ResultSet resultSet) throws DAOException {
+    public void closeStatement(ResultSet resultSet) throws DAOException {
         try {
             if (resultSet != null) {
                 resultSet.close();
-            }
-        } catch (SQLException e) {
-            logger.error(e);
-        }
-        try {
-            if (statement != null) {
-                statement.close();
             }
         } catch (SQLException e) {
             logger.error(e);

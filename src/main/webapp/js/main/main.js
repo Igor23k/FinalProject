@@ -79,3 +79,16 @@ function changeLocale(loc) {
         }
     });
 }
+
+function createDocument() {
+    alert("eeeeeeee")
+    $.ajax({
+        type: 'GET',
+        url: '/servlet?action=CREATE_DOC&docname=room_document&id=2&locale=ru&localePage=contentMain&rights=5',
+        success: function(data) {
+            alert("kek");
+            console.log(data);
+            alert("roooooooolesam")
+        }
+    });
+}

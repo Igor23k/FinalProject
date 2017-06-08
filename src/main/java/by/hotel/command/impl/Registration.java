@@ -10,6 +10,7 @@ import by.hotel.service.impl.RegistrationServiceImpl;
 import by.hotel.service.impl.UserServiceImpl;
 
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 
 /**
  * Registration.java
@@ -21,11 +22,11 @@ import javax.servlet.http.HttpServletRequest;
 public class Registration implements ICommand {
     /**
      * Function for user registration
-     * @param request the operand to use for getting different values.
+     * @param request the operand to use for getting values.
      * @return registered  user
      * @throws CommandException if registration is failed
      */
-    public Object execute(HttpServletRequest request) throws CommandException {
+    public Object execute(HttpServletRequest request, HttpServletResponse response) throws CommandException {
         try {
             User user;
             IRegistrationService registrationService = new RegistrationServiceImpl();

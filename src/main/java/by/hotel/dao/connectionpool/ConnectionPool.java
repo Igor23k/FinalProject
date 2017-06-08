@@ -63,6 +63,8 @@ public final class ConnectionPool {
         }
     }
 
+
+
     /**
      * The inner class for implementation singleton. It holds ConnectionPool instance.
      */
@@ -130,7 +132,7 @@ public final class ConnectionPool {
      * @throws ConnectionPoolException if take connection is failed.
      */
     public PooledConnection takeConnection() throws ConnectionPoolException {
-         PooledConnection connection = null;
+        PooledConnection connection;
         try {
             connection = connectionQueue.take();
             givenAwayConQueue.offer(connection);
@@ -153,6 +155,18 @@ public final class ConnectionPool {
         } catch (SQLException e) {
             logger.error("Statement isn't closed.", e);
         }
+        try {
+            connection.close();
+        } catch (SQLException e) {
+            logger.error("Connection isn't return to the pool.", e);
+        }
+    }
+
+    /**
+     * The method closes the connection and statement.
+     * @param connection the operand to get a connection.
+     */
+    public void closeConnection(Connection connection) {
         try {
             connection.close();
         } catch (SQLException e) {
@@ -190,7 +204,7 @@ public final class ConnectionPool {
      * The method closes the connections in BlockingQueue.
      *
      * @param queue the operand to get a queue of connections.
-     * @exception SQLException
+     * @exception SQLException if closing is failed
      */
     private void closeConnectionsQueue(BlockingQueue<PooledConnection> queue)
             throws SQLException {

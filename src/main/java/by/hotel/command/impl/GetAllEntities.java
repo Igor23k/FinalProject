@@ -7,6 +7,7 @@ import by.hotel.service.CrudServiceMapper;
 import by.hotel.service.exception.ServiceException;
 
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 import java.util.List;
 import java.util.Map;
 
@@ -20,11 +21,11 @@ import java.util.Map;
 public class GetAllEntities implements ICommand {
     /**
      * Function for getting all entities
-     * @param request the operand to use for getting different values.
+     * @param request the operand to use for getting values.
      * @return all entities
      * @throws CommandException if get entities is failed
      */
-    public Object execute(HttpServletRequest request) throws CommandException {
+    public Object execute(HttpServletRequest request, HttpServletResponse response) throws CommandException {
         List resultList;
         try {
             ICrudService service =  CrudServiceMapper.getService(request.getParameterMap().get("tableName")[0]);

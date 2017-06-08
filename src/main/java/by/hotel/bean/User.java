@@ -231,6 +231,14 @@ public class User {
         this.email = email;
     }
 
+    public String getUserFullname(){
+        StringBuilder stringBuilder = new StringBuilder();
+        stringBuilder.append(surname);
+        stringBuilder.append(" ");
+        stringBuilder.append(name);
+        return stringBuilder.toString();
+    }
+
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;

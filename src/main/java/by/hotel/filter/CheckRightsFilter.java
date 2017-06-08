@@ -30,6 +30,7 @@ public class CheckRightsFilter implements Filter {
         rights.put("GET_ALL", 4);
         rights.put("GET_ALL_BY_KEY", 4);
         rights.put("ADD", 16);
+        rights.put("CREATE_DOC", 4);
         rights.put("REMOVE", 32);
         rights.put("UPDATE", 64);
         rights.put("GET_ALL_HEADERS", 127);
@@ -62,6 +63,8 @@ public class CheckRightsFilter implements Filter {
 
         Integer requiredRight = 0;
         Integer userRights;
+        Map<String, String[]> list = request.getParameterMap();
+        String s1 = request.getParameter("action");
         if(request.getParameter("action")!= null) {
             requiredRight = rights.get(request.getParameter("action"));
         }

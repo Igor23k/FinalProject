@@ -8,6 +8,7 @@ import by.hotel.service.CrudServiceMapper;
 import by.hotel.service.exception.ServiceException;
 
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
@@ -22,11 +23,11 @@ import java.util.Map;
 public class GetEntityHeaders implements ICommand {
     /**
      * Function for getting entity headers
-     * @param request the operand to use for getting different values.
+     * @param request the operand to use for getting values.
      * @return entity headers
      * @throws CommandException  if get entity headers is failed
      */
-    public Object execute(HttpServletRequest request) throws CommandException {
+    public Object execute(HttpServletRequest request, HttpServletResponse response) throws CommandException {
         Map<String,List<String>> resultMap = new LinkedHashMap<>();
         int tablesCount = request.getParameterMap().get("tableName").length;
         try {

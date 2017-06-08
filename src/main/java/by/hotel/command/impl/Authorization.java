@@ -9,6 +9,7 @@ import by.hotel.service.exception.ServiceException;
 import by.hotel.service.impl.AuthServiceImpl;
 
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 
 /**
  * Authorization.java
@@ -20,11 +21,11 @@ import javax.servlet.http.HttpServletRequest;
 public class Authorization implements ICommand {
     /**
      * Function for user authotization
-     * @param request the operand to use for getting different values.
+     * @param request the operand to use for getting values.
      * @return authorizationed user or null
      * @throws CommandException if authorization entity is failed
      */
-    public Object execute(HttpServletRequest request) throws CommandException {
+    public Object execute(HttpServletRequest request, HttpServletResponse response) throws CommandException {
         try {
             User user;
             IAuthService service = new AuthServiceImpl();

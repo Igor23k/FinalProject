@@ -7,6 +7,7 @@ import by.hotel.service.ICrudService;
 import by.hotel.service.exception.ServiceException;
 
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 
 /**
  * AddEntity.java
@@ -18,11 +19,11 @@ import javax.servlet.http.HttpServletRequest;
 public class AddEntity implements ICommand {
     /**
      * Function for add entity
-     * @param request the operand to use for getting different values.
+     * @param request the operand to use for getting values.
      * @return added entity
      * @throws CommandException  if add entity is failed
      */
-    public Object execute(HttpServletRequest request) throws CommandException {
+    public Object execute(HttpServletRequest request, HttpServletResponse response) throws CommandException {
         Object result;
         try {
             ICrudService service =  CrudServiceMapper.getService(request.getParameterMap().get("tableName")[0]);

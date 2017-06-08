@@ -16,37 +16,43 @@ public interface IDiscountDao {
     /**
      * Get discount headers.
      * @return the list of discount headers.
+     * @param connection the operand to have a connection with DB.
      * @throws DAOException if get headers is failed
      */
-    List<String> getDiscountHeaders() throws DAOException;
+    List<String> getDiscountHeaders(Connection connection) throws DAOException;
     /**
      * Get discounts.
      * @return the list of discounts.
+     * @param connection the operand to have a connection with DB.
      * @throws DAOException if get discounts is failed
      */
-    List<Discount> getDiscounts() throws DAOException;
+    List<Discount> getDiscounts(Connection connection) throws DAOException;
     /**
      * Add discount.
      * @param discount the operand to have as a discount.
+     * @param connection the operand to have a connection with DB.
      * @throws DAOException if add discount is failed
      */
-    void addDiscount(Discount discount) throws DAOException;
+    void addDiscount(Discount discount, Connection connection) throws DAOException;
     /**
      * Remove discount.
      * @param discount the operand to have as a discount.
+     * @param connection the operand to have a connection with DB.
      * @throws DAOException if remove discount is failed
      */
-    void removeDiscount(Discount discount) throws DAOException;
+    void removeDiscount(Discount discount, Connection connection) throws DAOException;
     /**
      * Update discount.
      * @param discount the operand to have as a discount.
+     * @param connection the operand to have a connection with DB.
      * @throws DAOException if update discount is failed
      */
-    void updateDiscount(Discount discount) throws DAOException;
+    void updateDiscount(Discount discount, Connection connection) throws DAOException;
     /**
      * Get last inserted discount.
+     * @param connection the operand to have a connection with DB.
      * @return a discount.
      * @throws DAOException if get last inserted discount is failed
      */
-    Discount getLastInsertedDiscount() throws DAOException;
+    Discount getLastInsertedDiscount(Connection connection) throws DAOException;
 }

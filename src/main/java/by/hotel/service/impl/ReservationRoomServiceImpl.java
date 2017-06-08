@@ -5,12 +5,16 @@ import by.hotel.builder.ReservationBuilder;
 import by.hotel.builder.ReservationRoomBuilder;
 import by.hotel.builder.RoomBuilder;
 import by.hotel.dao.IReservationRoomDao;
+import by.hotel.dao.connectionpool.ConnectionPool;
+import by.hotel.dao.exception.ConnectionPoolException;
 import by.hotel.dao.exception.DAOException;
 import by.hotel.dao.impl.ReservationRoomDaoImpl;
 import by.hotel.service.AbstractService;
 import by.hotel.service.ICrudServiceExtended;
 import by.hotel.service.exception.ServiceException;
 
+import java.sql.Connection;
+import java.sql.PreparedStatement;
 import java.util.List;
 import java.util.Map;
 
@@ -28,6 +32,8 @@ import java.util.Map;
  * @version 1.0
  */
 public class ReservationRoomServiceImpl extends AbstractService implements ICrudServiceExtended<ReservationRoom> {
+    private static ConnectionPool connectionPool = ConnectionPool.getInstance();
+    Connection connection;
     /**
      * Field - reservationRoomDao
      */
@@ -40,9 +46,12 @@ public class ReservationRoomServiceImpl extends AbstractService implements ICrud
      */
     public List<ReservationRoom> getAllEntities() throws ServiceException {
         try {
-            return reservationRoomDao.getReservationRooms();
-        }catch (DAOException e){
+            connection = connectionPool.takeConnection();
+            return reservationRoomDao.getReservationRooms(connection);
+        }catch (DAOException | ConnectionPoolException e){
             throw new ServiceException(e);
+        }finally {
+            connectionPool.closeConnection(connection);
         }
     }
 
@@ -54,9 +63,12 @@ public class ReservationRoomServiceImpl extends AbstractService implements ICrud
     @Override
     public List<ReservationRoom> getAllEntitiesByKey(Integer key) throws ServiceException {
         try {
-            return reservationRoomDao.getReservationRoomsByKey(key);
-        }catch (DAOException e){
+            connection = connectionPool.takeConnection();
+            return reservationRoomDao.getReservationRoomsByKey(key, connection);
+        }catch (DAOException | ConnectionPoolException e){
             throw new ServiceException(e);
+        }finally {
+            connectionPool.closeConnection(connection);
         }
     }
 
@@ -68,10 +80,13 @@ public class ReservationRoomServiceImpl extends AbstractService implements ICrud
     public List<ReservationRoom> addEntity(ReservationRoom reservationRoom) throws ServiceException {
         List<ReservationRoom> reservationRooms;
         try {
-            reservationRoomDao.addReservationRoom(reservationRoom);
-            reservationRooms = reservationRoomDao.getReservationRooms();
-        }catch (DAOException e){
+            connection = connectionPool.takeConnection();
+            reservationRoomDao.addReservationRoom(reservationRoom, connection);
+            reservationRooms = reservationRoomDao.getReservationRooms(connection);
+        }catch (DAOException | ConnectionPoolException e){
             throw new ServiceException(e);
+        }finally {
+            connectionPool.closeConnection(connection);
         }
         return reservationRooms;
     }
@@ -83,9 +98,12 @@ public class ReservationRoomServiceImpl extends AbstractService implements ICrud
      */
     public void removeEntity(ReservationRoom reservationRoom) throws ServiceException {
         try {
-            reservationRoomDao.removeReservationRoom(reservationRoom);
-        }catch (DAOException e){
+            connection = connectionPool.takeConnection();
+            reservationRoomDao.removeReservationRoom(reservationRoom, connection);
+        }catch (DAOException | ConnectionPoolException e){
             throw new ServiceException(e);
+        }finally {
+            connectionPool.closeConnection(connection);
         }
     }
 
@@ -96,10 +114,52 @@ public class ReservationRoomServiceImpl extends AbstractService implements ICrud
      */
     public void updateEntity(ReservationRoom reservationRoom) throws ServiceException {
         try {
-            reservationRoomDao.updateReservationRoom(reservationRoom);
-        }catch (DAOException e){
+            connection = connectionPool.takeConnection();
+            reservationRoomDao.updateReservationRoom(reservationRoom, connection);
+        }catch (DAOException | ConnectionPoolException e){
             throw new ServiceException(e);
+        }finally {
+            connectionPool.closeConnection(connection);
         }
+    }
+
+    /**
+     * Get all entities by user.
+     * @param idUser the operand to get entities.
+     * @return a list of reservation rooms.
+     * @throws ServiceException if get reservation rooms is failed
+     */
+    public List<ReservationRoom> getReservationRoomByUser(int idUser) throws ServiceException{
+        List<ReservationRoom> reservationRooms;
+        Connection connection = null;
+        try {
+            connection = connectionPool.takeConnection();
+            reservationRooms = reservationRoomDao.getReservationRoomByUser(connection, idUser);
+        }catch (DAOException | ConnectionPoolException e){
+            throw new ServiceException(e);
+        }finally {
+            connectionPool.closeConnection(connection);        }
+        return reservationRooms;
+    }
+
+    /**
+     * Get all entities by reservation.
+     * @param idReservation the operand to get entities.
+     * @return a list of reservation rooms.
+     * @throws ServiceException if get reservation rooms is failed
+     */
+    public List<ReservationRoom> getReservationRoomByReservation(int idReservation) throws ServiceException{
+        List<ReservationRoom> reservationRooms;
+        Connection connection = null;
+        try {
+            connection = connectionPool.takeConnection();
+            reservationRooms = reservationRoomDao.getReservationRoomByReservation(connection, idReservation);
+        }catch (DAOException | ConnectionPoolException e){
+            throw new ServiceException(e);
+        }finally {
+            connectionPool.closeConnection(connection);
+        }
+        return reservationRooms;
     }
 
     /**
@@ -121,9 +181,12 @@ public class ReservationRoomServiceImpl extends AbstractService implements ICrud
      */
     public ReservationRoom getLastInsertedEntity() throws ServiceException {
         try {
-            return reservationRoomDao.getLastInsertedReservationRoom();
-        }catch (DAOException e){
+            connection = connectionPool.takeConnection();
+            return reservationRoomDao.getLastInsertedReservationRoom(connection);
+        }catch (DAOException | ConnectionPoolException e){
             throw new ServiceException(e);
+        }finally {
+            connectionPool.closeConnection(connection);
         }
     }
 

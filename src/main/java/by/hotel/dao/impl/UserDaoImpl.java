@@ -36,22 +36,18 @@ import static by.hotel.dao.constant.Constants.*;
  * @version 1.0
  */
 public class UserDaoImpl extends AbstractDao implements IUserDao,IAuthDao {
-
-    private static ConnectionPool connectionPool = ConnectionPool.getInstance();
-
+    PreparedStatement statement;
     /**
      * Get user headers.
+     * @param connection the operand to have a connection with DB.
      * @return the list of user headers.
      * @throws DAOException if get user headers is failed
      */
-    public List<String> getUserHeaders() throws DAOException {
-        PreparedStatement statement = null;
+    public List<String> getUserHeaders(Connection connection) throws DAOException {
         ResultSet resultSet = null;
-        List<String> headers = new ArrayList<String>();
+        List<String> headers = new ArrayList<>();
         StringBuilder stringBuilder = new StringBuilder();
-        Connection connection = null;
         try {
-            connection = connectionPool.takeConnection();
             statement = connection.prepareStatement(GET_ALL_USERS_HEADERS);
             resultSet = statement.executeQuery();
             while (resultSet.next()) {
@@ -61,183 +57,150 @@ public class UserDaoImpl extends AbstractDao implements IUserDao,IAuthDao {
                 headers.add(stringBuilder.toString());
                 stringBuilder.setLength(0);
             }
-        } catch (SQLException | ConnectionPoolException e) {
+        } catch (SQLException e) {
             throw new DAOException(e);
         } finally {
-            connectionPool.closeConnection(connection, statement);
-            closeStatement(statement, resultSet);
+            closeStatement(resultSet);
         }
         return headers;
     }
 
     /**
      * Get users.
+     * @param connection the operand to have a connection with DB.
      * @return the list of users.
      * @throws DAOException if get users is failed
      */
-    public List<User> getUsers() throws DAOException {
-        PreparedStatement statement = null;
+    public List<User> getUsers(Connection connection) throws DAOException {
         ResultSet resultSet = null;
         List<User> users = new ArrayList<>();
         UserBuilder userBuilder = new UserBuilder();
-        Connection connection = null;
         try {
-            connection = connectionPool.takeConnection();
             statement = connection.prepareStatement(GET_ALL_USERS);
             resultSet = statement.executeQuery();
             while (resultSet.next()) {
                 users.add(fillUser(resultSet, userBuilder));
             }
-        } catch (SQLException | ConnectionPoolException e) {
+        } catch (SQLException  e) {
             throw new DAOException(e);
         }  finally {
-            connectionPool.closeConnection(connection, statement);
-            closeStatement(statement, resultSet);
+            closeStatement(resultSet);
         }
         return users;
     }
 
     /**
      * Add user.
+     * @param connection the operand to have a connection with DB.
      * @param user the operand to have as a user.
      * @throws DAOException if add user is failed
      */
-    public void addUser(User user) throws DAOException {
-        PreparedStatement statement = null;
-        Connection connection = null;
+    public void addUser(User user, Connection connection) throws DAOException {
         try {
-            connection = connectionPool.takeConnection();
             statement = connection.prepareStatement(ADD_USER);
             statement = fillStatement(statement, user);
             statement.execute();
-        } catch (SQLException | NullPointerException | ConnectionPoolException e) {
+        } catch (SQLException | NullPointerException e) {
             throw new DAOException(e);
-        }  finally {
-            connectionPool.closeConnection(connection, statement);
-            closeStatement(statement, null);
         }
     }
 
     /**
      * Remove user.
+     * @param connection the operand to have a connection with DB.
      * @param user the operand to have as a user.
      * @throws DAOException if remove user is failed
      */
-    public void removeUser(User user) throws DAOException {
-        PreparedStatement statement = null;
-        Connection connection = null;
+    public void removeUser(User user, Connection connection) throws DAOException {
         try {
-            connection = connectionPool.takeConnection();
             statement = connection.prepareStatement(REMOVE_USER);
             statement.setInt(1, user.getId());
             statement.execute();
-        } catch (SQLException | ConnectionPoolException e) {
+        } catch (SQLException e) {
             throw new DAOException(e);
-        }  finally {
-            connectionPool.closeConnection(connection, statement);
-            closeStatement(statement, null);
         }
     }
 
     /**
      * Update user.
+     * @param connection the operand to have a connection with DB.
      * @param user the operand to have as a user.
      * @throws DAOException if update user is failed
      */
-    public void updateUser(User user) throws DAOException {
-        PreparedStatement statement = null;
-        Connection connection = null;
+    public void updateUser(User user, Connection connection) throws DAOException {
         try {
-            connection = connectionPool.takeConnection();
             statement = connection.prepareStatement(UPDATE_USER);
             statement = fillStatement(statement, user);
             statement.setInt(10, user.getId());
             statement.execute();
-        } catch (SQLException | ConnectionPoolException e) {
+        } catch (SQLException e) {
             throw new DAOException(e);
-        }  finally {
-            connectionPool.closeConnection(connection, statement);
-            closeStatement(statement, null);
         }
     }
     /**
      * Get user.
+     * @param connection the operand to have a connection with DB.
      * @param id the operand to use as id of user.
      * @return the user.
      * @throws DAOException if get user is failed
      */
-    public User getUser(Integer id) throws DAOException {
-        PreparedStatement statement = null;
+    public User getUser(Integer id, Connection connection) throws DAOException {
         ResultSet resultSet = null;
         User user;
         UserBuilder userBuilder = new UserBuilder();
-        Connection connection = null;
         try {
-            connection = connectionPool.takeConnection();
             statement = connection.prepareStatement(GET_USER);
             statement.setInt(1, id);
             resultSet = statement.executeQuery();
+            resultSet.next();
             user = fillUser(resultSet, userBuilder);
-        } catch (SQLException | ConnectionPoolException e) {
+        } catch (SQLException e) {
             throw new DAOException(e);
-        }  finally {
-            connectionPool.closeConnection(connection, statement);
-            closeStatement(statement, resultSet);
         }
         return user;
     }
 
     /**
      * Get last inserted user.
+     * @param connection the operand to have a connection with DB.
      * @throws DAOException  if get last inserted user is failed
      */
-    public User getLastInsertedUser() throws DAOException {
-        PreparedStatement statement = null;
+    public User getLastInsertedUser(Connection connection) throws DAOException {
         User user = null;
         ResultSet resultSet;
         UserBuilder userBuilder = new UserBuilder();
-        Connection connection = null;
         try {
-            connection = connectionPool.takeConnection();
             statement = connection.prepareStatement(GET_LAST_INSERTED_USER);
             resultSet = statement.executeQuery();
             if (resultSet.next()) {
                 user = fillUser(resultSet, userBuilder);
             }
-        } catch (SQLException | NullPointerException | ConnectionPoolException e) {
+        } catch (SQLException | NullPointerException e) {
             throw new DAOException(e);
-        }  finally {
-            connectionPool.closeConnection(connection, statement);
-            closeStatement(statement, null);
         }
         return user;
     }
 
     /**
      * Perform an authorisation.
+     * @param connection the operand to have a connection with DB.
      * @param email  the operand to use as email of user.
      * @param password the operand to use as password of user.
      * @return a user.
      * @throws DAOException if authorisation user is failed
      */
-    public User authorisation(String email, String password) throws DAOException{
+    public User authorisation(String email, String password, Connection connection) throws DAOException{
         UserBuilder userBuilder = new UserBuilder();
-        PreparedStatement statement = null;
         ResultSet resultSet = null;
-        Connection connection = null;
         try {
-            connection = connectionPool.takeConnection();
             statement = connection.prepareStatement(Constants.AUTH_USER);
             statement = fillStatement(statement, email,password);
             resultSet = statement.executeQuery();
             if(resultSet.next()){
                 return fillUser(resultSet, userBuilder);
             }
-        } catch (SQLException | ConnectionPoolException e) {
+        } catch (SQLException e) {
             throw new DAOException(e);
-        }  finally {
-            connectionPool.closeConnection(connection, statement);
-            closeStatement(statement, resultSet);
         }
         return null;
     }
@@ -284,7 +247,7 @@ public class UserDaoImpl extends AbstractDao implements IUserDao,IAuthDao {
      * @param resultSet the operand that contain data from BD.
      * @param userBuilder the operand to build a discount.
      * @return a Discount.
-     * @throws SQLException
+     * @throws SQLException if fill user is failed
      */
     private User fillUser(ResultSet resultSet, UserBuilder userBuilder) throws SQLException {
         RoleBuilder roleBuilder = new RoleBuilder();

@@ -10,7 +10,7 @@ import java.util.Map;
 /**
  * CommandFactoryMapper.java
  * Class implements methods from interface ICommandFactory.
- * getLocale - method to get command  that implements ICommand interface.
+ * getInstance - method to get command  that implements ICommand interface.
  * @author Igor Kozlov
  * @version 2.0
  */
@@ -30,6 +30,7 @@ public final class CommandFactoryMapper implements ICommandFactory {
         commands.put("GET_ALL_HEADERS",new GetEntityHeaders());
         commands.put("AUTHORIZATION", new Authorization());
         commands.put("REGISTRATION", new Registration());
+        commands.put("CREATE_DOC", new CreateDocument());
     }
 
     /**

@@ -48,7 +48,7 @@ function preparationMain() {
 
     $.ajax({
         type: 'GET',
-        url: '/servlet?&rights=4&localePage=contentMain&locale=' + locale,
+        url: '/servlet?&localePage=contentMain&locale=' + locale,
         success: function(data) {
           //  alert("kek");
             setData(data['local']);
@@ -72,23 +72,10 @@ function setData(data) {
 function changeLocale(loc) {
     $.ajax({
         type: 'GET',
-        url: '/servlet?rights=4&localePage=' + currentPageName + '&locale=' + loc,
+        url: '/servlet?&localePage=' + currentPageName + '&locale=' + loc,
         success: function(data) {
             locale = loc;
             setData(data['local']);
-        }
-    });
-}
-
-function createDocument() {
-    alert("eeeeeeee")
-    $.ajax({
-        type: 'GET',
-        url: '/servlet?action=CREATE_DOC&docname=room_document&id=2&locale=ru&localePage=contentMain&rights=5',
-        success: function(data) {
-            alert("kek");
-            console.log(data);
-            alert("roooooooolesam")
         }
     });
 }

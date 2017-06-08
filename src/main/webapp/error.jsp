@@ -7,7 +7,7 @@
     </head>
     <body>
         <div class="wrap">
-            <h1><a href="http://localhost:8080/servlet?rights=4&page=main.jsp&locale=ru&localePage=contentMain#contentMain">Hotel Bobruisk</a></h1>
+            <h1><a href="http://localhost:8080/servlet?page=main.jsp&locale=ru&localePage=contentMain#contentMain">Hotel Bobruisk</a></h1>
             <div class="banner">
                 <img src="images/banner.png" alt=""/>
             </div>

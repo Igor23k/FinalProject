@@ -187,7 +187,7 @@ function sendUserDataLogin(email,pass){
      $.ajax({
          type: 'POST',
          url: '/servlet?action=AUTHORIZATION',
-         data:{"locale":locale,"localePage":"personalInfo","email":email,"password":pass,"rights":4},
+         data:{"locale":locale,"localePage":"personalInfo","email":email,"password":pass},
          success: function(data) {
              if(typeof data['data'] =='object' && data['data']!=null) {
                  currentUser = data['data'];
@@ -230,7 +230,6 @@ function validateUpForm (){
         alert ("Данные заполнены неверно!");
         return  false;
     }
-    alert ("Данные успешно отправлены на сервер!");
     sendUserDataRegistration(login.value,email.value,password.value,phone.value,name.value,surname.value,passport.value);
 }
 
@@ -252,6 +251,11 @@ function LogOut() {
     setNewValueEntryDiv("Вход","#entry");
     loadTemplate('/templates/pages/signin/entry.html');
     document.getElementById('idAdminRef').style.display = 'none';
+    $.ajax({
+        type: 'POST',
+        url: '/servlet?action=LOGOUT',
+        data:{"locale":locale,"localePage":"personalInfo"}
+    });
 }
 
 function validPassport(passport) {

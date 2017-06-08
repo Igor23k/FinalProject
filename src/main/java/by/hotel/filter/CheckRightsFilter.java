@@ -3,6 +3,8 @@ package by.hotel.filter;
 import javax.servlet.*;
 import javax.servlet.annotation.WebFilter;
 import javax.servlet.annotation.WebInitParam;
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpSession;
 import java.io.IOException;
 import java.util.HashMap;
 import java.util.Map;
@@ -35,6 +37,7 @@ public class CheckRightsFilter implements Filter {
         rights.put("UPDATE", 64);
         rights.put("GET_ALL_HEADERS", 127);
         rights.put("AUTHORIZATION", 4);
+        rights.put("LOGOUT", 4);
         rights.put("REGISTRATION", 4);
     }
 
@@ -62,16 +65,17 @@ public class CheckRightsFilter implements Filter {
     public void doFilter(ServletRequest request, ServletResponse response, FilterChain chain) throws IOException, ServletException {
 
         Integer requiredRight = 0;
-        Integer userRights;
+        Integer userRights = 4;
         Map<String, String[]> list = request.getParameterMap();
         String s1 = request.getParameter("action");
         if(request.getParameter("action")!= null) {
             requiredRight = rights.get(request.getParameter("action"));
         }
-        userRights = Integer.parseInt(request.getParameter("rights"));
-        //userRights = 127;
-        String s = request.getParameter("action");
-        Integer a = requiredRight & userRights;
+        HttpServletRequest request1 = (HttpServletRequest) request;
+        HttpSession session = request1.getSession(false);
+        if (session != null && session.getAttribute("rights") !=null) {
+            userRights = (Integer) session.getAttribute("rights");
+        }
         if ((requiredRight & userRights) == requiredRight) {
             chain.doFilter(request, response);
         } else {

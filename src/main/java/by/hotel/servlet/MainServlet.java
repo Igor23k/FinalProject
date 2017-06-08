@@ -16,6 +16,7 @@ import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.jsp.JspException;
 import java.io.IOException;
 import java.util.Map;
 
@@ -58,7 +59,6 @@ public class MainServlet extends HttpServlet {
             }else{
                 action="";
             }
-
             LocalizationManager localizationManager = new LocalizationManager();
             if (request.getParameter("locale") != null) {
                 locale = request.getParameter("locale");
@@ -88,9 +88,7 @@ public class MainServlet extends HttpServlet {
             } catch (IOException e1) {
                 convertToGson(message.substring(message.lastIndexOf(":") + 1));
             }
-        } catch (IOException e) {
-            logger.error(e);
-        } catch (ServletException e) {
+        } catch (IOException | ServletException e) {
             logger.error(e);
         }
     }

@@ -57,14 +57,11 @@ function getReservationData(editBody) {
 function sendReservation() {
     var editBodyUpdate = $('#mainFormReservationInfo');
     var data = getReservationData(editBodyUpdate[0]);
-    console.log("eeee")
-    console.log(sessionStorage)
     if(flag)
     $.ajax({
         type: 'POST',
-        url: '/servlet?action=ADD' + data +'&tableName=RESERVATION&locale='+locale+'&localePage=contentServices&rights=' + sessionStorage["rights"],
-        success: function () {
-        }});
+        url: '/servlet?action=ADD' + data +'&tableName=RESERVATION&locale='+locale+'&localePage=contentServices',
+        success: function () {}});
 }
 
 function acceptReservationRoom() {

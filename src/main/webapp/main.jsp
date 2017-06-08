@@ -28,7 +28,7 @@
 
     <!--[if lt IE 7]>
     <link href="ie_style.css" rel="stylesheet" type="text/css" />
-    <script type="text/javascript" src="ie_png.js"></script>
+    <script type="text/javascript" src="js/ie_png.js"></script>
     <script type="text/javascript">
         ie_png.fix('.png, #header .row-2, #header .nav li a, #content, .gallery li');
     </script>
@@ -67,7 +67,7 @@
                         +375(29)179-07-46
                         <br>
                         <div id="idAdminRef" style="display: none">
-                            <a id="admin" href = "/servlet?page=admin.jsp&action=ADMIN_START&locale=ru&localePage=admin&rights=127">${data.admin}</a>
+                            <a id="admin" href = "/servlet?page=admin.jsp&action=ADMIN_START&locale=ru&localePage=admin">${data.admin}</a>
                         </div>
                     </div>
 

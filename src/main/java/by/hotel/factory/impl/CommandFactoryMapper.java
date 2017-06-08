@@ -29,6 +29,7 @@ public final class CommandFactoryMapper implements ICommandFactory {
         commands.put("ADMIN_START",new GetTableNames());
         commands.put("GET_ALL_HEADERS",new GetEntityHeaders());
         commands.put("AUTHORIZATION", new Authorization());
+        commands.put("LOGOUT", new Logout());
         commands.put("REGISTRATION", new Registration());
         commands.put("CREATE_DOC", new CreateDocument());
     }

@@ -61,7 +61,7 @@ function generateRoomHtml(roomObj) {
 function getRooms() {
     $.ajax({
         type: 'GET',
-        url: '/servlet?tableName=room&action=GET_ALL&rights=4&localePage=contentServices&locale=' + locale,
+        url: '/servlet?tableName=room&action=GET_ALL&localePage=contentServices&locale=' + locale,
         success: function(data) {
             generateRooms(data['data']);
             setData(data['local']);

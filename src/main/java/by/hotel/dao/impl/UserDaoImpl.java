@@ -36,7 +36,6 @@ import static by.hotel.dao.constant.Constants.*;
  * @version 1.0
  */
 public class UserDaoImpl extends AbstractDao implements IUserDao,IAuthDao {
-    PreparedStatement statement;
     /**
      * Get user headers.
      * @param connection the operand to have a connection with DB.
@@ -44,7 +43,7 @@ public class UserDaoImpl extends AbstractDao implements IUserDao,IAuthDao {
      * @throws DAOException if get user headers is failed
      */
     public List<String> getUserHeaders(Connection connection) throws DAOException {
-        ResultSet resultSet = null;
+        PreparedStatement statement = null;
         List<String> headers = new ArrayList<>();
         StringBuilder stringBuilder = new StringBuilder();
         try {
@@ -60,7 +59,8 @@ public class UserDaoImpl extends AbstractDao implements IUserDao,IAuthDao {
         } catch (SQLException e) {
             throw new DAOException(e);
         } finally {
-            closeStatement(resultSet);
+            closeStatement(statement);
+            closeResultSet(resultSet);
         }
         return headers;
     }
@@ -72,7 +72,7 @@ public class UserDaoImpl extends AbstractDao implements IUserDao,IAuthDao {
      * @throws DAOException if get users is failed
      */
     public List<User> getUsers(Connection connection) throws DAOException {
-        ResultSet resultSet = null;
+        PreparedStatement statement = null;
         List<User> users = new ArrayList<>();
         UserBuilder userBuilder = new UserBuilder();
         try {
@@ -83,8 +83,9 @@ public class UserDaoImpl extends AbstractDao implements IUserDao,IAuthDao {
             }
         } catch (SQLException  e) {
             throw new DAOException(e);
-        }  finally {
-            closeStatement(resultSet);
+        } finally {
+            closeStatement(statement);
+            closeResultSet(resultSet);
         }
         return users;
     }
@@ -96,12 +97,15 @@ public class UserDaoImpl extends AbstractDao implements IUserDao,IAuthDao {
      * @throws DAOException if add user is failed
      */
     public void addUser(User user, Connection connection) throws DAOException {
+        PreparedStatement statement = null;
         try {
             statement = connection.prepareStatement(ADD_USER);
             statement = fillStatement(statement, user);
             statement.execute();
         } catch (SQLException | NullPointerException e) {
             throw new DAOException(e);
+        } finally {
+            closeStatement(statement);
         }
     }
 
@@ -112,12 +116,15 @@ public class UserDaoImpl extends AbstractDao implements IUserDao,IAuthDao {
      * @throws DAOException if remove user is failed
      */
     public void removeUser(User user, Connection connection) throws DAOException {
+        PreparedStatement statement = null;
         try {
             statement = connection.prepareStatement(REMOVE_USER);
             statement.setInt(1, user.getId());
             statement.execute();
         } catch (SQLException e) {
             throw new DAOException(e);
+        } finally {
+            closeStatement(statement);
         }
     }
 
@@ -128,6 +135,7 @@ public class UserDaoImpl extends AbstractDao implements IUserDao,IAuthDao {
      * @throws DAOException if update user is failed
      */
     public void updateUser(User user, Connection connection) throws DAOException {
+        PreparedStatement statement = null;
         try {
             statement = connection.prepareStatement(UPDATE_USER);
             statement = fillStatement(statement, user);
@@ -135,6 +143,8 @@ public class UserDaoImpl extends AbstractDao implements IUserDao,IAuthDao {
             statement.execute();
         } catch (SQLException e) {
             throw new DAOException(e);
+        } finally {
+            closeStatement(statement);
         }
     }
     /**
@@ -145,7 +155,7 @@ public class UserDaoImpl extends AbstractDao implements IUserDao,IAuthDao {
      * @throws DAOException if get user is failed
      */
     public User getUser(Integer id, Connection connection) throws DAOException {
-        ResultSet resultSet = null;
+        PreparedStatement statement = null;
         User user;
         UserBuilder userBuilder = new UserBuilder();
         try {
@@ -156,6 +166,9 @@ public class UserDaoImpl extends AbstractDao implements IUserDao,IAuthDao {
             user = fillUser(resultSet, userBuilder);
         } catch (SQLException e) {
             throw new DAOException(e);
+        } finally {
+            closeStatement(statement);
+            closeResultSet(resultSet);
         }
         return user;
     }
@@ -166,8 +179,8 @@ public class UserDaoImpl extends AbstractDao implements IUserDao,IAuthDao {
      * @throws DAOException  if get last inserted user is failed
      */
     public User getLastInsertedUser(Connection connection) throws DAOException {
+        PreparedStatement statement = null;
         User user = null;
-        ResultSet resultSet;
         UserBuilder userBuilder = new UserBuilder();
         try {
             statement = connection.prepareStatement(GET_LAST_INSERTED_USER);
@@ -177,6 +190,9 @@ public class UserDaoImpl extends AbstractDao implements IUserDao,IAuthDao {
             }
         } catch (SQLException | NullPointerException e) {
             throw new DAOException(e);
+        } finally {
+            closeStatement(statement);
+            closeResultSet(resultSet);
         }
         return user;
     }
@@ -190,8 +206,8 @@ public class UserDaoImpl extends AbstractDao implements IUserDao,IAuthDao {
      * @throws DAOException if authorisation user is failed
      */
     public User authorisation(String email, String password, Connection connection) throws DAOException{
+        PreparedStatement statement = null;
         UserBuilder userBuilder = new UserBuilder();
-        ResultSet resultSet = null;
         try {
             statement = connection.prepareStatement(Constants.AUTH_USER);
             statement = fillStatement(statement, email,password);
@@ -201,6 +217,9 @@ public class UserDaoImpl extends AbstractDao implements IUserDao,IAuthDao {
             }
         } catch (SQLException e) {
             throw new DAOException(e);
+        } finally {
+            closeStatement(statement);
+            closeResultSet(resultSet);
         }
         return null;
     }
@@ -224,7 +243,7 @@ public class UserDaoImpl extends AbstractDao implements IUserDao,IAuthDao {
      * @param statement the operand to make a query.
      * @param user the operand to have as a user.
      * @return a PreparedStatement.
-     ** @throws SQLException if statement is null
+     * @throws SQLException if statement is null
      */
     private PreparedStatement fillStatement(PreparedStatement statement, User user) throws SQLException {
         statement.setString(1, user.getPassportNumber());

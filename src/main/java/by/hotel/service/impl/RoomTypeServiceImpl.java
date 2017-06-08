@@ -3,17 +3,15 @@ package by.hotel.service.impl;
 import by.hotel.bean.RoomType;
 import by.hotel.builder.RoomTypeBuilder;
 import by.hotel.dao.IRoomTypeDao;
-import by.hotel.dao.connectionpool.ConnectionPool;
 import by.hotel.dao.exception.ConnectionPoolException;
-import by.hotel.dao.impl.RoomTypeDaoImpl;
 import by.hotel.dao.exception.DAOException;
+import by.hotel.dao.impl.RoomTypeDaoImpl;
 import by.hotel.service.AbstractService;
 import by.hotel.service.ICrudServiceExtended;
 import by.hotel.service.exception.*;
 import by.hotel.service.validator.ValidatorRoomType;
 
 import java.sql.Connection;
-import java.sql.PreparedStatement;
 import java.util.List;
 import java.util.Map;
 
@@ -31,8 +29,6 @@ import java.util.Map;
  * @version 1.0
  */
 public class RoomTypeServiceImpl extends AbstractService implements ICrudServiceExtended<RoomType> {
-    private static ConnectionPool connectionPool = ConnectionPool.getInstance();
-    Connection connection;
     /**
      * Field - roomTypeDao
      */

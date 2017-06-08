@@ -1,4 +1,3 @@
-
 $templateReservation = null;
 var flag = true;
 
@@ -60,8 +59,7 @@ function sendReservation() {
     if(flag)
     $.ajax({
         type: 'POST',
-        url: '/servlet?action=ADD' + data +'&tableName=RESERVATION&locale='+locale+'&localePage=contentServices',
-        success: function () {}});
+        url: '/servlet?action=ADD' + data +'&tableName=RESERVATION&locale='+locale+'&localePage=contentServices'});
 }
 
 function acceptReservationRoom() {

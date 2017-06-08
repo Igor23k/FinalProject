@@ -1,16 +1,13 @@
 package by.hotel.service.impl;
 
 import by.hotel.dao.ITablesInfoDao;
-import by.hotel.dao.connectionpool.ConnectionPool;
 import by.hotel.dao.exception.ConnectionPoolException;
-import by.hotel.dao.impl.TablesInfoDaoImpl;
 import by.hotel.dao.exception.DAOException;
+import by.hotel.dao.impl.TablesInfoDaoImpl;
 import by.hotel.service.AbstractService;
 import by.hotel.service.ITablesInfoService;
 import by.hotel.service.exception.ServiceException;
 
-import java.sql.Connection;
-import java.sql.PreparedStatement;
 import java.util.List;
 
 /**
@@ -21,8 +18,6 @@ import java.util.List;
  * @version 1.0
  */
 public class TablesInfoServiceImpl extends AbstractService implements ITablesInfoService {
-    private static ConnectionPool connectionPool = ConnectionPool.getInstance();
-    Connection connection;
     /**
      * Field - tablesInfoDao
      */

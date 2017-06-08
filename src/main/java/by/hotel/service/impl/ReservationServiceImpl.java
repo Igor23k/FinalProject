@@ -7,7 +7,6 @@ import by.hotel.builder.ReservationBuilder;
 import by.hotel.builder.UserBuilder;
 import by.hotel.dao.IReservationDao;
 import by.hotel.dao.IReservationRoomDao;
-import by.hotel.dao.connectionpool.ConnectionPool;
 import by.hotel.dao.exception.ConnectionPoolException;
 import by.hotel.dao.exception.DAOException;
 import by.hotel.dao.impl.ReservationDaoImpl;
@@ -20,7 +19,6 @@ import by.hotel.service.exception.ServiceException;
 import by.hotel.service.validator.ValidatorReservation;
 
 import java.sql.Connection;
-import java.sql.PreparedStatement;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -38,8 +36,6 @@ import java.util.Map;
  * @version 1.0
  */
 public class ReservationServiceImpl extends AbstractService implements ICrudServiceExtended<Reservation> {
-    private static ConnectionPool connectionPool = ConnectionPool.getInstance();
-    Connection connection;
     /**
      * Field - reservationDao
      */

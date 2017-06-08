@@ -1,20 +1,18 @@
 package by.hotel.service.impl;
 
-import by.hotel.bean.ReservationRoom;
 import by.hotel.bean.Role;
 import by.hotel.builder.RoleBuilder;
 import by.hotel.dao.IRoleDao;
-import by.hotel.dao.connectionpool.ConnectionPool;
 import by.hotel.dao.exception.ConnectionPoolException;
-import by.hotel.dao.impl.RoleDaoImpl;
 import by.hotel.dao.exception.DAOException;
+import by.hotel.dao.impl.RoleDaoImpl;
 import by.hotel.service.AbstractService;
 import by.hotel.service.ICrudServiceExtended;
-import by.hotel.service.exception.*;
+import by.hotel.service.exception.IncorrectNameRoleException;
+import by.hotel.service.exception.IncorrectRightRoleException;
+import by.hotel.service.exception.ServiceException;
 import by.hotel.service.validator.ValidatorRole;
 
-import java.sql.Connection;
-import java.sql.PreparedStatement;
 import java.util.List;
 import java.util.Map;
 
@@ -32,8 +30,6 @@ import java.util.Map;
  * @version 1.0
  */
 public class RoleServiceImpl extends AbstractService implements ICrudServiceExtended<Role> {
-    private static ConnectionPool connectionPool = ConnectionPool.getInstance();
-    Connection connection;
     /**
      * Field - roleDao
      */

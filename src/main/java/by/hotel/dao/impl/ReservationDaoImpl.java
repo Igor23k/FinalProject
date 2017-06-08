@@ -36,7 +36,6 @@ import static by.hotel.dao.constant.Constants.*;
  * @version 1.0
  */
 public class ReservationDaoImpl extends AbstractDao implements IReservationDao {
-    PreparedStatement statement;
     /**
      * Get reservation headers.
      * @param connection the operand to have a connection with DB.
@@ -44,7 +43,7 @@ public class ReservationDaoImpl extends AbstractDao implements IReservationDao {
      * @throws DAOException if get reservation headers is failed
      */
     public List<String> getReservationHeaders(Connection connection) throws DAOException {
-        ResultSet resultSet = null;
+        PreparedStatement statement = null;
         List<String> headers = new ArrayList<>();
         StringBuilder stringBuilder = new StringBuilder();
         try {
@@ -60,7 +59,8 @@ public class ReservationDaoImpl extends AbstractDao implements IReservationDao {
         } catch (SQLException e) {
             throw new DAOException(e);
         } finally {
-            closeStatement(resultSet);
+            closeStatement(statement);
+            closeResultSet(resultSet);
         }
         return headers;
     }
@@ -72,7 +72,7 @@ public class ReservationDaoImpl extends AbstractDao implements IReservationDao {
      * @throws DAOException if get reservations is failed
      */
     public List<Reservation> getAllReservations(Connection connection) throws DAOException {
-        ResultSet resultSet = null;
+        PreparedStatement statement = null;
         List<Reservation> reservations = new ArrayList<>();
         ReservationBuilder reservationBuilder = new ReservationBuilder();
         try {
@@ -84,7 +84,8 @@ public class ReservationDaoImpl extends AbstractDao implements IReservationDao {
         } catch (SQLException  e) {
             throw new DAOException(e);
         } finally {
-            closeStatement(resultSet);
+            closeStatement(statement);
+            closeResultSet(resultSet);
         }
         return reservations;
     }
@@ -96,12 +97,15 @@ public class ReservationDaoImpl extends AbstractDao implements IReservationDao {
      * @throws DAOException if add reservation is failed
      */
     public void addReservation(Reservation reservation, Connection connection) throws DAOException {
+        PreparedStatement statement = null;
         try {
             statement = connection.prepareStatement(ADD_RESERVATION);
             statement = fillStatement(statement, reservation);
             statement.execute();
         } catch (SQLException | NullPointerException e) {
             throw new DAOException(e);
+        }finally {
+            closeStatement(statement);
         }
     }
 
@@ -112,6 +116,7 @@ public class ReservationDaoImpl extends AbstractDao implements IReservationDao {
      * @throws DAOException if remove reservation is failed
      */
     public void removeReservation(Reservation reservation, Connection connection) throws DAOException {
+        PreparedStatement statement = null;
         try {
             statement = connection.prepareStatement(REMOVE_RESERVATION);
             statement.setInt(1, reservation.getId());
@@ -121,6 +126,8 @@ public class ReservationDaoImpl extends AbstractDao implements IReservationDao {
             throw new DAOException(buildMessage(reservation, e.getMessage()),e);
         } catch (SQLException e) {
             throw new DAOException(e);
+        }finally {
+            closeStatement(statement);
         }
     }
 
@@ -131,6 +138,7 @@ public class ReservationDaoImpl extends AbstractDao implements IReservationDao {
      * @throws DAOException if update reservation is failed
      */
     public void updateReservation(Reservation reservation, Connection connection) throws DAOException {
+        PreparedStatement statement = null;
         try {
             statement = connection.prepareStatement(UPDATE_RESERVATION);
             statement = fillStatement(statement, reservation);
@@ -138,6 +146,8 @@ public class ReservationDaoImpl extends AbstractDao implements IReservationDao {
             statement.execute();
         } catch (SQLException e) {
             throw new DAOException(e);
+        }finally {
+            closeStatement(statement);
         }
     }
 
@@ -147,20 +157,20 @@ public class ReservationDaoImpl extends AbstractDao implements IReservationDao {
      * @throws DAOException if get last inserted reservation is failed
      */
     public Reservation getLastInsertedReservation(Connection connection) throws DAOException {
+        PreparedStatement statement = null;
         Reservation reservation = null;
-        ResultSet resultSet;
         ReservationBuilder reservationBuilder = new ReservationBuilder();
-        DiscountBuilder discountBuilder = new DiscountBuilder();
-        UserBuilder userBuilder = new UserBuilder();
         try {
             statement = connection.prepareStatement(GET_LAST_INSERTED_RESERVATION);
-            // statement.setString(1,"reservation");
             resultSet = statement.executeQuery();
             if (resultSet.next()) {
                 reservation = fillReservation(resultSet,reservationBuilder);
             }
         } catch (SQLException | NullPointerException e) {
             throw new DAOException(e);
+        }finally {
+            closeStatement(statement);
+            closeResultSet(resultSet);
         }
         return reservation;
     }
@@ -173,7 +183,6 @@ public class ReservationDaoImpl extends AbstractDao implements IReservationDao {
      */
     public Reservation getReservation(Integer id,Connection connection) throws DAOException {
         PreparedStatement statement = null;
-        ResultSet resultSet = null;
         Reservation reservation = null;
         ReservationBuilder reservationBuilder = new ReservationBuilder();
         try {
@@ -186,7 +195,8 @@ public class ReservationDaoImpl extends AbstractDao implements IReservationDao {
         } catch (SQLException e) {
             throw new DAOException(e);
         } finally {
-            closeStatement(resultSet);
+            closeStatement(statement);
+            closeResultSet(resultSet);
         }
         return reservation;
     }

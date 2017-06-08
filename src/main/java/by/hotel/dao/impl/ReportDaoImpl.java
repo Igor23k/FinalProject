@@ -30,7 +30,6 @@ public class ReportDaoImpl extends AbstractDao implements IReportDao {
     @Override
     public Report getFinancialReportInfoByMonth(Report report, Connection connection) throws DAOException {
         PreparedStatement statement = null;
-        ResultSet resultSet = null;
         try {
             statement = connection.prepareStatement(GET_FINANCIAL_REPORT_BY_MONTH_FOR_YEAR);
             statement.setString(1, report.getYear());
@@ -44,7 +43,8 @@ public class ReportDaoImpl extends AbstractDao implements IReportDao {
         } catch (SQLException e) {
             throw new DAOException(e);
         } finally {
-            closeStatement(resultSet);
+            closeStatement(statement);
+            closeResultSet(resultSet);
         }
         return report;
     }
@@ -59,7 +59,6 @@ public class ReportDaoImpl extends AbstractDao implements IReportDao {
     @Override
     public Report getFinancialReportInfoByQuarter(Report report, Connection connection) throws DAOException {
         PreparedStatement statement = null;
-        ResultSet resultSet = null;
         try {
             statement = connection.prepareStatement(GET_FINANCIAL_REPORT_BY_QUARTER_FOR_YEAR);
             statement.setString(1, report.getYear());
@@ -73,7 +72,8 @@ public class ReportDaoImpl extends AbstractDao implements IReportDao {
         } catch (SQLException e) {
             throw new DAOException(e);
         } finally {
-            closeStatement(resultSet);
+            closeStatement(statement);
+            closeResultSet(resultSet);
         }
         return report;
     }
@@ -88,7 +88,6 @@ public class ReportDaoImpl extends AbstractDao implements IReportDao {
     @Override
     public Report getRoomReportInfoByMonth(Report report, Connection connection) throws DAOException {
         PreparedStatement statement = null;
-        ResultSet resultSet = null;
         try {
             statement = connection.prepareStatement(GET_ROOM_REPORT_BY_MONTH_FOR_YEAR);
             statement.setString(1, report.getYear());
@@ -103,7 +102,8 @@ public class ReportDaoImpl extends AbstractDao implements IReportDao {
         } catch (SQLException e) {
             throw new DAOException(e);
         } finally {
-            closeStatement(resultSet);
+            closeStatement(statement);
+            closeResultSet(resultSet);
         }
         return report;
     }
@@ -118,7 +118,6 @@ public class ReportDaoImpl extends AbstractDao implements IReportDao {
     @Override
     public Report getRoomReportInfoByQuarter(Report report, Connection connection) throws DAOException {
         PreparedStatement statement = null;
-        ResultSet resultSet = null;
         try {
             statement = connection.prepareStatement(GET_ROOM_REPORT_BY_QUARTER_FOR_YEAR);
             statement.setString(1, report.getYear());
@@ -133,7 +132,8 @@ public class ReportDaoImpl extends AbstractDao implements IReportDao {
         } catch (SQLException e) {
             throw new DAOException(e);
         } finally {
-            closeStatement(resultSet);
+            closeStatement(statement);
+            closeResultSet(resultSet);
         }
         return report;
     }

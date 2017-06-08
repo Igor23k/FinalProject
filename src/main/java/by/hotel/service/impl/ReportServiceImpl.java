@@ -2,7 +2,6 @@ package by.hotel.service.impl;
 
 import by.hotel.bean.Report;
 import by.hotel.dao.IReportDao;
-import by.hotel.dao.connectionpool.ConnectionPool;
 import by.hotel.dao.exception.ConnectionPoolException;
 import by.hotel.dao.exception.DAOException;
 import by.hotel.dao.impl.ReportDaoImpl;
@@ -18,8 +17,6 @@ import java.sql.Connection;
  * @version 2.0
  */
 public class ReportServiceImpl extends AbstractService {
-    private static ConnectionPool connectionPool = ConnectionPool.getInstance();
-    Connection connection;
 	private IReportDao reportDao = new ReportDaoImpl();
 
     /**

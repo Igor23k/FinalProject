@@ -1,10 +1,9 @@
 package by.hotel.tag;
 
-import by.hotel.bean.Discount;
-
-import javax.servlet.jsp.tagext.*;
-import javax.servlet.jsp.*;
-import java.io.*;
+import javax.servlet.jsp.JspException;
+import javax.servlet.jsp.JspWriter;
+import javax.servlet.jsp.tagext.TagSupport;
+import java.io.IOException;
 import java.text.DateFormat;
 import java.util.Calendar;
 import java.util.GregorianCalendar;

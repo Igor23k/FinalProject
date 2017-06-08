@@ -36,8 +36,6 @@ function generatePermissionsUser() {
         if(permission!='id' && permission !='nameRole') {
             stringPermissions += objRole[permission];
         }
-    console.log(stringPermissions)
-    console.log(parseInt( stringPermissions, 2 ))
     return (parseInt( stringPermissions, 2 ));
 }
 function findRoom() {
@@ -62,7 +60,6 @@ function setData(data) {
         if (document.getElementById(key) !=null){
             if(key == "singinHeader" && sessionStorage.length != 0){
                 data[key] = sessionStorage['login']
-                //alert(key)
             }
             document.getElementById(key).innerHTML = data[key];
         }
@@ -72,10 +69,11 @@ function setData(data) {
 function changeLocale(loc) {
     $.ajax({
         type: 'GET',
-        url: '/servlet?&localePage=' + currentPageName + '&locale=' + loc,
+        url: '/servlet?localePage=' + currentPageName + '&locale=' + loc,
         success: function(data) {
             locale = loc;
             setData(data['local']);
+            document.getElementById("idPageLocale").innerHTML=loc;
         }
     });
 }

@@ -23,7 +23,6 @@ import static by.hotel.dao.constant.Constants.GET_ALL_NAMES_TABLES;
  * @version 1.0
  */
 public class TablesInfoDaoImpl extends AbstractDao implements ITablesInfoDao {
-    PreparedStatement statement;
     /**
      * Get table names.
      * @param connection the operand to have a connection with DB.
@@ -31,7 +30,7 @@ public class TablesInfoDaoImpl extends AbstractDao implements ITablesInfoDao {
      * @throws DAOException  if get info tables is failed
      */
     public List<String> getNamesTables(Connection connection) throws DAOException {
-        ResultSet resultSet=null;
+        PreparedStatement statement = null;
         List<String> namesTables=new ArrayList<>();
         try {
             statement=connection.prepareStatement(GET_ALL_NAMES_TABLES);
@@ -42,7 +41,8 @@ public class TablesInfoDaoImpl extends AbstractDao implements ITablesInfoDao {
         }catch (SQLException e){
             throw new DAOException(e);
         } finally {
-            closeStatement(resultSet);
+            closeStatement(statement);
+            closeResultSet(resultSet);
         }
         return namesTables;
     }

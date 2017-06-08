@@ -3,7 +3,6 @@ package by.hotel.dao.exception;
 /**
  * ConnectionPoolException.java
  * This exception appears in ConnectionPool class
- *
  * @author Igor Kozlov
  */
 public class ConnectionPoolException extends Exception {

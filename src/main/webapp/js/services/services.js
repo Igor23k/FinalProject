@@ -48,7 +48,6 @@ function generateRoomHtml(roomObj) {
     var arrayComponentsListRoom = $(($('#containerServices').children().last().children())[1]).children();
 
     $(($('#containerServices').children().last().children())[2]).attr('id','idRoom' + roomObj['id']);
-    console.log(arrayComponentsListRoom);
     arrayComponentsListRoom[0].innerHTML = roomObj["name"];
     arrayComponentsListRoom[1].lastElementChild.innerHTML = roomObj["floor"];
     arrayComponentsListRoom[2].lastElementChild.innerHTML = roomObj["roomsCount"];

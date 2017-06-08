@@ -314,13 +314,14 @@ function setHtml(){
                 newItem += '<td></td>';
             }
         }
+
         additionalString+='<td style="border: none"><input type="button" style="width: 100%" value="UPDATE" data-toggle="modal" data-target="#myModalUpdate" onclick="updateData((this.parentNode).parentNode)"></td>' +
             '<td style="border: none"><input type="button" style="width: 100%" value="DELETE" onclick="deleteRow(this)"></td>';
         bodyString += strRow.replace(patternRow,additionalString);
 
         j++;
     }
-
+    console.log("bodyString=" + bodyString);
     var strRow = '<tr class="add" style="border: none">row</tr>';
     var patternRow = /row/;
     newItem+='<td style="border: none"><input type="button" style="width: 100%" value="ADD" data-toggle="modal" data-target="#myModalAdd" onclick="addData((this.parentNode).parentNode)"></td>';

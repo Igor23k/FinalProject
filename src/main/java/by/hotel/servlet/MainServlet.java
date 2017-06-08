@@ -51,14 +51,12 @@ public class MainServlet extends HttpServlet {
             String page = request.getParameter("page");
             String action = request.getParameter("action");
             String localePage = request.getParameter("localePage");
-            Map<String, String[]> list = request.getParameterMap();
             CommandFactoryMapper commandFactoryMapper = CommandFactoryMapper.getInstance();
             if (action != null) {
                 ICommand command = commandFactoryMapper.getCommand(action);
                 result = command.execute(request,response);
-            }else{
-                action="";
-            }
+            }else
+                action="No action";
             LocalizationManager localizationManager = new LocalizationManager();
             if (request.getParameter("locale") != null) {
                 locale = request.getParameter("locale");

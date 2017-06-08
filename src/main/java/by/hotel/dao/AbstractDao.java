@@ -6,6 +6,7 @@ import by.hotel.dao.exception.DAOException;
 import by.hotel.servlet.MainServlet;
 import org.apache.log4j.Logger;
 
+import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
@@ -18,6 +19,7 @@ import java.sql.Statement;
  * @author Igor Kozlov
  */
 public abstract class AbstractDao {
+    protected ResultSet resultSet;
     /**
      * It is a logger which print some messages to log file.
      */
@@ -32,7 +34,22 @@ public abstract class AbstractDao {
         try {
             connectionPool.initPoolData();
         } catch (ConnectionPoolException e) {
-            e.printStackTrace();
+            logger.error(e);
+        }
+    }
+
+    /**
+     * The method closes a statement.
+     * @param statement - the param that needed to close.
+     * @throws DAOException if close the statement or resultSet is failed.
+     */
+    public void closeStatement(Statement statement) throws DAOException {
+        try {
+            if (statement != null) {
+                statement.close();
+            }
+        } catch (SQLException e) {
+            logger.error(e);
         }
     }
 
@@ -41,7 +58,7 @@ public abstract class AbstractDao {
      * @param resultSet - the param that needed to close.
      * @throws DAOException if close the statement or resultSet is failed.
      */
-    public void closeStatement(ResultSet resultSet) throws DAOException {
+    public void closeResultSet(ResultSet resultSet) throws DAOException {
         try {
             if (resultSet != null) {
                 resultSet.close();

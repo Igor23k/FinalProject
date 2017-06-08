@@ -32,19 +32,19 @@ public class LocalizationManager {
     public Map getValue(String locale, String localePage) {
         pageLabels = ResourceBundle.getBundle("localization.pagecontent_" + localePage, localeProvider.getLocale(locale));
         generalLabels = ResourceBundle.getBundle("localization.pagecontent_generalLabels", localeProvider.getLocale(locale));
-        Enumeration bundlePageKeys = pageLabels.getKeys();
-        Enumeration bundleGeneralKeys = generalLabels.getKeys();
         Map<String, String> result = new HashMap();
+        fillLocaleData(result, pageLabels);
+        fillLocaleData(result, generalLabels);
+        return result;
+    }
+
+    private Map<String, String> fillLocaleData(Map<String, String> data,ResourceBundle pageLabels){
+        Enumeration bundlePageKeys = pageLabels.getKeys();
         while (bundlePageKeys.hasMoreElements() ) {
             String key = (String) bundlePageKeys.nextElement();
             String value = pageLabels.getString(key);
-            result.put(key, value);
+            data.put(key, value);
         }
-        while (bundleGeneralKeys.hasMoreElements() ) {
-            String key = (String) bundleGeneralKeys.nextElement();
-            String value = generalLabels.getString(key);
-            result.put(key, value);
-        }
-        return result;
+        return data;
     }
 }

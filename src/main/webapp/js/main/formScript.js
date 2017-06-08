@@ -73,10 +73,7 @@ function getUpdateDataUser() {
 function sendUpdatePersonalInfo() {
     $.ajax({
         type: 'POST',
-        url: '/servlet?action=UPDATE' + getUpdateDataUser() + '&rights=' + sessionStorage["rights"] +'&tableName=USER',
-        success: function(data) {
-
-        }
+        url: '/servlet?action=UPDATE' + getUpdateDataUser() + '&rights=' + sessionStorage["rights"] +'&tableName=USER&localePage=personalInfo&locale=' + locale,
     });
 }
 
@@ -139,7 +136,6 @@ function generateReservations(arrayReservations) {
 
 function generateReservationHtml(reservationObj) {
     $('#personalInfo').append($templateReservation);
-    console.log(reservationObj)
     var arrayComponentsListReservation = $(($('#personalInfo').children().last().children())[0]).children();
     arrayComponentsListReservation[0].innerHTML = "Бронь";
     arrayComponentsListReservation[1].lastElementChild.innerHTML = reservationObj["reservation"]["dateIn"];
@@ -150,6 +146,7 @@ function generateReservationHtml(reservationObj) {
     arrayComponentsListReservation[6].lastElementChild.innerHTML = reservationObj["room"]["roomType"]["roomsCount"];
     arrayComponentsListReservation[7].lastElementChild.innerHTML = reservationObj["room"]["roomType"]["bedsCount"];
     arrayComponentsListReservation[8].lastElementChild.innerHTML = reservationObj["room"]["roomType"]["additionalInfo"];
+    arrayComponentsListReservation[9].href = "/servlet?action=CREATE_DOC&docname=reservation_confirm&id=" + reservationObj["reservation"]["id"] + "&locale=ru&localePage=contentMain";
 }
 var section;
 function setNewValueEntryDiv(textDiv) {
@@ -202,9 +199,8 @@ function sendUserDataLogin(email,pass){
                          document.getElementById('idAdminRef').style.display = 'block';
                      loadTemplate('/templates/pages/signin/personalInfo.html');
                      setNewValueEntryDiv(currentUser.name);
-                 }else
-                 {
-                     alert("Чет тут не но...")
+                 }else {
+                     alert("Чет тут не то...")
                  }
              }else {
                  alert("Данные заполнены неверно!")
@@ -241,7 +237,6 @@ function validateInForm (){
         alert ("Данные заполнены неверно!");
         return  false;
     }
-    alert ("Данные успешно отправлены на сервер!");
     sendUserDataLogin(email.value,passw.value);
 }
 

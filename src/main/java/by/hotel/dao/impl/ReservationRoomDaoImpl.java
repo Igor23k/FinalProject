@@ -33,7 +33,6 @@ import static by.hotel.dao.constant.Constants.*;
  * @version 1.0
  */
 public class ReservationRoomDaoImpl extends AbstractDao implements IReservationRoomDao {
-    PreparedStatement statement;
     /**
      * Get reservationRooms.
      * @param connection the operand to have a connection with DB.
@@ -41,7 +40,7 @@ public class ReservationRoomDaoImpl extends AbstractDao implements IReservationR
      * @throws DAOException if get reservation rooms is failed
      */
     public List<ReservationRoom> getReservationRooms(Connection connection) throws DAOException {
-        ResultSet resultSet = null;
+        PreparedStatement statement = null;
         List<ReservationRoom> reservationRooms = new ArrayList<>();
         ReservationRoomBuilder reservationRoomBuilder = new ReservationRoomBuilder();
         try {
@@ -52,6 +51,9 @@ public class ReservationRoomDaoImpl extends AbstractDao implements IReservationR
             }
         } catch (SQLException e) {
             throw new DAOException(e);
+        } finally {
+            closeStatement(statement);
+            closeResultSet(resultSet);
         }
         return reservationRooms;
     }
@@ -63,12 +65,15 @@ public class ReservationRoomDaoImpl extends AbstractDao implements IReservationR
      * @throws DAOException if add reservation room is failed
      */
     public void addReservationRoom(ReservationRoom reservationRoom, Connection connection) throws DAOException {
+        PreparedStatement statement = null;
         try {
             statement = connection.prepareStatement(ADD_RESERVATION_ROOM);
             statement = fillStatement(statement, reservationRoom);
             statement.execute();
         }catch (SQLException | NullPointerException e) {
             throw new DAOException(buildMessage(reservationRoom),e);
+        }finally {
+            closeStatement(statement);
         }
     }
 
@@ -79,12 +84,15 @@ public class ReservationRoomDaoImpl extends AbstractDao implements IReservationR
      * @throws DAOException if remove reservation room is failed
      */
     public void removeReservationRoom(ReservationRoom reservationRoom, Connection connection) throws DAOException {
+        PreparedStatement statement = null;
         try {
             statement = connection.prepareStatement(REMOVE_RESERVATION_ROOM);
             statement = fillStatement(statement, reservationRoom);
             statement.execute();
         } catch (SQLException e) {
             throw new DAOException(e);
+        }finally {
+            closeStatement(statement);
         }
     }
 
@@ -98,8 +106,7 @@ public class ReservationRoomDaoImpl extends AbstractDao implements IReservationR
     @Override
     public List<ReservationRoom> getReservationRoomByReservation(Connection connection, int reservationId) throws DAOException {
         PreparedStatement statement = null;
-        ResultSet resultSet = null;
-        List<ReservationRoom> reservationRooms = new ArrayList<ReservationRoom>();
+        List<ReservationRoom> reservationRooms = new ArrayList<>();
         ReservationRoomBuilder reservationRoomBuilder = new ReservationRoomBuilder();
         try {
             statement = connection.prepareStatement(GET_RESERVATION_ROOM_BY_RESERVATION);
@@ -111,7 +118,8 @@ public class ReservationRoomDaoImpl extends AbstractDao implements IReservationR
         } catch (SQLException e) {
             throw new DAOException(e);
         } finally {
-            closeStatement(resultSet);
+            closeStatement(statement);
+            closeResultSet(resultSet);
         }
         return reservationRooms;
     }
@@ -125,8 +133,7 @@ public class ReservationRoomDaoImpl extends AbstractDao implements IReservationR
      */
     public List<ReservationRoom> getReservationRoomByUser(Connection connection, int userId) throws DAOException{
         PreparedStatement statement = null;
-        ResultSet resultSet = null;
-        List<ReservationRoom> reservationRooms = new ArrayList<ReservationRoom>();
+        List<ReservationRoom> reservationRooms = new ArrayList<>();
         ReservationRoomBuilder reservationRoomBuilder = new ReservationRoomBuilder();
         try {
             statement = connection.prepareStatement(GET_RESERVATION_ROOM_BY_USER);
@@ -138,7 +145,8 @@ public class ReservationRoomDaoImpl extends AbstractDao implements IReservationR
         } catch (SQLException e) {
             throw new DAOException(e);
         } finally {
-            closeStatement(resultSet);
+            closeStatement(statement);
+            closeResultSet(resultSet);
         }
         return reservationRooms;
     }
@@ -159,18 +167,20 @@ public class ReservationRoomDaoImpl extends AbstractDao implements IReservationR
      * @throws DAOException if get last inserted reservation room is failed
      */
     public ReservationRoom getLastInsertedReservationRoom(Connection connection) throws DAOException {
+        PreparedStatement statement = null;
         ReservationRoom reservationRoom = null;
         ResultSet resultSet;
         ReservationRoomBuilder reservationRoomBuilder = new ReservationRoomBuilder();
         try {
             statement = connection.prepareStatement(GET_LAST_INSERTED_RESERVATION_ROOM);
-            // statement.setString(1,"reservation_room");
             resultSet = statement.executeQuery();
             if (resultSet.next()) {
                 reservationRoom = fillReservationRoom(resultSet, reservationRoomBuilder);
             }
         } catch (SQLException | NullPointerException e) {
             throw new DAOException(e);
+        } finally {
+            closeStatement(statement);
         }
         return reservationRoom;
     }
@@ -182,7 +192,7 @@ public class ReservationRoomDaoImpl extends AbstractDao implements IReservationR
      * @throws DAOException if get reservation rooms is failed
      */
     public List<ReservationRoom> getReservationRoomsByKey(Integer key, Connection connection) throws DAOException {
-        ResultSet resultSet = null;
+        PreparedStatement statement = null;
         List<ReservationRoom> reservationRooms = new ArrayList<>();
         ReservationRoomBuilder reservationRoomBuilder = new ReservationRoomBuilder();
         try {
@@ -194,8 +204,9 @@ public class ReservationRoomDaoImpl extends AbstractDao implements IReservationR
             }
         } catch (SQLException e) {
             throw new DAOException(e);
-        }finally {
-            closeStatement(resultSet);
+        } finally {
+            closeStatement(statement);
+            closeResultSet(resultSet);
         }
         return reservationRooms;
     }
@@ -249,12 +260,11 @@ public class ReservationRoomDaoImpl extends AbstractDao implements IReservationR
      * @param statement the operand to make a query.
      * @param reservationRoom the operand to have as a reservationRoom.
      * @return a PreparedStatement.
-     * @throws SQLException
+     * @throws SQLException if fill statement is failed
      */
     private PreparedStatement fillStatement(PreparedStatement statement, ReservationRoom reservationRoom) throws SQLException {
         statement.setInt(1, reservationRoom.getRoom().getId());
         statement.setInt(2, reservationRoom.getReservation().getId());
-
         return statement;
     }
 
@@ -262,7 +272,6 @@ public class ReservationRoomDaoImpl extends AbstractDao implements IReservationR
      * Build error message.
      * @param reservationRoom the operand to have as a discount.
      * @return an error string.
-     * @throws SQLException
      */
     private String buildMessage(ReservationRoom reservationRoom){
         Map<String,String> idNames = new HashMap<>();

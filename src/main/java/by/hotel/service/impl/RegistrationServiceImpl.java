@@ -1,13 +1,11 @@
 package by.hotel.service.impl;
 
 import by.hotel.bean.User;
-import by.hotel.dao.connectionpool.ConnectionPool;
 import by.hotel.service.IAuthService;
 import by.hotel.service.ICrudService;
 import by.hotel.service.IRegistrationService;
 import by.hotel.service.exception.ServiceException;
 
-import java.sql.Connection;
 import java.util.List;
 
 
@@ -19,8 +17,6 @@ import java.util.List;
  * @version 2.0
  */
 public class RegistrationServiceImpl implements IRegistrationService {
-    private static ConnectionPool connectionPool = ConnectionPool.getInstance();
-    Connection connection;
     /**
      * Field - authService
      */

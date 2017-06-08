@@ -8,23 +8,23 @@
 <head>
 
     <title>Main</title>
-    <script type="text/javascript" src="js/jquery-3.2.0.min.js"></script>
-    <script src="js/bootstrap.js" type="text/javascript"></script>
-    <script type="text/javascript" src="js/spa.js"></script>
+    <script type="text/javascript" src="js/other/jquery-3.2.0.min.js"></script>
+    <script src="js/other/bootstrap.js" type="text/javascript"></script>
+    <script type="text/javascript" src="js/spa/spa.js"></script>
     <script type="text/javascript" src="js/main/main.js"></script>
-    <script src="js/formScript.js" type="text/javascript"></script>
-    <script type="text/javascript" src=js/formScript.js></script>
+    <script src="js/main/formScript.js" type="text/javascript"></script>
+    <script type="text/javascript" src=js/main/formScript.js></script>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
     <meta http-equiv="Content-Style-Type" content="text/css" />
     <link rel="stylesheet" href="bootstrap/bootstrap.css">
     <link rel="stylesheet" href="css/styleSignIn.css">
     <link href="css/style.css" rel="stylesheet" type="text/css" />
     <link href="css/layout.css" rel="stylesheet" type="text/css" />
-    <script src="js/maxheight.js" type="text/javascript"></script>
+    <script src="js/other/maxheight.js" type="text/javascript"></script>
     <script src="js/services/services.js" type="text/javascript"></script>
     <script src="js/booking/booking.js" type="text/javascript"></script>
     <script src="js/testimonials/testimonials.js" type="text/javascript"></script>
-    <script src="js/spa.js" type="text/javascript"></script>
+    <script src="js/spa/spa.js" type="text/javascript"></script>
 
     <!--[if lt IE 7]>
     <link href="ie_style.css" rel="stylesheet" type="text/css" />
@@ -34,22 +34,15 @@
     </script>
     <![endif]-->
 
-    <%--<link type="text/css" href="css/gallery/bottom.css" rel="stylesheet" />
-
-    <script type="text/javascript" src="js/gallery/jquery.js"></script>
-    <script type="text/javascript" src="js/gallery/pikachoose-min.js"></script>--%>
-
-
-
 </head>
 <body class="contentMain" onload="new ElementMaxHeight();">
 <div id="main">
     <ex:GetDate/>
     <div class="dropdown">
-        <div class="dropbtn">RU</div>
+        <div id="idPageLocale" class="dropbtn">ru</div>
         <div class="dropdown-content">
-            <a onclick='changeLocale("ru")'>RU</a>
-            <a onclick='changeLocale("en")'>EN</a>
+            <a onclick='changeLocale("ru")'>ru</a>
+            <a onclick='changeLocale("en")'>en</a>
         </div>
     </div>
     <c:set var="data" value="${data}"/>
@@ -105,7 +98,6 @@
             <li><a id="mainRef" href="#contentMain" class="current">${data.mainRef}</a></li>
             <li><a id="services" href="#contentServices">${data.services}</a></li>
             <li><a id="testimonials" href="#contentTestimonials">${data.testimonials}</a></li>
-            <li><a id="booking" href="#contentBooking">${data.booking}</a></li>
             <li><a id="singin" href="#entry">${data.singin}</a></li>
         </ul>
         <div class="wrapper">

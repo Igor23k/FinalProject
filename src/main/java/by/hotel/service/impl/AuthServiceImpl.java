@@ -1,7 +1,6 @@
 package by.hotel.service.impl;
 
 import by.hotel.bean.User;
-import by.hotel.command.exception.CommandException;
 import by.hotel.dao.IAuthDao;
 import by.hotel.dao.connectionpool.ConnectionPool;
 import by.hotel.dao.exception.ConnectionPoolException;
@@ -12,7 +11,6 @@ import by.hotel.service.IAuthService;
 import by.hotel.service.exception.ServiceException;
 
 import java.sql.Connection;
-import java.sql.PreparedStatement;
 
 /**
  * AuthServiceImpl.java
@@ -40,7 +38,11 @@ public class AuthServiceImpl extends AbstractService implements IAuthService {
 	public User checkUser(String email, String password)  throws ServiceException{
 		try {
 			connection = connectionPool.takeConnection();
-			return authDao.authorisation(email,password,connection);
+			User user = authDao.authorisation(email,password,connection);
+			if (user== null || user.getBanned() == 1){
+				return null;
+			}
+			return user;
 		}catch (DAOException | ConnectionPoolException e){
 			throw new ServiceException(e);
 		}finally {

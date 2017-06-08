@@ -1,21 +1,17 @@
 package by.hotel.service.impl;
 
 import by.hotel.bean.Discount;
-import by.hotel.bean.ReservationRoom;
 import by.hotel.builder.DiscountBuilder;
 import by.hotel.dao.IDiscountDao;
-import by.hotel.dao.connectionpool.ConnectionPool;
 import by.hotel.dao.exception.ConnectionPoolException;
-import by.hotel.dao.impl.DiscountDaoImpl;
 import by.hotel.dao.exception.DAOException;
+import by.hotel.dao.impl.DiscountDaoImpl;
 import by.hotel.service.AbstractService;
 import by.hotel.service.ICrudServiceExtended;
 import by.hotel.service.exception.IncorrectDiscountNameException;
 import by.hotel.service.exception.ServiceException;
 import by.hotel.service.validator.ValidatorDiscount;
 
-import java.sql.Connection;
-import java.sql.PreparedStatement;
 import java.util.List;
 import java.util.Map;
 
@@ -33,9 +29,6 @@ import java.util.Map;
  * @version 1.0
  */
 public class DiscountServiceImpl extends AbstractService implements ICrudServiceExtended<Discount> {
-
-    private static ConnectionPool connectionPool = ConnectionPool.getInstance();
-    Connection connection;
     /**
      * Field - discountDao
      */
@@ -141,8 +134,6 @@ public class DiscountServiceImpl extends AbstractService implements ICrudService
             }
         } catch (IncorrectDiscountNameException e) {
             throw new ServiceException(e);
-        } finally {
-            connectionPool.closeConnection(connection);
         }
         return null;
     }

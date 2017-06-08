@@ -1,6 +1,5 @@
 package by.hotel.service;
 
-import by.hotel.bean.ReservationRoom;
 import by.hotel.service.exception.ServiceException;
 
 import java.util.List;

@@ -2,7 +2,7 @@ package by.hotel.dao.constant;
 
 /**
  * Constants.java
- * Class contains strings that using for querier to BD.
+ * Class contains strings that using for queries to BD.
  * @author Igor Kozlov
  * @version 4.5
  */
@@ -42,8 +42,6 @@ public class Constants {
     public static final String REMOVE_RESERVATION = "DELETE FROM `db_hotel`.`reservation` WHERE `id`=?";
     public static final String UPDATE_RESERVATION = "UPDATE `db_hotel`.`reservation` SET `idUser`=?, `dateIn`=?, `dateOut`=?, `accepted`=?, `idDiscount`=? WHERE `id`=?";
     public static final String GET_RESERVATION = GET_ALL_RESERVATIONS.concat(" WHERE `reservation`.`id` = ?");
-    //   public static final String GET_RESERVATION = "SELECT `id`, `idUser`, `name`, `surname`, `room_number`, `dateIn`, `dateOut`, `days_count` " +
-    //          "FROM (`db_hotel`.`reservation` LEFT OUTER JOIN `db_hotel`.`user` ON `reservation`.`idUser` = `user`.`id`)";
     public static final String GET_ALL_RESERVATIONS_HEADERS = "SELECT `id`, `dateIn`, `dateOut` FROM `db_hotel`.`reservation`";
 
     public static final String GET_ALL_RESERVATION_ROOMS = "SELECT `idRoom`,`idRoomType`,`floor`,`size`, `phone`, `roomsCount`, `bedsCount`,`costPerDay`, `additionalInfo`,`idReservation`,`idUser`, `user`.`name`, `surname`, `passportNumber`,`mobilePhone`, `dateIn`, `dateOut`, `accepted`,`countPercentages`, `idDiscount`,`discount`.`name` AS `discountName`" +
@@ -60,27 +58,21 @@ public class Constants {
             "ON `idDiscount` = `discount`.`id`)";
     public static final String ADD_RESERVATION_ROOM = "INSERT INTO `db_hotel`.`reservation_room` (`idRoom`, `idReservation`) VALUES (?,?)";
     public static final String REMOVE_RESERVATION_ROOM = "DELETE FROM `db_hotel`.`reservation_room` WHERE `idRoom`=? AND `idReservation`=?";
-    public static final String UPDATE_RESERVATION_ROOM = "UPDATE `db_hotel`.`reservation_room` SET `idRoom`=?, `idReservation`=? WHERE `idRoom`=? AND `idReservation`=?";
-    public static final String GET_RESERVATION_ROOM = GET_ALL_RESERVATION_ROOMS.concat(" WHERE `idRoom` = ? AND `idReservation` = ?");
     public static final String GET_RESERVATION_ROOM_BY_USER = GET_ALL_RESERVATION_ROOMS.concat(" WHERE `idUser` = ? AND `accepted` = 1");
     public static final String GET_RESERVATION_ROOM_BY_RESERVATION = GET_ALL_RESERVATION_ROOMS.concat(" WHERE `idReservation` = ?");
-    public static final String GET_LAST_INSERT_ID_RESERVATION_ROOM = "SELECT id FROM `db_hotel`.`reservation` ORDER BY id DESC LIMIT 1" ;
 
     public static final String GET_ALL_DISCOUNTS = "SELECT `id`, `name`, `countPercentages` FROM `db_hotel`.`discount`";
     public static final String ADD_DISCOUNT = "INSERT INTO `db_hotel`.`discount` (`name`, `countPercentages`) VALUES (?,?)";
     public static final String REMOVE_DISCOUNT = "DELETE FROM `db_hotel`.`discount` WHERE `id`=?";
     public static final String UPDATE_DISCOUNT = "UPDATE `db_hotel`.`discount` SET `name`=?,`countPercentages`=? WHERE `id`=?";
     public static final String GET_ALL_DISCOUNTS_HEADERS = "SELECT `id`, `name`,`countPercentages` FROM `db_hotel`.`discount`";
-    public static final String GET_DISCOUNT = GET_ALL_DISCOUNTS.concat(" WHERE `discount`.`id` = ?");
 
     public static final String GET_ALL_ROLES = "SELECT `id`,`nameRole`, `update`, `delete`, `insert`, `create`, `select`, `drop`, `grant` FROM `db_hotel`.`role`";
     public static final String ADD_ROLE = "INSERT INTO `db_hotel`.`role` (`nameRole`, `update`, `delete`, `insert`, `create`, `select`, `drop`, `grant`) VALUES (?,?,?,?,?,?,?,?)";
     public static final String REMOVE_ROLE = "DELETE FROM `db_hotel`.`role` WHERE `id`=?";
     public static final String UPDATE_ROLE = "UPDATE `db_hotel`.`role` SET `nameRole`=?, `update`=?, `delete`=?,`insert`=?, `create`=?, `select`=?,`drop`=?, `grant`=? WHERE `id`=?";
-    public static final String GET_ROLE = GET_ALL_ROLES.concat(" WHERE `role`.`id` = ?");
     public static final String GET_ALL_ROLES_HEADERS = "SELECT `id`, `nameRole` FROM `db_hotel`.`role`";
 
-    public static final String GET_LAST_INSERT_ID = "SELECT LAST_INSERT_ID() FROM `db_hotel`.`reservation" ;
     public static final String AUTH_USER = GET_ALL_USERS.concat("WHERE `email`=? AND `password`=?");
 
 

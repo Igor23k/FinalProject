@@ -1,11 +1,9 @@
 package by.hotel.service.impl;
 
-import by.hotel.bean.Room;
 import by.hotel.bean.User;
 import by.hotel.builder.RoleBuilder;
 import by.hotel.builder.UserBuilder;
 import by.hotel.dao.IUserDao;
-import by.hotel.dao.connectionpool.ConnectionPool;
 import by.hotel.dao.exception.ConnectionPoolException;
 import by.hotel.dao.exception.DAOException;
 import by.hotel.dao.impl.UserDaoImpl;
@@ -15,8 +13,6 @@ import by.hotel.service.ICrudServiceExtended;
 import by.hotel.service.exception.*;
 import by.hotel.service.validator.ValidatorUser;
 
-import java.sql.Connection;
-import java.sql.PreparedStatement;
 import java.util.List;
 import java.util.Map;
 
@@ -34,8 +30,6 @@ import java.util.Map;
  * @version 1.0
  */
 public class UserServiceImpl extends AbstractService implements ICrudServiceExtended<User> {
-    private static ConnectionPool connectionPool = ConnectionPool.getInstance();
-    Connection connection;
     /**
      * Field - userDao
      */
@@ -138,8 +132,6 @@ public class UserServiceImpl extends AbstractService implements ICrudServiceExte
             userDao.updateUser(user, connection);
         } catch (DAOException | ConnectionPoolException e) {
             throw new ServiceException(e);
-        }finally {
-            connectionPool.closeConnection(connection);
         }
     }
 

@@ -1,24 +1,20 @@
 package by.hotel.service.impl;
 
 import by.hotel.bean.Room;
-import by.hotel.bean.RoomType;
 import by.hotel.builder.RoomBuilder;
 import by.hotel.builder.RoomTypeBuilder;
 import by.hotel.dao.IRoomDao;
-import by.hotel.dao.connectionpool.ConnectionPool;
 import by.hotel.dao.exception.ConnectionPoolException;
-import by.hotel.dao.impl.RoomDaoImpl;
 import by.hotel.dao.exception.DAOException;
+import by.hotel.dao.impl.RoomDaoImpl;
 import by.hotel.service.AbstractService;
 import by.hotel.service.ICrudServiceExtended;
 import by.hotel.service.exception.IncorrectRoomNameException;
-import by.hotel.service.exception.IncorrectRoomPathException;
 import by.hotel.service.exception.IncorrectRoomPhoneNumberException;
 import by.hotel.service.exception.ServiceException;
 import by.hotel.service.validator.ValidatorRoom;
 
 import java.sql.Connection;
-import java.sql.PreparedStatement;
 import java.util.List;
 import java.util.Map;
 
@@ -36,8 +32,6 @@ import java.util.Map;
  * @version 1.0
  */
 public class RoomServiceImpl extends AbstractService implements ICrudServiceExtended<Room> {
-    private static ConnectionPool connectionPool = ConnectionPool.getInstance();
-    Connection connection;
     /**
      * Field - roomDao
      */

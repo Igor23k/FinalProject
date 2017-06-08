@@ -34,7 +34,6 @@ import static by.hotel.dao.constant.Constants.*;
  * @version 1.0
  */
 public class RoomDaoImpl extends AbstractDao implements IRoomDao {
-    PreparedStatement statement;
     /**
      * Get room headers.
      * @param connection the operand to have a connection with DB.
@@ -42,7 +41,7 @@ public class RoomDaoImpl extends AbstractDao implements IRoomDao {
      * @throws DAOException if get room headers is failed
      */
     public List<String> getRoomHeaders(Connection connection) throws DAOException {
-        ResultSet resultSet = null;
+        PreparedStatement statement = null;
         List<String> headers = new ArrayList<>();
         StringBuilder stringBuilder = new StringBuilder();
         try {
@@ -57,7 +56,8 @@ public class RoomDaoImpl extends AbstractDao implements IRoomDao {
         } catch (SQLException e) {
             throw new DAOException(e);
         } finally {
-            closeStatement(resultSet);
+            closeStatement(statement);
+            closeResultSet(resultSet);
         }
         return headers;
     }
@@ -71,7 +71,6 @@ public class RoomDaoImpl extends AbstractDao implements IRoomDao {
      */
     public Room getRoom(Connection connection, int idRoom) throws DAOException{
         PreparedStatement statement = null;
-        ResultSet resultSet = null;
         RoomBuilder roomBuilder = new RoomBuilder();
         Room room = null;
         try {
@@ -84,7 +83,8 @@ public class RoomDaoImpl extends AbstractDao implements IRoomDao {
         } catch (SQLException e) {
             throw new DAOException(e);
         } finally {
-            closeStatement(resultSet);
+            closeStatement(statement);
+            closeResultSet(resultSet);
         }
         return room;
     }
@@ -96,7 +96,7 @@ public class RoomDaoImpl extends AbstractDao implements IRoomDao {
      * @throws DAOException if room rooms is failed
      */
     public List<Room> getRooms(Connection connection) throws DAOException {
-        ResultSet resultSet = null;
+        PreparedStatement statement = null;
         List<Room> rooms = new ArrayList<>();
         RoomBuilder roomBuilder = new RoomBuilder();
         try {
@@ -108,7 +108,8 @@ public class RoomDaoImpl extends AbstractDao implements IRoomDao {
         } catch (SQLException e) {
             throw new DAOException(e);
         } finally {
-            closeStatement(resultSet);
+            closeStatement(statement);
+            closeResultSet(resultSet);
         }
         return rooms;
     }
@@ -120,12 +121,15 @@ public class RoomDaoImpl extends AbstractDao implements IRoomDao {
      * @throws DAOException if add room is failed
      */
     public void addRoom(Room room, Connection connection) throws DAOException {
+        PreparedStatement statement = null;
         try {
             statement = connection.prepareStatement(ADD_ROOM);
             statement = fillStatement(statement, room);
             statement.execute();
         } catch (SQLException | NullPointerException e) {
             throw new DAOException(e);
+        } finally {
+            closeStatement(statement);
         }
     }
 
@@ -136,6 +140,7 @@ public class RoomDaoImpl extends AbstractDao implements IRoomDao {
      * @throws DAOException if remove room is failed
      */
     public void removeRoom(Room room, Connection connection) throws DAOException {
+        PreparedStatement statement = null;
         try {
             statement = connection.prepareStatement(REMOVE_ROOM);
             statement.setInt(1, room.getId());
@@ -144,6 +149,8 @@ public class RoomDaoImpl extends AbstractDao implements IRoomDao {
             throw new DAOException(buildMessage(room, e.getMessage()) ,e);
         } catch (SQLException e) {
             throw new DAOException(e);
+        } finally {
+            closeStatement(statement);
         }
     }
 
@@ -154,6 +161,7 @@ public class RoomDaoImpl extends AbstractDao implements IRoomDao {
      * @throws DAOException if update room is failed
      */
     public void updateRoom(Room room, Connection connection) throws DAOException {
+        PreparedStatement statement = null;
         try {
             statement = connection.prepareStatement(UPDATE_ROOM);
             statement = fillStatement(statement, room);
@@ -161,6 +169,8 @@ public class RoomDaoImpl extends AbstractDao implements IRoomDao {
             statement.execute();
         } catch (SQLException e) {
             throw new DAOException(e);
+        } finally {
+            closeStatement(statement);
         }
     }
 
@@ -170,13 +180,12 @@ public class RoomDaoImpl extends AbstractDao implements IRoomDao {
      * @throws DAOException  if get last inserted room is failed
      */
     public Room getLastInsertedRoom(Connection connection) throws DAOException {
+        PreparedStatement statement = null;
         Room room = null;
-        ResultSet resultSet;
         RoomBuilder roomBuilder = new RoomBuilder();
         RoomTypeBuilder roomTypeBuilder  = new RoomTypeBuilder();
         try {
             statement = connection.prepareStatement(GET_LAST_INSERTED_ROOM);
-            // statement.setString(1,room");
             resultSet = statement.executeQuery();
             if (resultSet.next()) {
                 room = roomBuilder.id(resultSet.getInt("id"))
@@ -190,6 +199,9 @@ public class RoomDaoImpl extends AbstractDao implements IRoomDao {
             }
         } catch (SQLException | NullPointerException e) {
             throw new DAOException(e);
+        } finally {
+            closeStatement(statement);
+            closeResultSet(resultSet);
         }
         return room;
     }
@@ -242,7 +254,7 @@ public class RoomDaoImpl extends AbstractDao implements IRoomDao {
      * @return an error string.
      */
     private String buildMessage(Room room, String errorMessage){
-        Map<String,String> idNames = new HashMap<String, String>();
+        Map<String,String> idNames = new HashMap<>();
         idNames.put("id",Integer.toString(room.getId()));
         return ErrorStringBuilder.buildDeleteErrorString(idNames,errorMessage);
     }

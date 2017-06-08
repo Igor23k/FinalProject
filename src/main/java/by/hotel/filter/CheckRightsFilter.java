@@ -63,16 +63,13 @@ public class CheckRightsFilter implements Filter {
      * @throws ServletException if operations with request or response are failed.
      */
     public void doFilter(ServletRequest request, ServletResponse response, FilterChain chain) throws IOException, ServletException {
-
+        HttpServletRequest req = (HttpServletRequest) request;
+        HttpSession session = req.getSession(false);
         Integer requiredRight = 0;
         Integer userRights = 4;
-        Map<String, String[]> list = request.getParameterMap();
-        String s1 = request.getParameter("action");
         if(request.getParameter("action")!= null) {
             requiredRight = rights.get(request.getParameter("action"));
         }
-        HttpServletRequest request1 = (HttpServletRequest) request;
-        HttpSession session = request1.getSession(false);
         if (session != null && session.getAttribute("rights") !=null) {
             userRights = (Integer) session.getAttribute("rights");
         }
